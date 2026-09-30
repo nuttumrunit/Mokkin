@@ -31,6 +31,7 @@
     <script language="JavaScript" src="javascript/titlescroll.js"></script>
     <script language="JavaScript" src="config.js?v=3"></script>
     <style>
+        .pending-link { opacity: .7; cursor: not-allowed; }
         .brand-title { color: #f5f2e6; font-family: Impact, "Arial Black", sans-serif; font-size: clamp(42px, 7vw, 96px); letter-spacing: .08em; line-height: 1; text-shadow: 4px 4px 0 #0a2b1f; }
         .brand-tagline { font-weight: bold; letter-spacing: .12em; text-align: center; color: #f5f2e6; }
         .brand-title.hallows, .brand-title.crimbo, .brand-title.valentine, .brand-title.easter { content: normal !important; }
@@ -105,7 +106,9 @@
                 <a href="#links">Devlog</a>
                 <a href="#guide">Guide</a>
                 <a href="#board">Guestbook</a>
+                <a href="#" class="pending-link" onclick="return false;" aria-disabled="true" title="Nuttum X link coming soon">X (soon)</a>
                 <a href="https://github.com/zunonhood/Nuttum" target="_blank" rel="noopener">GitHub</a>
+                <a href="#" class="pending-link" onclick="return false;" aria-disabled="true" title="Nuttum Pump.fun link coming soon">Pump.fun (soon)</a>
             </nav>
         </section>
 
