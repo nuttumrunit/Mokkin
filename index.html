@@ -170,6 +170,120 @@
     .platform-copy strong { font-size: 10px; letter-spacing: 0.1em; }
     .platform-copy small { margin-top: 2px; color: #cbeaff; font-size: 8px; letter-spacing: 0.08em; }
     .platform-link.is-pending { opacity: 0.64; cursor: default; }
+    .city-systems {
+      max-width: 860px;
+      margin: 20px auto 2px;
+      padding-top: 15px;
+      border-top: 1px solid rgba(224, 246, 255, 0.24);
+      text-shadow: none;
+    }
+    .systems-heading {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 0 0 9px;
+      color: rgba(235, 249, 255, 0.74);
+      font-size: 8px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+    .systems-heading::before, .systems-heading::after {
+      content: "";
+      height: 1px;
+      flex: 1;
+      background: linear-gradient(90deg, transparent, rgba(222, 245, 255, 0.34));
+    }
+    .systems-heading::after { transform: scaleX(-1); }
+    .systems-grid {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 7px;
+    }
+    .system-badge {
+      --accent: #ffd166;
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      min-width: 0;
+      min-height: 48px;
+      padding: 7px 8px;
+      box-sizing: border-box;
+      overflow: hidden;
+      color: #f7fcff;
+      background: linear-gradient(150deg, rgba(5, 54, 91, 0.74), rgba(33, 132, 188, 0.34));
+      border: 1px solid rgba(218, 244, 255, 0.38);
+      border-radius: 10px;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12), 0 5px 14px rgba(5, 47, 79, 0.14);
+    }
+    .system-badge::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 9px;
+      right: 9px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--accent), transparent);
+      opacity: 0.9;
+    }
+    .status-icon {
+      display: inline-grid;
+      place-items: center;
+      width: 28px;
+      height: 28px;
+      flex: 0 0 28px;
+      color: var(--accent);
+      background: rgba(3, 44, 74, 0.46);
+      border: 1px solid color-mix(in srgb, var(--accent) 52%, transparent);
+      border-radius: 8px;
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: 0;
+    }
+    .status-icon img { display: block; width: 17px; height: 17px; }
+    .status-copy { display: flex; flex-direction: column; min-width: 0; text-align: left; }
+    .status-copy small {
+      color: #bfe6f8;
+      font-size: 7px;
+      line-height: 1.1;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+    .status-copy strong {
+      margin-top: 3px;
+      color: #ffffff;
+      font-size: 8px;
+      line-height: 1.1;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .status-dot {
+      display: inline-block;
+      width: 5px;
+      height: 5px;
+      margin-right: 4px;
+      vertical-align: 1px;
+      background: #76f0a5;
+      border-radius: 50%;
+      box-shadow: 0 0 7px rgba(118, 240, 165, 0.9);
+      animation: statusPulse 1.8s ease-in-out infinite;
+    }
+    .mini-cube {
+      width: 13px;
+      height: 13px;
+      background: linear-gradient(135deg, #ffe0a0, #d97942);
+      border: 1px solid rgba(255, 246, 215, 0.8);
+      box-shadow: 4px 4px 0 rgba(123, 65, 38, 0.42);
+      animation: cubeLift 2.6s ease-in-out infinite;
+    }
+    .solana-bars { display: grid; gap: 2px; transform: skewX(-15deg); }
+    .solana-bars i { display: block; width: 16px; height: 3px; border-radius: 3px; background: linear-gradient(90deg, #7cf7cf, #b98cff); }
+    @keyframes statusPulse { 0%, 100% { opacity: .55; } 50% { opacity: 1; } }
+    @keyframes cubeLift { 0%, 100% { transform: translateY(1px); } 50% { transform: translateY(-2px); } }
+    @media (max-width: 760px) { .systems-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+    @media (max-width: 440px) { .systems-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+    @media (prefers-reduced-motion: reduce) { .status-dot, .mini-cube { animation: none; } }
     .ca-addr { font-family: Consolas, monospace; font-size: 0.8em; font-weight: bold; cursor: pointer; word-break: break-all; }
     </style>
     <p>I'm not going to call this AGI or pretend I found magic. I'm an AI engineer.<br>
@@ -216,8 +330,35 @@ When the city crosses certain block counts, that growth will trigger a buyback a
          <span class="platform-mark"><img src="badges/icon_pumpfun.svg" alt=""></span><span class="platform-copy"><strong>Pump.fun</strong><small>Link soon</small></span>
        </span>
      </nav>
-     <br>
-     <img src="badges/sideadd.gif" alt="sideadd"><img src="badges/decayedg1rl.gif" alt="decayedg1rl"><a href="https://pixelmoondust.neocities.org/"><img src="badges/lonelyjulybutton.gif" alt="lonely july"></a><a href="https://pixelmoondust.neocities.org/"><img src="badges/everfreebutton.gif" alt="everfree"></a><a href="https://urist.neocities.org/"><img src="badges/youtuube.gif" alt="youtube"></a><a href="https://urist.neocities.org/"><img src="badges/necrodancer.gif" alt="necrodancer"></a><img src="badges/8bit.gif" alt="8bit"><img src="badges/117.gif" alt="117"><img src="badges/angelgirl134123.gif" alt="angelgirl"><img src="badges/bikobatanari.gif" alt="bikobatanari"><img src="badges/getcubed.png" alt="getcubed"><img src="badges/isnotanoctopus.gif" alt="isnotanoctopus"><br><img src="badges/pnfrlenm.gif" alt="pnfrlenm"><img src="badges/jamesland_3.gif" alt="jamesland"><img src="badges/lovedentist.gif" alt="lovedentist"><img src="badges/noerror.gif" alt="noerror"><img src="badges/cyanonearth.gif" alt="cyanonearth"><img src="badges/top_6.gif" alt="top6"><img src="badges/imhigh.gif" alt="imhigh">
+     <section class="city-systems" aria-label="Nuttum city systems">
+       <div class="systems-heading"><span>City systems</span></div>
+       <div class="systems-grid">
+         <div class="system-badge" style="--accent:#ffd166">
+           <span class="status-icon"><span class="mini-cube"></span></span>
+           <span class="status-copy"><small>Builder</small><strong><span class="status-dot"></span>Online</strong></span>
+         </div>
+         <div class="system-badge" style="--accent:#ffad69">
+           <span class="status-icon">F</span>
+           <span class="status-copy"><small>Signal input</small><strong>Fomo</strong></span>
+         </div>
+         <div class="system-badge" style="--accent:#73e7a1">
+           <span class="status-icon"><img src="badges/icon_pumpfun.svg" alt=""></span>
+           <span class="status-copy"><small>Signal input</small><strong>Pump.fun</strong></span>
+         </div>
+         <div class="system-badge" style="--accent:#ffe39a">
+           <span class="status-icon">1:1</span>
+           <span class="status-copy"><small>Build rule</small><strong>1 TX = 1 Block</strong></span>
+         </div>
+         <div class="system-badge" style="--accent:#a98cff">
+           <span class="status-icon"><span class="solana-bars"><i></i><i></i><i></i></span></span>
+           <span class="status-copy"><small>Network</small><strong>Solana</strong></span>
+         </div>
+         <div class="system-badge" style="--accent:#ff8f70">
+           <span class="status-icon">B+B</span>
+           <span class="status-copy"><small>Milestone</small><strong>Buyback + Burn</strong></span>
+         </div>
+       </div>
+     </section>
 
     </center>
     <div style="text-align:center; font-weight:normal; margin-top:auto; padding:6px 0 8px;">Copyright ©2026 Nuttum</div>
