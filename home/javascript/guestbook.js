@@ -1,4 +1,4 @@
-// Woodoo guestbook — shared realtime board backed by Supabase.
+// Nuttum guestbook — shared realtime board backed by Supabase.
 // Visitors leave feedback / ideas / feature requests; everyone sees new notes live.
 // Atabook style: Date (US Eastern) / Name / Number + a brick message. Newest on top.
 (function () {
@@ -47,7 +47,7 @@
     }
     function subscribe() {
         if (!sb) return;
-        sb.channel('woodoo-guestbook')
+        sb.channel('nuttum-guestbook')
             .on('postgres_changes', { event: 'INSERT', schema: 'public', table: TABLE }, function (p) {
                 var list = document.getElementById('gbList'); if (!list) return;
                 list.insertBefore(entryEl(p.new), list.firstChild);
@@ -56,7 +56,7 @@
             .subscribe();
     }
 
-    window.woodooSign = function () {
+    window.nuttumSign = function () {
         var name = (document.getElementById('gbName').value || 'anon').slice(0, 30);
         var msg = document.getElementById('gbMsg').value.trim();
         if (!msg) return;

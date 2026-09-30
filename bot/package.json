@@ -1,11 +1,11 @@
 {
-  "name": "@woodcutleaf/woodoo-bot",
+  "name": "@zunonhood/nuttum-bot",
   "version": "1.0.0",
-  "description": "Woodoo — an autonomous AI that designs and builds a whole city on a Minecraft world, block by block.",
+  "description": "Nuttum — an autonomous AI that designs and builds a whole city on a Minecraft world, block by block.",
   "main": "bot.js",
   "type": "commonjs",
   "bin": {
-    "woodoo-bot": "bot.js"
+    "nuttum-bot": "bot.js"
   },
   "files": [
     "bot.js",
@@ -18,7 +18,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/woodcutleaf/Woodoo.git",
+    "url": "git+https://github.com/zunonhood/Nuttum.git",
     "directory": "bot"
   },
   "keywords": [
@@ -28,9 +28,9 @@
     "autonomous",
     "city-builder",
     "voxel",
-    "woodoo"
+    "nuttum"
   ],
-  "author": "woodcutleaf",
+  "author": "zunonhood",
   "license": "MIT",
   "publishConfig": {
     "registry": "https://npm.pkg.github.com"

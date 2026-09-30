@@ -1,9 +1,9 @@
-// Woodoo AI — live metrics dashboard + realtime feed.
-// Data is REAL and SERVER-AUTHORITATIVE: the bot writes woodoo-live.json with a persistent
+// Nuttum AI — live metrics dashboard + realtime feed.
+// Data is REAL and SERVER-AUTHORITATIVE: the bot writes nuttum-live.json with a persistent
 // history array (one sample every 5s, kept on the server). We just render that history, so
 // every visitor sees the SAME real curve and a page refresh never restarts it.
 (function () {
-    var LIVE = (window.WOODOO && window.WOODOO.data) || 'woodoo-live.json';
+    var LIVE = (window.NUTTUM && window.NUTTUM.data) || 'nuttum-live.json';
     var GREEN = '#12a012', RED = '#d02020';
 
     function hm(ms) { return new Date(ms).toLocaleTimeString('en-US', { timeZone: 'America/New_York', hour12: false, hour: '2-digit', minute: '2-digit' }); }
@@ -82,7 +82,7 @@
         ctx.fillText(m.unit, 0, 0); ctx.restore();
         ctx.save(); ctx.translate(W - 9, py0 + ph / 2); ctx.rotate(Math.PI / 2);
         ctx.fillStyle = '#cccccc'; ctx.font = '8px Consolas, monospace'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-        ctx.fillText('RRDTOOL / WOODOO.AI', 0, 0); ctx.restore();
+        ctx.fillText('RRDTOOL / NUTTUM.AI', 0, 0); ctx.restore();
     }
 
     function updateLegend(m) {
@@ -91,21 +91,21 @@
         var avg = d.reduce(function (a, b) { return a + b; }, 0) / d.length;
         function c(l, v, strong) { return l + ':' + (strong ? '<b>' : '') + String(fmt(v)).padStart(7) + (strong ? '</b>' : ''); }
         m.legend.innerHTML = '<div class="lg-row"><span class="sw" style="background:' + m.color + '"></span>' +
-            'Woodoo ' + c(' Min', s[0]) + '  ' + c('Avg', avg) + '  ' + c('90th', pct(s, 0.9)) + '  ' +
+            'Nuttum ' + c(' Min', s[0]) + '  ' + c('Avg', avg) + '  ' + c('90th', pct(s, 0.9)) + '  ' +
             c('Max', s[s.length - 1]) + '  ' + c('Cur', cur, true) + '  ' + m.unit + (live.stale ? '  [offline]' : '') + '</div>';
     }
 
     function renderCharts() { metrics.forEach(function (m) { draw(m); updateLegend(m); }); }
 
     // ---- realtime feed (real bot events) ----
-    var feed = document.getElementById('woodooFeed');
+    var feed = document.getElementById('nuttumFeed');
     function renderFeed() {
         if (!feed) return;
         var evs = live.events || [];
         feed.innerHTML = '';
         if (!evs.length) {
             var d0 = document.createElement('div'); d0.className = 'feed-line';
-            d0.innerHTML = '<span class="feed-time">--:--:--</span> <span class="feed-tag">SYS</span> waiting for Woodoo...';
+            d0.innerHTML = '<span class="feed-time">--:--:--</span> <span class="feed-tag">SYS</span> waiting for Nuttum...';
             feed.appendChild(d0);
         }
         evs.forEach(function (e) {

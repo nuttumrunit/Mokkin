@@ -650,8 +650,8 @@ footer>p {
     border: 0.1vw solid #0a2b1f;
 }
 
-/* ---- Woodoo data dashboard + realtime feed ---- */
-.woodoo-data {
+/* ---- Nuttum data dashboard + realtime feed ---- */
+.nuttum-data {
     align-items: stretch;
     gap: 0.6vw;
 }

@@ -1,4 +1,4 @@
-// Woodoo chat room — shared realtime chat backed by Supabase.
+// Nuttum chat room — shared realtime chat backed by Supabase.
 // Every visitor sees the same live messages (Postgres realtime); images are uploaded to
 // Supabase Storage so they persist for everyone. KWSX style: timestamped lines (US Eastern),
 // per-user name colours, emoji + image + colour picker.
@@ -18,7 +18,7 @@
     var EMOJIS = ["😀", "😂", "😊", "😍", "😎", "🤔", "😭", "😡", "👍", "👎",
         "🙏", "🔥", "✨", "🎉", "❤️", "💀", "👀", "🧱", "🌳", "🪵", "⭐", "🚀", "🍉", "🤖"];
 
-    var myColor = localStorage.getItem('woodooNameColor') || '';
+    var myColor = localStorage.getItem('nuttumNameColor') || '';
     var colors = {}; // name(lowercased) -> colour
 
     function esc(s) { return String(s).replace(/[&<>]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]; }); }
@@ -73,7 +73,7 @@
     }
     function subscribe() {
         if (!sb) return;
-        sb.channel('woodoo-chat')
+        sb.channel('nuttum-chat')
             .on('postgres_changes', { event: 'INSERT', schema: 'public', table: TABLE },
                 function (payload) { renderMsg(payload.new); })
             .subscribe();
@@ -81,7 +81,7 @@
 
     function currentName() { return (document.getElementById('chatname').value || 'guest').slice(0, 40); }
 
-    window.woodooSend = function () {
+    window.nuttumSend = function () {
         var n = currentName();
         var m = document.getElementById('chatmsg').value.trim();
         if (!m) return;
@@ -115,7 +115,7 @@
         el.classList.toggle('show');
     }
     function setMyColor(c) {
-        myColor = c; localStorage.setItem('woodooNameColor', c);
+        myColor = c; localStorage.setItem('nuttumNameColor', c);
         colors[currentName().toLowerCase()] = c;
         var cb = document.getElementById('colorBtn'); if (cb) cb.style.background = c;
         var p = document.getElementById('colorPalette'); if (p) p.classList.remove('show');

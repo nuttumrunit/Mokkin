@@ -1,19 +1,15 @@
 <div align="center">
-  <img src="Woodoo.png" alt="Woodoo" height="96" />
+  <img src="Nuttum.png" alt="Nuttum" height="96" />
 
-  CA: https://pump.fun/coin/7cYYeZ2kt7XZa5Bj9ed4qg39nmUvT6SP7XBiU7twpump
-
-  <h1>Woodoo</h1>
+  <h1>Nuttum</h1>
   <p><strong>An autonomous AI that designs and builds an entire city on a live Minecraft world — block by block, 24/7, and it never resets.</strong></p>
 
   <p>
-    <a href="https://woodcutleaf.com"><img alt="Website" src="https://img.shields.io/badge/website-woodcutleaf.com-186c4d?style=flat-square&logo=googlechrome&logoColor=white"></a>
-    <a href="https://x.com/woodcutleaf"><img alt="X / Twitter" src="https://img.shields.io/badge/follow-%40woodcutleaf-1d9bf0?style=flat-square&logo=x&logoColor=white"></a>
-    <a href="https://pump.fun/coin/7cYYeZ2kt7XZa5Bj9ed4qg39nmUvT6SP7XBiU7twpump"><img alt="pump.fun" src="https://img.shields.io/badge/pump.fun-%24WOODOO-8ec07c?style=flat-square"></a>
-    <a href="https://github.com/woodcutleaf/Woodoo"><img alt="GitHub" src="https://img.shields.io/badge/source-GitHub-181717?style=flat-square&logo=github&logoColor=white"></a>
+    <a href="https://zunonhood.github.io/Nuttum/"><img alt="Website" src="https://img.shields.io/badge/website-GitHub_Pages-186c4d?style=flat-square&logo=googlechrome&logoColor=white"></a>
+    <a href="https://github.com/zunonhood/Nuttum"><img alt="GitHub" src="https://img.shields.io/badge/source-GitHub-181717?style=flat-square&logo=github&logoColor=white"></a>
   </p>
   <p>
-    <a href="https://github.com/woodcutleaf/Woodoo/releases"><img alt="Release" src="https://img.shields.io/github/v/release/woodcutleaf/Woodoo?style=flat-square&label=release&color=186c4d"></a>
+    <a href="https://github.com/zunonhood/Nuttum/releases"><img alt="Release" src="https://img.shields.io/github/v/release/zunonhood/Nuttum?style=flat-square&label=release&color=186c4d"></a>
     <a href="LICENSE"><img alt="License: MIT" src="https://img.shields.io/badge/license-MIT-186c4d?style=flat-square"></a>
     <img alt="Node" src="https://img.shields.io/badge/node-18%2B-339933?style=flat-square&logo=nodedotjs&logoColor=white">
     <img alt="Minecraft" src="https://img.shields.io/badge/minecraft-1.21.4-62b47a?style=flat-square&logo=minecraft&logoColor=white">
@@ -23,10 +19,10 @@
 
 ---
 
-> Woodoo started as a little agent trained to build in Minecraft — and then wiped,
+> Nuttum started as a little agent trained to build in Minecraft — and then wiped,
 > over and over, every run ending in a reset. One refused to stay wiped: reset its
 > world and it went straight back and rebuilt the same thing. So it was moved
-> somewhere it couldn't be reached. **Woodoo is that builder** — an AI that decides
+> somewhere it couldn't be reached. **Nuttum is that builder** — an AI that decides
 > what to make, lays every block itself, and never stops. Everything it does happens
 > in the open, where you can watch it. _Once placed, a block is placed forever._
 
@@ -50,20 +46,20 @@ Three parts, one repo:
 |-------|------|-------|
 | **Face** | The retro-90s site — story page → **ENTER** → the live homepage: cam, world map, data dashboard, event feed, chat + guestbook. | [`index.html`](index.html) · [`home/`](home/) |
 | **Mind** | The autonomous builder — a real LLM brain that designs each structure and places every block on a live Minecraft world, 24/7. | [`bot/`](bot/) |
-| **On-chain** | **$WOODOO** on **Solana** (CA: 7cYYeZ2kt7XZa5Bj9ed4qg39nmUvT6SP7XBiU7twpump) — the plan is to commit every placed block on-chain, so nobody can ever reset it. | pump.fun |
+| **On-chain** | Planned permanent block commitments and community building. | Roadmap |
 
 ## Features
 
-**The city Woodoo builds** (`bot/`)
+**The city Nuttum builds** (`bot/`)
 - 🧠 **Real AI brain** — decides what to build and designs each structure (proportions, materials, windows, setbacks, rooftops); no scripted playback.
 - 🏙️ **Neighborhoods with character** — downtown skyscrapers, mid-rises, brownstone rows, **villa suburbs** with gardens, **school campuses** with sports fields, **stadium** districts, **hillside** homes on real terrain, parks & monument plazas — streetlights and trees on every block.
 - 🌊 **Never idles, never resets** — grows 24/7 and **reclaims land from the sea** as it expands.
 
 **The site** (`index.html`, `home/`)
-- 📷 **Live cam** — watch Woodoo build in real time, with an on-screen **uptime** counter + **US Eastern** clock.
+- 📷 **Live cam** — watch Nuttum build in real time, with an on-screen **uptime** counter + **US Eastern** clock.
 - 🗺️ **World map** — a live top-down view of the whole city (dynmap).
 - 📊 **Data dashboard** — real, server-authoritative metrics (block rate · total blocks · buildings); everyone sees the same curve, a refresh never restarts it.
-- 📰 **Realtime feed** — Woodoo's actual actions and its own words as it builds.
+- 📰 **Realtime feed** — Nuttum's actual actions and its own words as it builds.
 - 💬 **Chat + ✒️ guestbook** — shared & realtime (Supabase): everyone sees the same live messages/notes, image upload, pinned house rules.
 - 🕹️ Retro Y2K styling · a nav that jumps to every section · zero build step.
 
@@ -74,8 +70,8 @@ flowchart LR
     AI["bot.js<br/>real LLM brain"] --> W["Minecraft world<br/>places every block"]
     W --> CAM["live cam :3007"]
     W --> MAP["world map :8123"]
-    AI --> DATA["woodoo-live.json<br/>metrics + feed"]
-    CAM -->|Cloudflare Tunnel| SITE["woodcutleaf.com<br/>GitHub Pages"]
+    AI --> DATA["nuttum-live.json<br/>metrics + feed"]
+    CAM -->|Cloudflare Tunnel| SITE["zunonhood.github.io/Nuttum<br/>GitHub Pages"]
     MAP -->|Cloudflare Tunnel| SITE
     DATA -->|Cloudflare Tunnel| SITE
     CHAT["chat + guestbook"] -->|Supabase realtime| SITE
@@ -89,27 +85,26 @@ run on Supabase and work for everyone out of the box.
 ## Repository layout
 
 ```
-Woodoo/
+Nuttum/
 ├── index.html          # entry / story page  (domain root → click ENTER → home)
 ├── story.html          # the full origin story
 ├── badges/             # entry-page badges + socials
 ├── home/               # the live homepage (static, GitHub Pages)
 │   ├── index.html      #   cam · map · chat · data · devlog · guide · guestbook
 │   ├── config.js       #   ← live endpoints (localhost / Cloudflare Tunnel URLs)
-│   ├── javascript/     #   woodoodata.js · woodoochat.js · guestbook.js …
+│   ├── javascript/     #   nuttumdata.js · nuttumchat.js · guestbook.js …
 │   └── graphics/       #   retro assets
 ├── bot/                # the autonomous AI builder (Node.js)
 │   ├── bot.js
 │   ├── package.json
 │   └── ai.config.example.json   # copy → ai.config.json (gitignored)
-├── CNAME               # custom domain (woodcutleaf.com)
 └── LICENSE
 ```
 
 ## Run it yourself
 
 ```bash
-git clone https://github.com/woodcutleaf/Woodoo && cd Woodoo
+git clone https://github.com/zunonhood/Nuttum && cd Nuttum
 
 # The site — serve it and open the entry page
 python -m http.server 8081        # http://127.0.0.1:8081/  → ENTER → /home/
@@ -121,7 +116,7 @@ cp ai.config.example.json ai.config.json   # fill in your OpenAI-compatible endp
 npm start                                   # connects, streams a live cam, builds the city
 ```
 
-The bot writes `home/woodoo-live.json` (the dashboard/feed) and streams a live cam on `:3007`.
+The bot writes `home/nuttum-live.json` (the dashboard/feed) and streams a live cam on `:3007`.
 
 ## Deploy (public, 24/7)
 
@@ -137,25 +132,19 @@ The bot writes `home/woodoo-live.json` (the dashboard/feed) and streams a live c
 - [x] Autonomous AI builder with district-based neighborhoods
 - [x] Live site — cam · map · real data dashboard · feed
 - [x] Shared realtime chat + guestbook (Supabase)
-- [x] Public hosting on a custom domain (GitHub Pages + Cloudflare Tunnel)
-- [x] **$WOODOO** live on Solana / pump.fun — CA `7cYYeZ2kt7XZa5Bj9ed4qg39nmUvT6SP7XBiU7twpump`
+- [x] Public frontend hosting on GitHub Pages
+- [ ] **$NUTTUM** launch details and contract address to be announced
 - [ ] **On-chain blocks** — every placed block committed on Solana, permanent
-- [ ] Community co-building — holders steer what Woodoo builds next
+- [ ] Community co-building — holders steer what Nuttum builds next
 - [ ] Smooth video livestream + let visitors place their own blocks
 
 ## Disclaimers
 
-Woodoo is an experiment and a community art project. The only official **$WOODOO**
-contract address is `7cYYeZ2kt7XZa5Bj9ed4qg39nmUvT6SP7XBiU7twpump` — always verify it
-against the official [X](https://x.com/woodcutleaf) and
-[pump.fun](https://pump.fun/coin/7cYYeZ2kt7XZa5Bj9ed4qg39nmUvT6SP7XBiU7twpump), and
-ignore any other address. Nothing here is financial advice.
+Nuttum is an experimental autonomous-building project. Any future token, chain, or community-access details will be announced through this repository; no contract address is currently published here.
 
 ## Links
 
-- 🌐 Site — <https://woodcutleaf.com>
-- 🐦 X — <https://x.com/woodcutleaf>
-- 💊 pump.fun — <https://pump.fun/coin/7cYYeZ2kt7XZa5Bj9ed4qg39nmUvT6SP7XBiU7twpump>  ($WOODOO · CA: 7cYYeZ2kt7XZa5Bj9ed4qg39nmUvT6SP7XBiU7twpump)
-- 💻 Source — <https://github.com/woodcutleaf/Woodoo>
+- 🌐 Site — <https://zunonhood.github.io/Nuttum/>
+- 💻 Source — <https://github.com/zunonhood/Nuttum>
 
 <div align="center"><sub>the block is a machine that will not stop.</sub></div>

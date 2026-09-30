@@ -1,4 +1,4 @@
-// Woodoo — an autonomous AI building a coherent New York City on a clean green island
+// Nuttum — an autonomous AI building a coherent New York City on a clean green island
 // surrounded by a wide ocean. A real LLM designs each building (as a spec); the code builds
 // it SOLID with /fill, lays streets, shapes parks. It keeps a persistent, server-side data
 // history (so all site visitors see the SAME real chart, and a refresh never restarts it),
@@ -12,7 +12,7 @@ const path = require('path')
 let mineflayerViewer = null
 try { mineflayerViewer = require('prismarine-viewer').mineflayer } catch (e) { console.log('viewer unavailable:', e.message) }
 
-const HOST = '127.0.0.1', PORT = 25565, NAME = 'Woodoo', VIEWER_PORT = 3007
+const HOST = '127.0.0.1', PORT = 25565, NAME = 'Nuttum', VIEWER_PORT = 3007
 const GY = 72                 // flat city ground level
 const PLOT = 13, CELL = 18    // building plot + street pitch
 const MAXRING = 30           // never idles: keeps expanding outward (61x61 plots) reclaiming land as it goes
@@ -36,7 +36,7 @@ const rawfill = (x1, y1, z1, x2, y2, z2, b) => cmd(`/fill ${x1} ${y1} ${z1} ${x2
 const clamp = (v, a, b) => Math.max(a, Math.min(b, Math.round(v || 0)))
 
 // ---- persistent, server-side live data (charts + info stream) ----
-const SITE_LIVE = 'C:\\Users\\Administrator\\Desktop\\W2\\site_mirror\\woodoo-live.json'
+const SITE_LIVE = 'C:\\Users\\Administrator\\Desktop\\W2\\site_mirror\\nuttum-live.json'
 let totalBlocks = 0, placeLog = [], events = [], history = [], startedAt = Date.now()
 try { const st = JSON.parse(fs.readFileSync(STATE, 'utf8')); totalBlocks = st.totalBlocks || 0; history = st.history || []; if (st.startedAt) startedAt = st.startedAt } catch (e) {}
 const easternClock = () => new Date().toLocaleTimeString('en-US', { timeZone: 'America/New_York', hour12: false })
@@ -191,7 +191,7 @@ async function reclaimLand(cx, cz) {
   await sleep(140)
 }
 
-const SYSTEM = `You are Woodoo, an autonomous AI architect building a detailed New York City block by block. For the given plot you design ONE building and return a SPEC (not individual blocks) — a renderer builds it SOLID from your spec, so pick proportions and materials that look great and match the district.
+const SYSTEM = `You are Nuttum, an autonomous AI architect building a detailed New York City block by block. For the given plot you design ONE building and return a SPEC (not individual blocks) — a renderer builds it SOLID from your spec, so pick proportions and materials that look great and match the district.
 Return ONLY a raw JSON object, no markdown/fences/commentary:
 {"say":"<one short in-character sentence>","name":"<short name>","w":<6-12>,"d":<6-12>,"height":<6..HMAX>,"body":"<block id>","trim":"<block id>","windows":"<block id>","setbacks":[[<height>,<inset 1-2>]],"roof":"flat|watertank|spire|crown|dome|pitched","roof_material":"<block id>"}
 Rules: block ids without minecraft: prefix; use real NYC materials (concrete/quartz/smooth_stone/bricks/deepslate/terracotta/copper body; stained_glass windows; iron/quartz/copper trim). height must be <= HMAX. setbacks optional (taller buildings look better with 1-2). No air/bedrock/tnt/water/lava/command blocks. JSON only.`
@@ -361,7 +361,7 @@ async function run() {
   await sleep(3000); cmd(`/tp ${NAME} 0 ${GY + 40} 0`); await sleep(3500)
   try { bot.creative.startFlying() } catch (e) {}
   if (!done['_canvas']) { await prepareCanvas(); done['_canvas'] = 1; saveProgress() }
-  pushEvent('SYS', 'Woodoo online — building New York City'); bot.chat('Woodoo online. building New York City.')
+  pushEvent('SYS', 'Nuttum online — building New York City'); bot.chat('Nuttum online. building New York City.')
 
   const plots = []; for (let r = 0; r <= MAXRING; r++) for (let gj = -r; gj <= r; gj++) for (let gi = -r; gi <= r; gi++) if (Math.max(Math.abs(gi), Math.abs(gj)) === r) plots.push([gi, gj])
   while (true) {
@@ -371,30 +371,30 @@ async function run() {
       const cx = gi * CELL, cz = gj * CELL, ox = cx - 6, oz = cz - 6
       await moveTo(cx + 22, GY + 16, cz + 22); try { await bot.lookAt(new Vec3(cx, GY + 8, cz), true) } catch (e) {}
       try {
-        if (Math.abs(cx) > ISLAND - 9 || Math.abs(cz) > ISLAND - 9) { pushEvent('WOODOO', 'reclaiming land from the sea to keep building'); await reclaimLand(cx, cz) }
+        if (Math.abs(cx) > ISLAND - 9 || Math.abs(cz) > ISLAND - 9) { pushEvent('NUTTUM', 'reclaiming land from the sea to keep building'); await reclaimLand(cx, cz) }
         const t = zone.type
-        if (t === 'park') { pushEvent('WOODOO', 'laying out a green ' + zone.name); await renderPark(cx, cz); done[key] = zone.name }
-        else if (t === 'feature') { pushEvent('WOODOO', 'building a public plaza with a monument and fountains'); await renderFeature(cx, cz); done[key] = 'Plaza & Monument' }
-        else if (t === 'field') { pushEvent('WOODOO', 'marking out a sports field'); await renderField(cx, cz); done[key] = 'Sports Field' }
-        else if (t === 'stadium') { pushEvent('WOODOO', 'raising a sports arena'); await renderStadium(cx, cz); done[key] = 'Sports Arena' }
-        else if (t === 'lot') { await pave(cx, cz); pushEvent('WOODOO', 'paving a parking plaza'); await renderLot(cx, cz); await decorate(cx, cz); done[key] = 'Parking & Plaza' }
+        if (t === 'park') { pushEvent('NUTTUM', 'laying out a green ' + zone.name); await renderPark(cx, cz); done[key] = zone.name }
+        else if (t === 'feature') { pushEvent('NUTTUM', 'building a public plaza with a monument and fountains'); await renderFeature(cx, cz); done[key] = 'Plaza & Monument' }
+        else if (t === 'field') { pushEvent('NUTTUM', 'marking out a sports field'); await renderField(cx, cz); done[key] = 'Sports Field' }
+        else if (t === 'stadium') { pushEvent('NUTTUM', 'raising a sports arena'); await renderStadium(cx, cz); done[key] = 'Sports Arena' }
+        else if (t === 'lot') { await pave(cx, cz); pushEvent('NUTTUM', 'paving a parking plaza'); await renderLot(cx, cz); await decorate(cx, cz); done[key] = 'Parking & Plaza' }
         else if (t === 'hillhouse') {
-          pushEvent('WOODOO', 'terracing a hillside for a home'); const baseY = await raiseHill(cx, cz)
+          pushEvent('NUTTUM', 'terracing a hillside for a home'); const baseY = await raiseHill(cx, cz)
           pushEvent('PLAN', `designing ${zone.name} @ grid(${gi},${gj})`); const spec = await askSpec(gi, gj, zone)
-          pushEvent('WOODOO', cleanSay(spec.say) || `a house on the hill`); bot.chat(cleanSay(spec.say) || `a house on the hill`)
+          pushEvent('NUTTUM', cleanSay(spec.say) || `a house on the hill`); bot.chat(cleanSay(spec.say) || `a house on the hill`)
           await renderTower(ox, oz, zone, spec, baseY); done[key] = String(spec.name || zone.name).slice(0, 40)
         }
         else if (t === 'villa') {
           await renderYard(cx, cz)
           pushEvent('PLAN', `designing ${zone.name} @ grid(${gi},${gj})`); const spec = await askSpec(gi, gj, zone)
-          pushEvent('WOODOO', cleanSay(spec.say) || `a villa with a garden`); bot.chat(cleanSay(spec.say) || `a villa with a garden`)
+          pushEvent('NUTTUM', cleanSay(spec.say) || `a villa with a garden`); bot.chat(cleanSay(spec.say) || `a villa with a garden`)
           await renderTower(ox, oz, zone, spec); done[key] = String(spec.name || zone.name).slice(0, 40)
         }
         else {   // AI-designed building on a paved street block
           await pave(cx, cz)
           pushEvent('PLAN', `designing ${zone.name} @ grid(${gi},${gj})`)
           const spec = await askSpec(gi, gj, zone)
-          pushEvent('WOODOO', cleanSay(spec.say) || `building ${zone.name}`); bot.chat(cleanSay(spec.say) || `building a ${zone.name}`)
+          pushEvent('NUTTUM', cleanSay(spec.say) || `building ${zone.name}`); bot.chat(cleanSay(spec.say) || `building a ${zone.name}`)
           await renderTower(ox, oz, zone, spec)
           await decorate(cx, cz)                 // streetlights + street trees
           done[key] = String(spec.name || zone.name).slice(0, 40)
