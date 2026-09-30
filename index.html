@@ -241,7 +241,8 @@
       font-weight: 800;
       letter-spacing: 0;
     }
-    .status-icon img { display: block; width: 17px; height: 17px; }
+    .status-icon img { display: block; width: 19px; height: 19px; }
+    .status-icon img.builder-icon { animation: cubeLift 2.6s ease-in-out infinite; }
     .status-copy { display: flex; flex-direction: column; min-width: 0; text-align: left; }
     .status-copy small {
       color: #bfe6f8;
@@ -269,21 +270,11 @@
       box-shadow: 0 0 7px rgba(118, 240, 165, 0.9);
       animation: statusPulse 1.8s ease-in-out infinite;
     }
-    .mini-cube {
-      width: 13px;
-      height: 13px;
-      background: linear-gradient(135deg, #ffe0a0, #d97942);
-      border: 1px solid rgba(255, 246, 215, 0.8);
-      box-shadow: 4px 4px 0 rgba(123, 65, 38, 0.42);
-      animation: cubeLift 2.6s ease-in-out infinite;
-    }
-    .solana-bars { display: grid; gap: 2px; transform: skewX(-15deg); }
-    .solana-bars i { display: block; width: 16px; height: 3px; border-radius: 3px; background: linear-gradient(90deg, #7cf7cf, #b98cff); }
     @keyframes statusPulse { 0%, 100% { opacity: .55; } 50% { opacity: 1; } }
     @keyframes cubeLift { 0%, 100% { transform: translateY(1px); } 50% { transform: translateY(-2px); } }
     @media (max-width: 760px) { .systems-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
     @media (max-width: 440px) { .systems-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-    @media (prefers-reduced-motion: reduce) { .status-dot, .mini-cube { animation: none; } }
+    @media (prefers-reduced-motion: reduce) { .status-dot, .builder-icon { animation: none; } }
     .ca-addr { font-family: Consolas, monospace; font-size: 0.8em; font-weight: bold; cursor: pointer; word-break: break-all; }
     </style>
     <p>I'm not going to call this AGI or pretend I found magic. I'm an AI engineer.<br>
@@ -334,27 +325,27 @@ When the city crosses certain block counts, that growth will trigger a buyback a
        <div class="systems-heading"><span>City systems</span></div>
        <div class="systems-grid">
          <div class="system-badge" style="--accent:#ffd166">
-           <span class="status-icon"><span class="mini-cube"></span></span>
+           <span class="status-icon"><img class="builder-icon" src="badges/icon_builder.svg" alt=""></span>
            <span class="status-copy"><small>Builder</small><strong><span class="status-dot"></span>Online</strong></span>
          </div>
          <div class="system-badge" style="--accent:#ffad69">
-           <span class="status-icon">F</span>
+           <span class="status-icon"><img src="badges/icon_fomo.svg" alt=""></span>
            <span class="status-copy"><small>Signal input</small><strong>Fomo</strong></span>
          </div>
          <div class="system-badge" style="--accent:#73e7a1">
-           <span class="status-icon"><img src="badges/icon_pumpfun.svg" alt=""></span>
+           <span class="status-icon"><img src="badges/icon_pumpfun_system.svg" alt=""></span>
            <span class="status-copy"><small>Signal input</small><strong>Pump.fun</strong></span>
          </div>
          <div class="system-badge" style="--accent:#ffe39a">
-           <span class="status-icon">1:1</span>
+           <span class="status-icon"><img src="badges/icon_trade_block.svg" alt=""></span>
            <span class="status-copy"><small>Build rule</small><strong>1 TX = 1 Block</strong></span>
          </div>
          <div class="system-badge" style="--accent:#a98cff">
-           <span class="status-icon"><span class="solana-bars"><i></i><i></i><i></i></span></span>
+           <span class="status-icon"><img src="badges/icon_solana.svg" alt=""></span>
            <span class="status-copy"><small>Network</small><strong>Solana</strong></span>
          </div>
          <div class="system-badge" style="--accent:#ff8f70">
-           <span class="status-icon">B+B</span>
+           <span class="status-icon"><img src="badges/icon_burn.svg" alt=""></span>
            <span class="status-copy"><small>Milestone</small><strong>Buyback + Burn</strong></span>
          </div>
        </div>
