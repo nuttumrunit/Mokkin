@@ -15,14 +15,14 @@
 <style>
     body {
     font-size: 14px;
-    color: #082B45;
+    color: #ffffff;
     background-color: #69c4f2;
     background-image: linear-gradient(rgba(20, 105, 170, 0.12), rgba(20, 105, 170, 0.12)), url("sky-clouds-background.png");
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     background-attachment: fixed;
-    text-shadow: 0 1px 1px rgba(255, 255, 255, 0.85), 0 0 3px rgba(255, 255, 255, 0.55);
+    text-shadow: -1px -1px 0 #123a56, 1px -1px 0 #123a56, -1px 1px 0 #123a56, 1px 1px 0 #123a56, 0 2px 4px rgba(0, 35, 70, 0.75);
     padding-top: 12px;
     margin: 0;
     min-height: 100vh;
@@ -30,8 +30,20 @@
     display: flex;
     flex-direction: column;
     }
-    h1, h5 { color: #052238; }
-    a { color: #704000; font-weight: 600; }
+    h1, h5 { color: #ffffff; }
+    center {
+      width: min(980px, calc(100% - 28px));
+      margin: 0 auto 20px;
+      padding: 20px 26px 24px;
+      box-sizing: border-box;
+      background: linear-gradient(135deg, rgba(8, 72, 122, 0.46), rgba(45, 150, 215, 0.24));
+      border: 1px solid rgba(255, 255, 255, 0.48);
+      border-radius: 24px;
+      box-shadow: 0 18px 55px rgba(0, 47, 88, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+      -webkit-backdrop-filter: blur(12px) saturate(125%);
+      backdrop-filter: blur(12px) saturate(125%);
+    }
+    a { color: #fff1a8; font-weight: 700; }
     html, body { scrollbar-width: none; -ms-overflow-style: none; }
     html::-webkit-scrollbar, body::-webkit-scrollbar { display: none; }
     .enterbtn {
