@@ -169,7 +169,68 @@
     .platform-copy { display: flex; flex-direction: column; }
     .platform-copy strong { font-size: 10px; letter-spacing: 0.1em; }
     .platform-copy small { margin-top: 2px; color: #cbeaff; font-size: 8px; letter-spacing: 0.08em; }
-    .platform-link.is-pending { opacity: 0.64; cursor: default; }
+    .ca-panel {
+      display: grid;
+      grid-template-columns: 34px minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 10px;
+      width: min(590px, calc(100% - 24px));
+      margin: 16px auto 4px;
+      padding: 8px 9px;
+      box-sizing: border-box;
+      color: #f7fcff;
+      background: linear-gradient(135deg, rgba(4, 55, 94, 0.7), rgba(32, 136, 194, 0.38));
+      border: 1px solid rgba(224, 246, 255, 0.56);
+      border-radius: 13px;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.17), 0 8px 20px rgba(5, 48, 81, 0.18);
+      text-align: left;
+      text-shadow: none;
+    }
+    .ca-mark {
+      display: grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      background: rgba(4, 42, 72, 0.52);
+      border: 1px solid rgba(169, 140, 255, 0.58);
+      border-radius: 9px;
+    }
+    .ca-mark img { width: 21px; height: 21px; }
+    .ca-copygroup { display: flex; flex-direction: column; min-width: 0; }
+    .ca-copygroup small {
+      color: #bfe6f8;
+      font-size: 8px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+    .ca-value {
+      margin-top: 3px;
+      overflow: hidden;
+      color: #fff1bd;
+      font-family: Consolas, "Courier New", monospace;
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .ca-copygroup em {
+      margin-top: 2px;
+      color: rgba(218, 241, 252, 0.66);
+      font-size: 8px;
+      font-style: normal;
+      letter-spacing: 0.03em;
+    }
+    .ca-copy-button {
+      padding: 7px 11px;
+      color: rgba(230, 247, 255, 0.56);
+      background: rgba(4, 42, 72, 0.3);
+      border: 1px solid rgba(220, 244, 255, 0.25);
+      border-radius: 8px;
+      font: 700 8px Verdana, sans-serif;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: not-allowed;
+    }
     .city-systems {
       max-width: 860px;
       margin: 20px auto 2px;
@@ -305,21 +366,28 @@ When the city crosses certain block counts, that growth will trigger a buyback a
         <span class="world-copy"><strong>Enter the city</strong><small>Watch the builder work</small></span>
       </a>
     </div>
-<h5>the market is a machine that will not stop.</h5>
-<h5>one trade becomes one block. the city keeps the count.</h5>
+    <div class="ca-panel" aria-label="Nuttum contract address">
+      <span class="ca-mark"><img src="badges/icon_solana.svg" alt=""></span>
+      <span class="ca-copygroup">
+        <small>Contract address</small>
+        <strong class="ca-value">TBA</strong>
+        <em>Published here after the token launch</em>
+      </span>
+      <button class="ca-copy-button" type="button" disabled>Copy</button>
+    </div>
 
 
 
      <nav class="platform-links" aria-label="Nuttum links">
-       <span class="platform-link is-pending" aria-disabled="true" title="Nuttum X link coming soon">
-         <span class="platform-mark"><img src="badges/icon_x.svg" alt=""></span><span class="platform-copy"><strong>X / Twitter</strong><small>Link soon</small></span>
-       </span>
+       <a class="platform-link" href="https://x.com/nuttumrunit" target="_blank" rel="noopener">
+         <span class="platform-mark"><img src="badges/icon_x.svg" alt=""></span><span class="platform-copy"><strong>X / Twitter</strong><small>Follow updates</small></span>
+       </a>
        <a class="platform-link" href="https://github.com/nuttumrunit/Nuttum" target="_blank" rel="noopener">
          <span class="platform-mark"><img src="badges/icon_github.svg" alt=""></span><span class="platform-copy"><strong>GitHub</strong><small>View source</small></span>
        </a>
-       <span class="platform-link is-pending" aria-disabled="true" title="Nuttum Pump.fun link coming soon">
-         <span class="platform-mark"><img src="badges/icon_pumpfun.svg" alt=""></span><span class="platform-copy"><strong>Pump.fun</strong><small>Link soon</small></span>
-       </span>
+       <a class="platform-link" href="https://pump.fun/" target="_blank" rel="noopener">
+         <span class="platform-mark"><img src="badges/icon_pumpfun.svg" alt=""></span><span class="platform-copy"><strong>Pump.fun</strong><small>Open launchpad</small></span>
+       </a>
      </nav>
      <section class="city-systems" aria-label="Nuttum city systems">
        <div class="systems-heading"><span>City systems</span></div>
