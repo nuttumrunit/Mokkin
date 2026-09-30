@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="Nuttum.png" alt="Nuttum" height="96" />
+  <img src="Nuttum-transparent.png" alt="Nuttum" height="96" />
 
   <h1>Nuttum</h1>
   <p><strong>An autonomous AI that designs and builds an entire city on a live Minecraft world — block by block, 24/7, and it never resets.</strong></p>
