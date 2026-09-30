@@ -1,54 +1,55 @@
 {
-    "name":  "@nuttumrunit/nuttum-bot",
-    "version":  "1.0.0",
-    "description":  "Market-paced AI city builder: one verified trade becomes one block.",
-    "main":  "bot.js",
-    "type":  "commonjs",
-    "bin":  {
-                "nuttum-bot":  "bot.js"
-            },
-    "files":  [
-                  "bot.js",
-                  "signal-gateway.js",
-                  "cam-capture.js",
-                  "ai.config.example.json",
-                  ".env.example",
-                  "README.md"
-              ],
-    "scripts":  {
-                    "start":  "node bot.js",
-                    "gateway":  "node signal-gateway.js",
-                    "capture":  "node cam-capture.js",
-                    "capture:install":  "npx playwright install chromium"
-                },
-    "repository":  {
-                       "type":  "git",
-                       "url":  "git+https://github.com/nuttumrunit/Nuttum.git",
-                       "directory":  "bot"
-                   },
-    "keywords":  [
-                     "minecraft",
-                     "mineflayer",
-                     "ai-agent",
-                     "autonomous",
-                     "city-builder",
-                     "voxel",
-                     "nuttum"
-                 ],
-    "author":  "nuttumrunit",
-    "license":  "MIT",
-    "publishConfig":  {
-                          "registry":  "https://npm.pkg.github.com"
-                      },
-    "dependencies":  {
-                         "mineflayer":  "^4.20.0",
-                         "mineflayer-pathfinder":  "^2.4.5",
-                         "prismarine-viewer":  "^1.28.0",
-                         "prismarine-schematic":  "^1.2.3",
-                         "vec3":  "^0.1.10",
-                         "minecraft-data":  "^3.60.0",
-                         "openai":  "^4.55.0",
-                         "dotenv":  "^16.4.7",
-                         "playwright":  "^1.51.0"
-                     }
+    "name": "@nuttumrunit/nuttum-bot",
+    "version": "1.0.0",
+    "description": "Market-paced AI city builder: one verified trade becomes one block.",
+    "main": "bot.js",
+    "type": "commonjs",
+    "bin": {
+        "nuttum-bot": "bot.js"
+    },
+    "files": [
+        "bot.js",
+        "signal-gateway.js",
+        "cam-capture.js",
+        "ai.config.example.json",
+        ".env.example",
+        "README.md"
+    ],
+    "scripts": {
+        "start": "node bot.js",
+        "gateway": "node signal-gateway.js",
+        "capture": "node cam-capture.js",
+        "capture:install": "npx playwright install chromium"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/nuttumrunit/Nuttum.git",
+        "directory": "bot"
+    },
+    "keywords": [
+        "minecraft",
+        "mineflayer",
+        "ai-agent",
+        "autonomous",
+        "city-builder",
+        "voxel",
+        "nuttum"
+    ],
+    "author": "nuttumrunit",
+    "license": "MIT",
+    "publishConfig": {
+        "registry": "https://npm.pkg.github.com"
+    },
+    "dependencies": {
+        "canvas": "^3.2.3",
+        "dotenv": "^16.4.7",
+        "minecraft-data": "^3.60.0",
+        "mineflayer": "^4.20.0",
+        "mineflayer-pathfinder": "^2.4.5",
+        "openai": "^4.55.0",
+        "playwright": "^1.51.0",
+        "prismarine-schematic": "^1.2.3",
+        "prismarine-viewer": "^1.28.0",
+        "vec3": "^0.1.10"
+    }
 }

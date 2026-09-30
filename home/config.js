@@ -1,11 +1,12 @@
-// Public runtime settings. Keep unavailable services empty so the UI reports them honestly.
-// For 24/7 service, replace the empty values with stable HTTPS hostnames from a named tunnel.
+// Public runtime settings. These temporary HTTPS endpoints expose the real local builder.
+// Move them to a named Cloudflare Tunnel before treating the runtime as 24/7 production.
 window.NUTTUM = {
-  cam: '',
-  camMode: 'viewer', // viewer = interactive iframe, image = refreshed real cam.jpg
-  health: '',
-  map: '',
-  data: '',
+  cam: 'https://resumes-bosnia-nsw-glen.trycloudflare.com/cam',
+  camMode: 'image',
+  viewer: 'https://binary-oops-district-rogers.trycloudflare.com/',
+  health: 'https://resumes-bosnia-nsw-glen.trycloudflare.com/health',
+  map: 'https://resumes-bosnia-nsw-glen.trycloudflare.com/map/',
+  data: 'https://resumes-bosnia-nsw-glen.trycloudflare.com/',
   snapshot: 'nuttum-live.json',
   contractAddress: '',
   network: 'solana-mainnet',

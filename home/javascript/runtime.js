@@ -35,7 +35,7 @@
   setFrame('map', cfg.map);
   var popout = document.getElementById('cameraPopout');
   if (popout) {
-    if (cfg.cam) popout.href = cfg.cam;
+    if (cfg.viewer || cfg.cam) popout.href = cfg.viewer || cfg.cam;
     else { popout.removeAttribute('href'); popout.setAttribute('aria-disabled', 'true'); popout.textContent = 'Host Offline'; }
   }
   var ca = String(cfg.contractAddress || '').trim();

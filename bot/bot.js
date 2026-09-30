@@ -27,10 +27,12 @@ const OCEAN = 150             // cleared + water half-extent (everything within 
 const SKY = 150               // clear terrain up to this Y (removes mountains + floating blocks)
 
 const AI_CONFIG = path.resolve(process.env.NUTTUM_AI_CONFIG || path.join(__dirname, 'ai.config.json'))
-if (!fs.existsSync(AI_CONFIG)) throw new Error('Missing AI config. Copy ai.config.example.json to ai.config.json and fill it in.')
-const cfg = JSON.parse(fs.readFileSync(AI_CONFIG, 'utf8'))
-const ai = new OpenAI({ apiKey: cfg.apiKey, baseURL: cfg.baseURL })
-console.log('AI brain:', cfg.model, '@', cfg.baseURL)
+let cfg = null, ai = null
+if (fs.existsSync(AI_CONFIG)) {
+  cfg = JSON.parse(fs.readFileSync(AI_CONFIG, 'utf8'))
+  ai = new OpenAI({ apiKey: cfg.apiKey, baseURL: cfg.baseURL })
+  console.log('AI brain:', cfg.model, '@', cfg.baseURL)
+} else console.warn('AI planner not configured; viewer and market queue can run, but new building specs will wait for ai.config.json.')
 
 const PROGRESS = path.join(__dirname, 'nyc-progress.json')
 const STATE = path.join(__dirname, 'state.json')
@@ -96,10 +98,24 @@ setInterval(sampleHistory, 5000)
 // public endpoint (CORS): serves the live JSON + the latest live-view frame (cam.jpg),
 // so the hosted site can show a light, always-loading cam + data from anywhere
 const CAM_JPG = path.resolve(process.env.NUTTUM_CAM_FILE || path.join(__dirname, '..', 'home', 'cam.jpg'))
+const MAP_WEB = path.resolve(process.env.NUTTUM_MAP_WEB || path.join(__dirname, '..', 'runtime', 'server', 'plugins', 'squaremap', 'web'))
+const MAP_MIME = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8', '.json': 'application/json', '.png': 'image/png', '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.svg': 'image/svg+xml', '.ico': 'image/x-icon', '.webp': 'image/webp' }
 try {
   require('http').createServer((req, res) => {
     res.setHeader('Access-Control-Allow-Origin', '*')
     res.setHeader('Cache-Control', 'no-store')
+    const requestPath = decodeURIComponent(String(req.url || '/').split('?')[0])
+    if (requestPath === '/map') { res.statusCode = 302; res.setHeader('Location', '/map/'); return res.end() }
+    if (requestPath.startsWith('/map/')) {
+      const relative = requestPath.slice(5) || 'index.html'
+      const target = path.resolve(MAP_WEB, relative)
+      if (target !== MAP_WEB && !target.startsWith(MAP_WEB + path.sep)) { res.statusCode = 403; return res.end('forbidden') }
+      try {
+        const stat = fs.statSync(target); const file = stat.isDirectory() ? path.join(target, 'index.html') : target
+        res.setHeader('Content-Type', MAP_MIME[path.extname(file).toLowerCase()] || 'application/octet-stream')
+        return res.end(fs.readFileSync(file))
+      } catch (e) { res.statusCode = 404; return res.end('not found') }
+    }
     if (req.url === '/health') { res.setHeader('Content-Type', 'application/json'); return res.end(JSON.stringify({ ok: true, bot: bot.entity ? 'connected' : 'starting', signalMode: SIGNAL_MODE, signalConsumed })) }
     if (req.url.indexOf('cam') >= 0) {
       res.setHeader('Content-Type', 'image/jpeg')
@@ -243,6 +259,7 @@ Return ONLY a raw JSON object, no markdown/fences/commentary:
 Rules: block ids without minecraft: prefix; use real NYC materials (concrete/quartz/smooth_stone/bricks/deepslate/terracotta/copper body; stained_glass windows; iron/quartz/copper trim). height must be <= HMAX. setbacks optional (taller buildings look better with 1-2). No air/bedrock/tnt/water/lava/command blocks. JSON only.`
 
 async function askSpec(gi, gj, zone) {
+  if (!ai || !cfg) throw new Error('AI planner is not configured')
   const chat = recentChat.length ? recentChat.join(' | ') : '(none)'; recentChat = []
   const nbrs = []; for (const [dx, dz] of [[1, 0], [-1, 0], [0, 1], [0, -1]]) { const k = `${gi + dx},${gj + dz}`; if (done[k] && done[k] !== '~water~') nbrs.push(done[k]) }
   const user = `${SYSTEM.replace('HMAX', zone.hmax)}

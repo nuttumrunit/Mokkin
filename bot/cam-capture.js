@@ -10,6 +10,7 @@ const URL = process.env.NUTTUM_VIEWER_URL || 'http://localhost:' + (process.env.
 ;(async () => {
   const browser = await chromium.launch({
     headless: true,
+    channel: process.env.NUTTUM_BROWSER_CHANNEL || 'msedge',
     args: ['--use-gl=angle', '--use-angle=swiftshader', '--ignore-gpu-blocklist', '--enable-unsafe-webgpu', '--enable-webgl']
   })
   const page = await browser.newPage({ viewport: { width: 900, height: 560 } })
