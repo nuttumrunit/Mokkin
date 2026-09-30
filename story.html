@@ -8,11 +8,33 @@
     <style>
         body {
             font-size: 15px;
-            color: #f5f2e6;
-            background-color: #186c4d;
+            color: #ffffff;
+            background-color: #69c4f2;
+            background-image: linear-gradient(rgba(20, 105, 170, 0.12), rgba(20, 105, 170, 0.12)), url("sky-clouds-background.png");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            min-height: 100vh;
+            margin: 0;
+            padding: 18px 14px 40px;
+            box-sizing: border-box;
+            text-shadow: -1px -1px 0 #123a56, 1px -1px 0 #123a56, -1px 1px 0 #123a56, 1px 1px 0 #123a56, 0 2px 4px rgba(0, 35, 70, 0.75);
         }
-        h1 { color: #f5f2e6; }
-        a { color: #ffd27f; }
+        h1 { color: #ffffff; }
+        a { color: #fff1a8; font-weight: 700; }
+        center {
+            width: min(820px, calc(100% - 12px));
+            margin: 0 auto;
+            padding: 22px 28px 28px;
+            box-sizing: border-box;
+            background: linear-gradient(135deg, rgba(8, 72, 122, 0.48), rgba(45, 150, 215, 0.26));
+            border: 1px solid rgba(255, 255, 255, 0.48);
+            border-radius: 24px;
+            box-shadow: 0 18px 55px rgba(0, 47, 88, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+            -webkit-backdrop-filter: blur(12px) saturate(125%);
+            backdrop-filter: blur(12px) saturate(125%);
+        }
         .article {
             max-width: 680px;
             margin: 0 auto;
@@ -20,7 +42,7 @@
             line-height: 1.85;
         }
         .article p { margin: 0 0 1.15em 0; }
-        .sign { color: #cfe6d8; font-size: 13px; margin-top: 2em; }
+        .sign { color: #e8f6ff; font-size: 13px; margin-top: 2em; }
         .nav { font-size: 13px; margin-bottom: 1.5em; }
     </style>
 </head>
