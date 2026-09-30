@@ -1,8 +1,15 @@
-// Nuttum live endpoints (public HTTPS via Cloudflare Tunnel from the host machine).
-// NOTE: these are quick-tunnel URLs — temporary, they change on restart. For permanent 24/7,
-// switch to stable named tunnel hostnames and update the endpoints below.
+// Public runtime settings. Keep unavailable services empty so the UI reports them honestly.
+// For 24/7 service, replace the empty values with stable HTTPS hostnames from a named tunnel.
 window.NUTTUM = {
-    cam: 'https://principle-matches-constitutional-loading.trycloudflare.com',
-    map: 'https://assessment-dry-mothers-studios.trycloudflare.com/index.html?v=5&worldname=world&mapname=surface&zoom=5&x=0&y=88&z=0',
-    data: 'https://types-peas-marc-outline.trycloudflare.com'
+  cam: '',
+  map: '',
+  data: '',
+  snapshot: 'nuttum-live.json',
+  contractAddress: '',
+  network: 'solana-mainnet',
+  status: {
+    fomo: 'awaiting-feed',
+    pumpfun: 'awaiting-feed',
+    buyback: 'awaiting-launch'
+  }
 };

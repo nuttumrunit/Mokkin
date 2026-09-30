@@ -1,9 +1,11 @@
 // Renders the local live view and saves a fresh frame every couple seconds.
 // Runs on the host (localhost is fast), so the frame is always the real world — visitors just
 // see an image that refreshes, which is light enough for anyone, anywhere.
+require('dotenv').config({ path: require('path').join(__dirname, '.env') })
 const { chromium } = require('playwright')
-const OUT = 'C:\\Users\\Administrator\\Desktop\\W2\\site_mirror\\cam.jpg'
-const URL = 'http://localhost:3007'
+const path = require('path')
+const OUT = path.resolve(process.env.NUTTUM_CAM_FILE || path.join(__dirname, '..', 'home', 'cam.jpg'))
+const URL = process.env.NUTTUM_VIEWER_URL || 'http://localhost:' + (process.env.NUTTUM_VIEWER_PORT || 3007)
 
 ;(async () => {
   const browser = await chromium.launch({

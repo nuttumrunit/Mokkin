@@ -16,8 +16,8 @@
   <title>Nuttum City Console</title>
   <link rel="canonical" href="https://nuttumrunit.github.io/Nuttum/home/">
   <link rel="icon" type="image/png" href="../Nuttum-transparent.png">
-  <link rel="stylesheet" href="dashboard.css?v=1">
-  <script src="config.js?v=3"></script>
+  <link rel="stylesheet" href="dashboard.css?v=2">
+  <script src="config.js?v=4"></script>
 </head>
 <body>
   <div class="page-shell">
@@ -47,8 +47,8 @@
           </div>
           <div class="contract-bar" aria-label="Nuttum contract address">
             <span class="contract-icon"><img src="../badges/icon_solana.svg" alt=""></span>
-            <span class="contract-copy"><small>Contract Address</small><strong>TBA</strong><em>Published here after launch</em></span>
-            <button type="button" disabled>Copy</button>
+            <span class="contract-copy"><small>Contract Address</small><strong id="contractValue">TBA</strong><em id="contractNote">Published here after launch</em></span>
+            <button id="contractCopy" type="button" disabled>Copy</button>
           </div>
         </div>
         <div class="hero-visual" aria-label="Nuttum builder">
@@ -60,10 +60,10 @@
       </section>
 
       <section class="system-ribbon" aria-label="Nuttum system rules">
-        <article class="ribbon-card"><span class="ribbon-icon"><img src="../badges/icon_fomo.svg" alt=""></span><span><small>Signal Source</small><strong>Fomo</strong></span></article>
-        <article class="ribbon-card"><span class="ribbon-icon"><img src="../badges/icon_pumpfun_system.svg" alt=""></span><span><small>Signal Source</small><strong>Pump.fun</strong></span></article>
-        <article class="ribbon-card"><span class="ribbon-icon"><img src="../badges/icon_trade_block.svg" alt=""></span><span><small>Build Rule</small><strong>1 TX = 1 Block</strong></span></article>
-        <article class="ribbon-card"><span class="ribbon-icon"><img src="../badges/icon_burn.svg" alt=""></span><span><small>Milestone</small><strong>Buyback + Burn</strong></span></article>
+        <article class="ribbon-card"><span class="ribbon-icon"><img src="../badges/icon_fomo.svg" alt=""></span><span><small>Signal Source</small><strong>Fomo</strong><em id="fomoCount">Awaiting Feed</em></span></article>
+        <article class="ribbon-card"><span class="ribbon-icon"><img src="../badges/icon_pumpfun_system.svg" alt=""></span><span><small>Signal Source</small><strong>Pump.fun</strong><em id="pumpfunCount">Awaiting Feed</em></span></article>
+        <article class="ribbon-card"><span class="ribbon-icon"><img src="../badges/icon_trade_block.svg" alt=""></span><span><small>Build Rule</small><strong>1 TX = 1 Block</strong><em id="blockQueue">Runtime Offline</em></span></article>
+        <article class="ribbon-card"><span class="ribbon-icon"><img src="../badges/icon_burn.svg" alt=""></span><span><small>Milestone</small><strong>Buyback + Burn</strong><em id="milestoneState">Threshold TBA</em></span></article>
       </section>
 
       <section id="live" class="section-block">
@@ -73,7 +73,7 @@
         </div>
         <div class="live-grid">
           <article class="console-panel camera-panel">
-            <div class="panel-heading"><span><i class="panel-light"></i> Builder Camera</span><a id="cameraPopout" href="#" target="_blank" rel="noopener">Open View</a></div>
+            <div class="panel-heading"><span><i class="panel-light" id="camLight"></i> Builder Camera</span><a id="cameraPopout" href="#" target="_blank" rel="noopener">Open View</a></div>
             <div class="frame-shell">
               <iframe id="camFrame" class="streamframe" src="about:blank" title="Nuttum live builder camera"></iframe>
               <div class="frame-placeholder"><img src="../Nuttum-transparent.png" alt=""><span>Connecting To Builder</span></div>
@@ -84,7 +84,7 @@
             </div>
           </article>
           <article class="console-panel map-panel" id="map">
-            <div class="panel-heading"><span><i class="panel-light map-light"></i> World Map</span><span class="panel-state">Surface View</span></div>
+            <div class="panel-heading"><span><i class="panel-light map-light" id="mapLight"></i> World Map</span><a class="panel-state" id="mapRetry" href="#" target="_blank" rel="noopener" hidden>Open Map</a></div>
             <div class="frame-shell">
               <iframe id="mapFrame" class="streamframe" src="about:blank" title="Nuttum world map"></iframe>
               <div class="frame-placeholder map-placeholder"><img src="../badges/icon_builder.svg" alt=""><span>Loading World Map</span></div>
@@ -100,20 +100,20 @@
         </div>
         <div class="integration-note">
           <span class="note-icon"><img src="../badges/icon_trade_block.svg" alt=""></span>
-          <span><strong>Market ingestion is not live yet.</strong> The final system will verify and deduplicate eligible trades before adding blocks to the build queue.</span>
+          <span><strong>Market gateway is ready.</strong> Verified, deduplicated events are accepted by the runtime. Public Fomo and pump.fun feeds remain disabled until their exact provider endpoints are configured.</span>
         </div>
         <div class="telemetry-layout">
           <div class="metric-stack">
             <article class="metric console-panel" data-metric="rate" data-unit="blk/min" data-color="#67efad">
-              <div class="metric-head"><span>Builder Output Rate</span><small>Prototype Runtime</small></div>
+              <div class="metric-head"><span>Builder Output Rate</span><small class="runtime-mode">Verified Snapshot</small></div>
               <canvas class="metric-chart" width="640" height="190"></canvas><div class="metric-legend"></div>
             </article>
             <article class="metric console-panel" data-metric="total" data-unit="blocks" data-color="#ffd166">
-              <div class="metric-head"><span>Total Blocks Placed</span><small>Prototype Runtime</small></div>
+              <div class="metric-head"><span>Total Blocks Placed</span><small class="runtime-mode">Verified Snapshot</small></div>
               <canvas class="metric-chart" width="640" height="190"></canvas><div class="metric-legend"></div>
             </article>
             <article class="metric console-panel" data-metric="buildings" data-unit="builds" data-color="#ff9b6a">
-              <div class="metric-head"><span>Structures Completed</span><small>Prototype Runtime</small></div>
+              <div class="metric-head"><span>Structures Completed</span><small class="runtime-mode">Verified Snapshot</small></div>
               <canvas class="metric-chart" width="640" height="190"></canvas><div class="metric-legend"></div>
             </article>
           </div>
@@ -139,7 +139,7 @@
           <div><span class="section-kicker">Implementation Status</span><h3>Building The Verifiable Pipeline</h3><p>Exact thresholds, eligible transaction rules and the public event trail will be published before activation.</p></div>
           <div class="status-list">
             <span><i class="done"></i> City builder prototype</span><span><i class="done"></i> Public interface</span>
-            <span><i></i> Fomo transaction adapter</span><span><i></i> Pump.fun transaction adapter</span><span><i></i> Buyback and burn executor</span>
+            <span><i class="done"></i> Signed event gateway</span><span><i></i> Fomo provider feed</span><span><i></i> Pump.fun provider feed</span><span><i></i> Funded burn executor</span>
           </div>
         </div>
       </section>
@@ -151,7 +151,7 @@
         </div>
         <div class="community-grid">
           <article class="console-panel chat-panel" id="chat">
-            <div class="panel-heading"><span><i class="panel-light"></i> Live Chat</span><span class="panel-state">Shared Room</span></div>
+            <div class="panel-heading"><span><i class="panel-light"></i> Live Chat</span><span class="panel-state" id="chatState">Connecting</span></div>
             <div class="chat-pinned" id="chatPinned"><strong>Nuttum</strong><span>Keep it useful, civil and focused on the build.</span></div>
             <div id="chatlog"></div>
             <div class="chatrow">
@@ -168,7 +168,7 @@
             </div>
           </article>
           <article class="console-panel guestbook-panel" id="board">
-            <div class="panel-heading"><span><i class="panel-light gold-light"></i> City Guestbook</span><span class="panel-state"><b id="gbCount">0</b> Notes</span></div>
+            <div class="panel-heading"><span><i class="panel-light gold-light"></i> City Guestbook</span><span class="panel-state"><b id="gbCount">0</b> Notes · <b id="guestbookState">Connecting</b></span></div>
             <p class="guestbook-intro">Leave a feature request, a build idea or honest feedback for the project.</p>
             <div class="guestbook-form">
               <input id="gbName" placeholder="Your name" maxlength="30">
@@ -189,9 +189,10 @@
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="javascript/nuttumchat.js?v=3"></script>
-  <script src="javascript/nuttumdata.js?v=5"></script>
-  <script src="javascript/guestbook.js?v=3"></script>
+  <script src="javascript/runtime.js?v=1"></script>
+  <script src="javascript/nuttumchat.js?v=4"></script>
+  <script src="javascript/nuttumdata.js?v=6"></script>
+  <script src="javascript/guestbook.js?v=4"></script>
   <script>
     (function () {
       document.querySelectorAll('a[href^="#"]').forEach(function (link) {
@@ -200,11 +201,7 @@
           if (target) { event.preventDefault(); target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
         });
       });
-      var settings = window.NUTTUM || {};
-      var cam = document.getElementById('camFrame'), map = document.getElementById('mapFrame'), popout = document.getElementById('cameraPopout');
-      if (cam && settings.cam) cam.src = settings.cam;
-      if (map && settings.map) map.src = settings.map;
-      if (popout && settings.cam) popout.href = settings.cam;
+
     })();
   </script>
 </body>

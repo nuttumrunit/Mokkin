@@ -147,3 +147,9 @@ footer nav{display:flex;gap:12px}footer nav a{color:#fff0ba;font-size:10px;font-
 }
 @media(max-width:430px){.system-ribbon{grid-template-columns:1fr}.hero h1{font-size:36px}.hero-actions a{width:100%}.livecam-hud{flex-direction:column}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation:none!important}}
+
+/* Runtime truth states */
+.panel-light.offline{background:#91a9b5;box-shadow:none}.frame-shell.service-offline .streamframe{display:none}.frame-shell.service-offline .frame-placeholder{z-index:3;background:linear-gradient(145deg,rgba(5,37,61,.96),rgba(10,75,108,.94))}.frame-shell.service-offline .frame-placeholder img{filter:grayscale(1);opacity:.25}.frame-shell.frame-loaded .frame-placeholder{display:none}.panel-heading a[aria-disabled="true"]{color:#91a9b5;cursor:default;pointer-events:none}.panel-heading .panel-state{text-decoration:none}.contract-bar button:not(:disabled){cursor:pointer;color:#062f4b;background:#ffe39b}.service-note{font:8px Consolas,monospace;color:#a9d9ef}.panel-state.is-error{color:#ffae97}.panel-state.is-ready{color:#8ef1bd}
+.frame-shell.service-offline .livecam-hud{display:none}
+
+.ribbon-card em{display:block;margin-top:2px;color:#a9d9ef;font:7px Consolas,monospace;font-style:normal;letter-spacing:.06em;text-transform:uppercase}

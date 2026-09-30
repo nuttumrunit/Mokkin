@@ -12,6 +12,11 @@
     var sb = (window.supabase && /^https?:\/\//.test(SUPABASE_URL))
         ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
 
+    function setChatState(text, bad) {
+        var el = document.getElementById('chatState'); if (!el) return;
+        el.textContent = text; el.classList.toggle('is-error', Boolean(bad)); el.classList.toggle('is-ready', !bad);
+    }
+
     var PALETTE = ["#B60205", "#D93F0B", "#FBCA04", "#0E8A16", "#006B75", "#1D76DB",
         "#0052CC", "#5319E7", "#bd6768", "#ce846b", "#dec768", "#6da871",
         "#66999e", "#749fcf", "#668dc8", "#8e72d5"];
@@ -66,19 +71,24 @@
     }
 
     function loadHistory() {
-        if (!sb) { line('system', 'chat is offline (Supabase not configured yet)'); return; }
+        if (!sb) { setChatState('Unavailable', true); line('system', 'chat service could not load'); return; }
         sb.from(TABLE).select('*').order('created_at', { ascending: true }).limit(150)
-            .then(function (res) { (res.data || []).forEach(renderMsg); scrollBottom(); })
-            .catch(function (e) { console.error('chat load', e); });
+            .then(function (res) {
+                if (res.error) { setChatState('Unavailable', true); line('system', 'chat is temporarily unavailable'); return; }
+                (res.data || []).forEach(renderMsg); scrollBottom(); setChatState('Shared Room', false);
+            })
+            .catch(function () { setChatState('Unavailable', true); line('system', 'chat is temporarily unavailable'); });
     }
     function subscribe() {
         if (!sb) return;
         sb.channel('nuttum-chat')
             .on('postgres_changes', { event: 'INSERT', schema: 'public', table: TABLE },
                 function (payload) { renderMsg(payload.new); })
-            .subscribe();
+            .subscribe(function (status) {
+                if (status === 'SUBSCRIBED') setChatState('Shared Room', false);
+                if (status === 'CHANNEL_ERROR' || status === 'TIMED_OUT') setChatState('Read Only', true);
+            });
     }
-
     function currentName() { return (document.getElementById('chatname').value || 'guest').slice(0, 40); }
 
     window.nuttumSend = function () {
@@ -89,11 +99,12 @@
         document.getElementById('chatmsg').value = '';
         if (!sb) { line(n, m); return; }
         sb.from(TABLE).insert({ name: n, color: myColor || nameColor(n), body: m })
-            .then(function (r) { if (r.error) console.error('send', r.error); });
+            .then(function (r) { if (r.error) { setChatState('Send Failed', true); line('system', 'message was not sent'); } });
     };
 
     function handleFile(f) {
         if (!f || !/^image\//.test(f.type)) return;
+        if (f.size > 5 * 1024 * 1024) { line('system', 'image must be smaller than 5 MB'); return; }
         var n = currentName();
         if (!sb) { var rd = new FileReader(); rd.onload = function () { imgLine(n, rd.result); }; rd.readAsDataURL(f); return; }
         var ext = (f.name.split('.').pop() || 'png').toLowerCase().replace(/[^a-z0-9]/g, '') || 'png';

@@ -10,6 +10,7 @@
         ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
 
     var count = 0;
+    function setState(text, bad) { var el = document.getElementById('guestbookState'); if (!el) return; el.textContent = text; el.classList.toggle('is-error', Boolean(bad)); el.classList.toggle('is-ready', !bad); }
     function setCount(n) { var c = document.getElementById('gbCount'); if (c) c.textContent = String(n); }
     function fmtDate(iso) {
         return new Date(iso || Date.now()).toLocaleString('en-US', {
@@ -34,16 +35,16 @@
 
     function load() {
         var list = document.getElementById('gbList'); if (!list) return;
-        if (!sb) { return; }
+        if (!sb) { setState('Unavailable', true); return; }
         sb.from(TABLE).select('*').order('created_at', { ascending: false }).limit(300)
             .then(function (res) {
-                if (res.error) { console.error('guestbook load', res.error); return; }
+                if (res.error) { setState('Unavailable', true); console.error('guestbook load', res.error); return; }
                 var rows = res.data || [];
                 list.innerHTML = '';
                 rows.forEach(function (r) { list.appendChild(entryEl(r)); });   // newest first
-                count = rows.length; setCount(count);
+                count = rows.length; setCount(count); setState('Online', false);
             })
-            .catch(function (e) { console.error('guestbook', e); });
+            .catch(function (e) { setState('Unavailable', true); console.error('guestbook', e); });
     }
     function subscribe() {
         if (!sb) return;
@@ -53,7 +54,7 @@
                 list.insertBefore(entryEl(p.new), list.firstChild);
                 count += 1; setCount(count);
             })
-            .subscribe();
+            .subscribe(function (status) { if (status === 'SUBSCRIBED') setState('Online', false); if (status === 'CHANNEL_ERROR' || status === 'TIMED_OUT') setState('Read Only', true); });
     }
 
     window.nuttumSign = function () {
@@ -61,9 +62,9 @@
         var msg = document.getElementById('gbMsg').value.trim();
         if (!msg) return;
         document.getElementById('gbMsg').value = '';
-        if (!sb) { return; }
+        if (!sb) { setState('Unavailable', true); return; }
         sb.from(TABLE).insert({ name: name, body: msg })
-            .then(function (r) { if (r.error) console.error('sign', r.error); });
+            .then(function (r) { if (r.error) { setState('Sign Failed', true); console.error('sign', r.error); } });
     };
 
     function start() { load(); subscribe(); }

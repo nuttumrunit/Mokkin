@@ -17,3 +17,9 @@ Thumbs.db
 # npm auth
 .npmrc
 bot/.npmrc
+
+bot/.env
+bot/signals.json
+bot/signal-consumption.json
+bot/milestones.json
+home/cam.jpg

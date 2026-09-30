@@ -1,9 +1,10 @@
 // Nuttum AI — live metrics dashboard + realtime feed.
-// Data is REAL and SERVER-AUTHORITATIVE: the bot writes nuttum-live.json with a persistent
-// history array (one sample every 5s, kept on the server). We just render that history, so
-// every visitor sees the SAME real curve and a page refresh never restarts it.
+// Renders server-authoritative runtime data. If the runtime is unavailable, the last
+// published file is displayed and labelled as a historical snapshot.
 (function () {
-    var LIVE = (window.NUTTUM && window.NUTTUM.data) || 'nuttum-live.json';
+    var SETTINGS = window.NUTTUM || {};
+    var REMOTE = String(SETTINGS.data || '').trim();
+    var SNAPSHOT = SETTINGS.snapshot || 'nuttum-live.json';
     var GREEN = '#67efad', RED = '#ff8f70';
 
     function hm(ms) { return new Date(ms).toLocaleTimeString('en-US', { timeZone: 'America/New_York', hour12: false, hour: '2-digit', minute: '2-digit' }); }
@@ -20,7 +21,7 @@
     function pct(s, p) { return s[Math.min(s.length - 1, Math.floor(p * s.length))]; }
     function esc(s) { return String(s).replace(/[&<>]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]; }); }
 
-    var live = { history: [], events: [], stale: true };
+    var live = { history: [], events: [], stale: true, source: 'loading' };
 
     var metrics = [];
     document.querySelectorAll('.metric').forEach(function (m) {
@@ -92,7 +93,7 @@
         function c(l, v, strong) { return l + ':' + (strong ? '<b>' : '') + String(fmt(v)).padStart(7) + (strong ? '</b>' : ''); }
         m.legend.innerHTML = '<div class="lg-row"><span class="sw" style="background:' + m.color + '"></span>' +
             'Nuttum ' + c(' Min', s[0]) + '  ' + c('Avg', avg) + '  ' + c('90th', pct(s, 0.9)) + '  ' +
-            c('Max', s[s.length - 1]) + '  ' + c('Cur', cur, true) + '  ' + m.unit + (live.stale ? '  [offline]' : '') + '</div>';
+            c('Max', s[s.length - 1]) + '  ' + c('Cur', cur, true) + '  ' + m.unit + (live.source === 'snapshot' ? '  [snapshot]' : live.stale ? '  [stale]' : '  [live]') + '</div>';
     }
 
     function renderCharts() { metrics.forEach(function (m) { draw(m); updateLegend(m); }); }
@@ -116,12 +117,30 @@
         feed.scrollTop = feed.scrollHeight;
     }
 
+    function request(url) {
+        return fetch(url + (url.indexOf('?') >= 0 ? '&' : '?') + '_=' + Date.now(), { cache: 'no-store' })
+            .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); });
+    }
+    function applyData(d, source) {
+        d.source = source;
+        d.stale = source !== 'live' || (Date.now() - (d.ts || 0)) > 15000;
+        live = d; renderCharts(); renderFeed();
+        var signals = d.signals || {}, by = signals.bySource || {};
+        var fomo = document.getElementById('fomoCount'), pump = document.getElementById('pumpfunCount'), queue = document.getElementById('blockQueue');
+        if (fomo) fomo.textContent = signals.totalVerified == null ? 'Awaiting Feed' : fmt(by.fomo || 0) + ' Verified';
+        if (pump) pump.textContent = signals.totalVerified == null ? 'Awaiting Feed' : fmt(by.pumpfun || 0) + ' Verified';
+        if (queue) queue.textContent = signals.totalVerified == null ? 'Runtime Offline' : fmt(Math.max(0, (signals.totalVerified || 0) - (d.signalConsumed || 0))) + ' Credits Queued';
+        document.querySelectorAll('.runtime-mode').forEach(function (el) {
+            el.textContent = source === 'live' && !d.stale ? 'Live Runtime' : source === 'live' ? 'Stale Runtime' : 'Historical Snapshot';
+        });
+    }
     (function poll() {
-        fetch(LIVE + '?_=' + Date.now(), { cache: 'no-store' })
-            .then(function (r) { return r.json(); })
-            .then(function (d) { d.stale = (Date.now() - (d.ts || 0)) > 15000; live = d; renderCharts(); renderFeed(); })
-            .catch(function () { live.stale = true; renderCharts(); })
-            .then(function () { setTimeout(poll, 2000); });
+        var load = REMOTE
+            ? request(REMOTE).then(function (d) { applyData(d, 'live'); return 2000; })
+                .catch(function () { return request(SNAPSHOT).then(function (d) { applyData(d, 'snapshot'); return 30000; }); })
+            : request(SNAPSHOT).then(function (d) { applyData(d, 'snapshot'); return 30000; });
+        load.catch(function () { live.stale = true; live.source = 'offline'; renderCharts(); renderFeed(); return 10000; })
+            .then(function (delay) { setTimeout(poll, delay || 10000); });
     })();
 
     // ---- live-cam HUD: total uptime (to the second) + US Eastern time ----
