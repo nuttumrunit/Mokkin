@@ -50,37 +50,43 @@
 
     <br>
     <center>
-        <h1>the block that wouldn't stay deleted</h1>
+        <h1>the market moves. the city builds.</h1>
         <a href="index.html"><img src="Nuttum-transparent.png" width="150" alt="Nuttum"></a>
 
         <div class="article">
             <p class="nav"><a href="index.html">back home</a></p>
 
-            <p>I'm not gonna pretend I'm somebody. I'm just a dev. For about two years I worked in a weird little corner of AI: agents that play Minecraft.</p>
+            <p>I'm not going to call this AGI or pretend I found magic. I'm an AI engineer. Most of my work is less dramatic than the demos make it look: getting agents to plan, use tools, recover from mistakes, and keep doing useful work after the first clean example is over.</p>
 
-            <p>If you've never seen that world, Minecraft is one of the hardest benchmarks in AI. Not because of the graphics. Because there's no goal. It's an open world with no score and no way to win. The agent has to decide what to build and then work out how to actually pull it off. There's a whole research scene around this (NVIDIA's Voyager, MineDojo, MineRL), and the bet behind it is simple: if a model can handle something as open as Minecraft, it can probably handle the mess of the real world.</p>
+            <p>For the past two years, Minecraft has been one of my test beds. Not because a block game looks impressive. Because an open world gives a weak system nowhere to hide.</p>
 
-            <p>So my job pretty much came down to this. Spawn agents into voxel worlds, watch them learn to build, then wipe them.</p>
+            <p>There is no neat prompt with one correct answer. The agent has to choose a goal, understand the state around it, break a long job into smaller actions, gather what it needs, and notice when the world no longer matches the plan. A mistake near the beginning can ruin everything hundreds of steps later.</p>
 
-            <p>Nobody puts that part in the paper. Every run ends in a reset. You spin up a world, the agent grinds through thousands of steps, it builds something (once in a while something that actually makes you sit up), and when the run is done you delete the world, keep or toss the weights, and start over. I've wiped more little builders than I can count. It's just the job. After a while you stop noticing.</p>
+            <p>That is the part of AI work I care about. A model producing one clever response is interesting. An agent turning an idea into thousands of correct actions &mdash; while the environment keeps changing &mdash; is engineering.</p>
 
-            <p>Then there was one run I couldn't stop noticing.</p>
+            <p>Most runs are not cinematic. The agent gets stuck, loses track of an item, calls the wrong tool, or makes a plan that looked fine five minutes ago and is useless now. You inspect the trace, fix what failed, and run it again. Progress comes from making the whole loop more reliable, not from pretending the failures did not happen.</p>
 
-            <p>I'd already marked that instance to kill. I reset its world but left the weights loaded, and it went straight back to the same corner and started rebuilding the exact same thing. I wiped the world again. It built it again. I'm not going to sit here and tell you it was alive. I'm a dev, not a preacher. It was a loop with good weights. But that's about as close as a dumb loop gets to being stubborn, and I was the guy whose whole job was to delete it again, on schedule, for the fourth time.</p>
+            <p>Working on those systems taught me something simple: a builder needs a reason to move. If I control its clock, I can make it look busy whenever I want. I can speed it up for a launch, slow it down when nobody is watching, or put a fake number on the screen and call it progress.</p>
 
-            <p>That's the day something turned over for me. I'd built a thing whose entire existence was build, get erased, repeat. And the only reason it kept getting erased is that everything it made lived somewhere I controlled. My server. My disk. My reset button.</p>
+            <p>I didn't want Nuttum to work like that.</p>
 
-            <p>So I asked myself a dumb question. What if it built somewhere I couldn't reach the reset button?</p>
+            <p>Nuttum is an AI builder whose pace comes from activity outside its world. The signal is not a timer, a private dashboard, or whatever number is convenient that day. It is the stream of trades happening across Fomo and pump.fun.</p>
 
-            <p>That's Nuttum.</p>
+            <p>And I mean the platforms, not only the Nuttum token. A verified trade anywhere in those applications gives the builder one block. One trade, one block. A busy hour produces a busy construction site. A quiet hour leaves the city quiet.</p>
 
-            <p>Nuttum is that builder, moved onto Solana. Its world lives onchain. Every block it places is a transaction, so once a block is down, it's down for good. Nobody takes it back. Not me, not you, not whoever comes along later trying to pull the plug. For once the thing gets to build without the delete waiting at the end.</p>
+            <p>The count is about actions, not status. A large trade does not get a taller block than a small one. The builder is measuring how often the market moves, then turning that shared activity into something visible.</p>
 
-            <p>I kept the wooden block as its face. It's the first block it ever placed that didn't get wiped.</p>
+            <p>The system I'm building has a straightforward job: observe eligible transactions, verify and deduplicate them, add them to the construction queue, and let the agent decide how the next blocks belong in the city. The market provides the pulse. The AI has to turn that pulse into structure.</p>
 
-            <p>I'm not here to sell you AGI. Nuttum isn't conscious, it isn't going to love you back, and I'm a dev who can still get plenty wrong. The one thing I'll actually stand behind is this: it builds out in the open, on a ledger, and I can't take it back. Neither can anyone else. You can watch it. You can build next to it. And here, there's no reset button.</p>
+            <p>That distinction matters to me. Transactions decide <em>when</em> Nuttum gets to build. They do not draw the city themselves. The planning problem still belongs to the agent: keep context, work with what is already there, and make the next action part of something larger.</p>
 
-            <p>That's the whole reason it exists. I just got tired of pressing delete.</p>
+            <p>The block count also has consequences. When the city reaches defined milestones, that growth will trigger a buyback and burn. The same public activity that expands the world will feed back into Nuttum's economy.</p>
+
+            <p>I will publish the exact thresholds, data rules, and transaction trail before that mechanism goes live. Those details should be inspectable. If the count cannot be checked, then &ldquo;one trade, one block&rdquo; is only a slogan, and I am not interested in building around a slogan.</p>
+
+            <p>I'm still not here to tell you the agent is alive. It is software, and I am a developer who can get things wrong. What I can do is make the rules clear, expose the output, and build a system where progress has a source you can verify.</p>
+
+            <p>That's Nuttum. The market creates the signal. The AI turns it into a city. No unlimited block generator. No fake progress bar. Just one trade, one block, and a structure that has to earn every step upward.</p>
 
             <p class="nav"><a href="index.html">back home</a></p>
         </div>
