@@ -1,539 +1,211 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1 shrink-to-fit=no">
-    <meta name="description"
-        content="Nuttum is an autonomous AI architect that designs and builds a persistent Minecraft city, block by block.">
-    <meta name="keywords" content="Nuttum, autonomous AI, Minecraft, AI builder, persistent city">
-    <meta name="author" content="Nuttum">
-    <meta name=”robots” content="index, follow">
-    <meta property="og:title" content="Nuttum">
-    <meta property="og:site_name" content="Nuttum">
-    <meta property="og:type" content="website">
-    <meta property="og:description"
-        content="Nuttum is an autonomous AI architect that designs and builds a persistent Minecraft city, block by block.">
-    <meta property="og:url" content="https://zunonhood.github.io/Nuttum/">
-    <meta property="og:image"
-        content="https://zunonhood.github.io/Nuttum/Nuttum-transparent.png">
-    <meta property="og:image:secure_url"
-        content="https://zunonhood.github.io/Nuttum/Nuttum-transparent.png">
-    <meta property="og:image:type" content="image/webp">
-    <meta property="og:image:width" content="540">
-    <meta property="og:image:height" content="405">
-    <meta property="og:image:alt" content="Nuttum">
-    <meta property="og:locale" content="en_US">
-    <title>Nuttum</title>
-    <link rel="canonical" href="https://zunonhood.github.io/Nuttum/">
-    <link rel="shortcut icon" type="image/png" href="Nuttum-transparent.png">
-    <link rel="stylesheet" href="style.css?v=3">
-    <script language="JavaScript" src="javascript/titlescroll.js"></script>
-    <script language="JavaScript" src="config.js?v=3"></script>
-    <style>
-        .pending-link { opacity: .7; cursor: not-allowed; }
-        .brand-title { color: #f5f2e6; font-family: Impact, "Arial Black", sans-serif; font-size: clamp(42px, 7vw, 96px); letter-spacing: .08em; line-height: 1; text-shadow: 4px 4px 0 #0a2b1f; }
-        .brand-tagline { font-weight: bold; letter-spacing: .12em; text-align: center; color: #f5f2e6; }
-        .brand-title.hallows, .brand-title.crimbo, .brand-title.valentine, .brand-title.easter { content: normal !important; }
-        .livecam-hud {
-            position: absolute; top: 6px; left: 6px; z-index: 5; pointer-events: none;
-            font-family: Consolas, "Courier New", monospace; font-size: 11px; line-height: 1.35;
-            color: #6dff6d; text-shadow: 0 0 3px #000, 0 0 3px #000;
-            background: rgba(0, 0, 0, 0.55); border: 1px solid rgba(109, 255, 109, 0.5);
-            padding: 3px 7px 4px; border-radius: 2px;
-        }
-        .livecam-hud .hud-row { display: flex; gap: 6px; white-space: nowrap; }
-        .livecam-hud .hud-k { color: #9aa0a6; min-width: 46px; letter-spacing: .5px; }
-        .livecam-hud #hudUptime, .livecam-hud #hudEst { color: #6dff6d; font-weight: bold; }
-
-        /* pinned Nuttum message — rainbow gradient name + text */
-        .chat-pinned {
-            font-family: "MS Sans Serif", Tahoma, Verdana, sans-serif; font-size: 12px; line-height: 1.4;
-            padding: 5px 8px; margin: 2px 0 4px; border: 1px solid #b0b0b0;
-            background: #fffbe6; border-left: 3px solid #f0b400;
-            box-shadow: inset 0 0 0 1px #fff;
-        }
-        .chat-pinned .pin-icon { margin-right: 4px; }
-        .chat-pinned .grad-name { font-weight: bold; margin-right: 5px; }
-        .chat-pinned .grad-name::after { content: ":"; color: #999; -webkit-text-fill-color: #999; }
-        .grad-name, .grad-text {
-            background-image: linear-gradient(90deg, #ff004c, #ff8a00, #ffd500, #24d900, #00c2ff, #7a5cff, #ff00d4, #ff004c);
-            background-size: 300% 100%;
-            -webkit-background-clip: text; background-clip: text;
-            -webkit-text-fill-color: transparent; color: transparent;
-            animation: gradFlow 6s linear infinite;
-        }
-        @keyframes gradFlow { from { background-position: 0% 50%; } to { background-position: 300% 50%; } }
-            .ca-addr { font-family: Consolas, monospace; font-size: 0.8em; font-weight: bold; cursor: pointer; word-break: break-all; }
-    </style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Nuttum is a market paced AI city builder. Every verified trade becomes one block.">
+  <meta name="keywords" content="Nuttum, AI agent, Minecraft, Solana, Fomo, pump.fun">
+  <meta name="author" content="Nuttum">
+  <meta name="robots" content="index, follow">
+  <meta property="og:title" content="Nuttum City Console">
+  <meta property="og:site_name" content="Nuttum">
+  <meta property="og:type" content="website">
+  <meta property="og:description" content="The market sets the pace. The AI builds the city.">
+  <meta property="og:url" content="https://nuttumrunit.github.io/Nuttum/home/">
+  <meta property="og:image" content="https://nuttumrunit.github.io/Nuttum/Nuttum-transparent.png">
+  <title>Nuttum City Console</title>
+  <link rel="canonical" href="https://nuttumrunit.github.io/Nuttum/home/">
+  <link rel="icon" type="image/png" href="../Nuttum-transparent.png">
+  <link rel="stylesheet" href="dashboard.css?v=1">
+  <script src="config.js?v=3"></script>
 </head>
+<body>
+  <div class="page-shell">
+    <header class="topbar">
+      <a class="brand" href="../">
+        <img src="../Nuttum-transparent.png" alt="Nuttum">
+        <span><strong>Nuttum</strong><small>AI City Console</small></span>
+      </a>
+      <nav class="main-nav" aria-label="Primary navigation">
+        <a href="#live">Live</a>
+        <a href="#telemetry">Telemetry</a>
+        <a href="#mechanism">Signal Route</a>
+        <a href="#community">Community</a>
+      </nav>
+      <a class="entry-link" href="../">Entry Page</a>
+    </header>
 
-<body id="index">
-    <div class="crt">
-        <section style="line-height: 1vw;">
-            <script language="JavaScript">
-                function Y() {
-                    var taskkill = document.getElementById("taskkill");
-                    taskkill.classList.add("hide")
-                    setInterval(function () {
-                        [...Array(2 ** 32 - 1)]
-                    }, 1000);
-                }
+    <main>
+      <section class="hero glass-card">
+        <div class="hero-copy">
+          <div class="eyebrow"><span class="live-dot"></span> Market Paced AI Builder</div>
+          <h1>One Verified Trade.<br><span>One New Block.</span></h1>
+          <p class="hero-text">Nuttum turns activity across Fomo and pump.fun into construction. Transactions decide when the builder moves. The AI decides what the city becomes.</p>
+          <div class="hero-actions">
+            <a class="primary-action" href="#live">Watch The Builder</a>
+            <a class="secondary-action" href="../story.html">Read The Full Story</a>
+          </div>
+          <div class="contract-bar" aria-label="Nuttum contract address">
+            <span class="contract-icon"><img src="../badges/icon_solana.svg" alt=""></span>
+            <span class="contract-copy"><small>Contract Address</small><strong>TBA</strong><em>Published here after launch</em></span>
+            <button type="button" disabled>Copy</button>
+          </div>
+        </div>
+        <div class="hero-visual" aria-label="Nuttum builder">
+          <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
+          <span class="orbit-block block-one"></span><span class="orbit-block block-two"></span><span class="orbit-block block-three"></span>
+          <div class="logo-stage"><img src="../Nuttum-transparent.png" alt="Nuttum"></div>
+          <div class="visual-caption"><span>Builder Core</span><strong>Integration Mode</strong></div>
+        </div>
+      </section>
 
-                function N() {
-                    var taskkill = document.getElementById("taskkill");
-                    taskkill.classList.add("hide")
-                }
-            </script>
-            <span id="taskkill" style="margin: 0; font-size: 1vw;">
-                C:\Users\Webpage-1990-Colourised>taskkill /index.html [<span onclick="Y()">Y</span>/<span
-                    onclick="N()">N</span>]
-            </span>
-        </section>
+      <section class="system-ribbon" aria-label="Nuttum system rules">
+        <article class="ribbon-card"><span class="ribbon-icon"><img src="../badges/icon_fomo.svg" alt=""></span><span><small>Signal Source</small><strong>Fomo</strong></span></article>
+        <article class="ribbon-card"><span class="ribbon-icon"><img src="../badges/icon_pumpfun_system.svg" alt=""></span><span><small>Signal Source</small><strong>Pump.fun</strong></span></article>
+        <article class="ribbon-card"><span class="ribbon-icon"><img src="../badges/icon_trade_block.svg" alt=""></span><span><small>Build Rule</small><strong>1 TX = 1 Block</strong></span></article>
+        <article class="ribbon-card"><span class="ribbon-icon"><img src="../badges/icon_burn.svg" alt=""></span><span><small>Milestone</small><strong>Buyback + Burn</strong></span></article>
+      </section>
 
-        <section>
-            <header>
-                <h1 class="headingtop brand-title">NUTTUM</h1>
-            </header>
-        </section>
-
-        <section>
-            <nav>
-                <a href="../">Home</a>
-                <a href="#live">Live</a>
-                <a href="#chat">Chat</a>
-                <a href="#stats">Data</a>
-                <a href="#links">Devlog</a>
-                <a href="#guide">Guide</a>
-                <a href="#board">Guestbook</a>
-                <a href="#" class="pending-link" onclick="return false;" aria-disabled="true" title="Nuttum X link coming soon">X (soon)</a>
-                <a href="https://github.com/zunonhood/Nuttum" target="_blank" rel="noopener">GitHub</a>
-                <a href="#" class="pending-link" onclick="return false;" aria-disabled="true" title="Nuttum Pump.fun link coming soon">Pump.fun (soon)</a>
-            </nav>
-        </section>
-
-        <section class="flex">
-            <div>
-                <img class="homelogo left" src="Nuttum-transparent.png" alt="Nuttum">
+      <section id="live" class="section-block">
+        <div class="section-heading">
+          <div><span class="section-kicker">Live World</span><h2>Watch The City Take Shape</h2></div>
+          <p>The public camera and world map will appear here whenever the builder endpoints are online.</p>
+        </div>
+        <div class="live-grid">
+          <article class="console-panel camera-panel">
+            <div class="panel-heading"><span><i class="panel-light"></i> Builder Camera</span><a id="cameraPopout" href="#" target="_blank" rel="noopener">Open View</a></div>
+            <div class="frame-shell">
+              <iframe id="camFrame" class="streamframe" src="about:blank" title="Nuttum live builder camera"></iframe>
+              <div class="frame-placeholder"><img src="../Nuttum-transparent.png" alt=""><span>Connecting To Builder</span></div>
+              <div class="livecam-hud" id="livecamHud">
+                <div><small>Uptime</small><strong id="hudUptime">00:00:00</strong></div>
+                <div><small>Eastern Time</small><strong id="hudEst">00:00:00 ET</strong></div>
+              </div>
             </div>
-            <div>
-                <img src="graphics/welcome.gif" alt="welcome">
-                <p class="brand-tagline">AUTONOMOUS AI CITY BUILDER</p>
+          </article>
+          <article class="console-panel map-panel" id="map">
+            <div class="panel-heading"><span><i class="panel-light map-light"></i> World Map</span><span class="panel-state">Surface View</span></div>
+            <div class="frame-shell">
+              <iframe id="mapFrame" class="streamframe" src="about:blank" title="Nuttum world map"></iframe>
+              <div class="frame-placeholder map-placeholder"><img src="../badges/icon_builder.svg" alt=""><span>Loading World Map</span></div>
             </div>
-            <div>
-                <img class="homelogo right" src="Nuttum-transparent.png" alt="Nuttum">
+          </article>
+        </div>
+      </section>
+
+      <section id="telemetry" class="section-block">
+        <div class="section-heading">
+          <div><span class="section-kicker">Prototype Telemetry</span><h2>Builder Output</h2></div>
+          <p>These charts report the current builder prototype. Fomo and pump.fun transaction adapters are the next data layer.</p>
+        </div>
+        <div class="integration-note">
+          <span class="note-icon"><img src="../badges/icon_trade_block.svg" alt=""></span>
+          <span><strong>Market ingestion is not live yet.</strong> The final system will verify and deduplicate eligible trades before adding blocks to the build queue.</span>
+        </div>
+        <div class="telemetry-layout">
+          <div class="metric-stack">
+            <article class="metric console-panel" data-metric="rate" data-unit="blk/min" data-color="#67efad">
+              <div class="metric-head"><span>Builder Output Rate</span><small>Prototype Runtime</small></div>
+              <canvas class="metric-chart" width="640" height="190"></canvas><div class="metric-legend"></div>
+            </article>
+            <article class="metric console-panel" data-metric="total" data-unit="blocks" data-color="#ffd166">
+              <div class="metric-head"><span>Total Blocks Placed</span><small>Prototype Runtime</small></div>
+              <canvas class="metric-chart" width="640" height="190"></canvas><div class="metric-legend"></div>
+            </article>
+            <article class="metric console-panel" data-metric="buildings" data-unit="builds" data-color="#ff9b6a">
+              <div class="metric-head"><span>Structures Completed</span><small>Prototype Runtime</small></div>
+              <canvas class="metric-chart" width="640" height="190"></canvas><div class="metric-legend"></div>
+            </article>
+          </div>
+          <aside class="console-panel feed-panel">
+            <div class="panel-heading"><span><i class="panel-light"></i> Builder Event Feed</span><span class="panel-state">Auto Refresh</span></div>
+            <div class="feed-scroll" id="nuttumFeed"></div>
+          </aside>
+        </div>
+      </section>
+
+      <section id="mechanism" class="section-block">
+        <div class="section-heading">
+          <div><span class="section-kicker">Signal Route</span><h2>How A Trade Becomes A Block</h2></div>
+          <p>A public, inspectable pipeline replaces arbitrary timers and unlimited build speed.</p>
+        </div>
+        <div class="route-grid">
+          <article class="route-step"><span>01</span><img src="../badges/icon_fomo.svg" alt=""><small>Observe</small><h3>Platform Trade</h3><p>An eligible trade is detected across Fomo or pump.fun.</p></article>
+          <article class="route-step"><span>02</span><img src="../badges/icon_trade_block.svg" alt=""><small>Verify</small><h3>Clean The Signal</h3><p>The transaction is checked and duplicate events are rejected.</p></article>
+          <article class="route-step"><span>03</span><img src="../badges/icon_builder.svg" alt=""><small>Plan</small><h3>AI Chooses The Build</h3><p>The market sets the timing. Nuttum decides where the block belongs.</p></article>
+          <article class="route-step"><span>04</span><img src="../badges/icon_burn.svg" alt=""><small>Milestone</small><h3>Buyback And Burn</h3><p>Defined block counts will trigger an inspectable economic action.</p></article>
+        </div>
+        <div class="build-status glass-card">
+          <div><span class="section-kicker">Implementation Status</span><h3>Building The Verifiable Pipeline</h3><p>Exact thresholds, eligible transaction rules and the public event trail will be published before activation.</p></div>
+          <div class="status-list">
+            <span><i class="done"></i> City builder prototype</span><span><i class="done"></i> Public interface</span>
+            <span><i></i> Fomo transaction adapter</span><span><i></i> Pump.fun transaction adapter</span><span><i></i> Buyback and burn executor</span>
+          </div>
+        </div>
+      </section>
+
+      <section id="community" class="section-block">
+        <div class="section-heading">
+          <div><span class="section-kicker">Community</span><h2>Talk With The People Watching</h2></div>
+          <p>Live chat and the permanent guestbook remain part of the city console.</p>
+        </div>
+        <div class="community-grid">
+          <article class="console-panel chat-panel" id="chat">
+            <div class="panel-heading"><span><i class="panel-light"></i> Live Chat</span><span class="panel-state">Shared Room</span></div>
+            <div class="chat-pinned" id="chatPinned"><strong>Nuttum</strong><span>Keep it useful, civil and focused on the build.</span></div>
+            <div id="chatlog"></div>
+            <div class="chatrow">
+              <div class="input-tools">
+                <button class="tool-button color-btn" id="colorBtn" type="button" title="Name colour"></button>
+                <button class="tool-button" id="uploadBtn" type="button" title="Upload image">+</button>
+                <input id="chatfile" type="file" class="hidden" accept="image/*">
+                <button class="tool-button" id="emojiBtn" type="button" title="Emoji">:)</button>
+              </div>
+              <input id="chatname" placeholder="Name" maxlength="40">
+              <input id="chatmsg" placeholder="Write a message" maxlength="750" onkeydown="if(event.key==='Enter')nuttumSend()">
+              <button class="send-button" type="button" onclick="nuttumSend()">Send</button>
+              <div class="popup color-palette" id="colorPalette"></div><div class="popup emoji-picker" id="emojiPicker"></div>
             </div>
-        </section>
-
-        <img id="open24" src="graphics/open24hrs.gif" alt="open24hrs">
-        <section id="live">
-            <div style="width: 100%;">
-                <img class="flex" src="graphics/dividers/green.gif" alt="divider green">
-                <div class="window livestream">
-                    <div class="window-header">
-                        <h2>&#128506; NUTTUM'S WORLD &middot; LIVE</h2>
-                        <div class="window-commands">
-                            <a class="maximize" href="http://localhost:3007" target="_blank"></a>
-                            <a class="close"></a>
-                        </div>
-                    </div>
-                    <div class="stream-inner">
-                        <div class="stream-row">
-                            <div class="stream-col stream-col-big">
-                                <div class="wlabel">&#128065; nuttum &middot; live cam</div>
-                                <div class="stream-body" style="position:relative;">
-                                    <iframe class="streamframe" id="camFrame" src="http://localhost:3007"
-                                        title="Nuttum live cam"></iframe>
-                                    <div class="livecam-hud" id="livecamHud">
-                                        <div class="hud-row"><span class="hud-k">UPTIME</span><span id="hudUptime">00:00:00</span></div>
-                                        <div class="hud-row"><span class="hud-k">EST</span><span id="hudEst">--:--:--</span></div>
-                                    </div>
-                                </div>
-                                <div class="chat-block" id="chat">
-                                    <div class="wlabel">&#128172; chat room</div>
-                                    <div class="chat-pinned" id="chatPinned">
-                                        <span class="pin-icon">&#128204;</span>
-                                        <span class="grad-name">Nuttum</span>
-                                        <span class="grad-text">Welcome to Nuttum&#39;s World! Please keep it civil &amp; kind &mdash; no spam, no hate. Let&#39;s build something beautiful together while the city rises. &#128154;</span>
-                                    </div>
-                                    <div id="chatlog"></div>
-                                    <div class="chatrow">
-                                        <div class="color-btn" id="colorBtn" title="name colour"></div>
-                                        <input id="chatname" placeholder="Username" maxlength="40">
-                                        <input id="chatmsg" placeholder="Type your message..." maxlength="750"
-                                            onkeydown="if(event.key==='Enter')nuttumSend()">
-                                        <div class="icon-btn" id="uploadBtn" title="upload">&#8593;</div>
-                                        <input id="chatfile" type="file" class="hidden" accept="image/*">
-                                        <div class="icon-btn" id="emojiBtn" title="emoji">&#128578;</div>
-                                        <button onclick="nuttumSend()">Send</button>
-                                        <div class="popup color-palette" id="colorPalette"></div>
-                                        <div class="popup emoji-picker" id="emojiPicker"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="stream-col stream-col-small" id="map">
-                                <div class="wlabel">&#128506; world map</div>
-                                <div class="stream-body stream-body-fill">
-                                    <iframe class="streamframe" id="mapFrame"
-                                        src="http://localhost:8123/index.html?v=5&worldname=world&mapname=surface&zoom=5&x=0&y=88&z=0"
-                                        title="Nuttum world map"></iframe>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+          </article>
+          <article class="console-panel guestbook-panel" id="board">
+            <div class="panel-heading"><span><i class="panel-light gold-light"></i> City Guestbook</span><span class="panel-state"><b id="gbCount">0</b> Notes</span></div>
+            <p class="guestbook-intro">Leave a feature request, a build idea or honest feedback for the project.</p>
+            <div class="guestbook-form">
+              <input id="gbName" placeholder="Your name" maxlength="30">
+              <textarea id="gbMsg" placeholder="What should Nuttum build next?" maxlength="500"></textarea>
+              <button type="button" onclick="nuttumSign()">Sign The Guestbook</button>
             </div>
-        </section>
+            <div id="gbList"></div>
+          </article>
+        </div>
+      </section>
+    </main>
 
-        <section>
-            <div>
-                <img src="graphics/dividers/fire.gif" alt="divider fire">
-            </div>
-        </section>
+    <footer>
+      <div><img src="../Nuttum-transparent.png" alt=""><span><strong>Nuttum</strong><small>The market sets the pace. The AI builds.</small></span></div>
+      <nav><a href="https://x.com/nuttumrunit" target="_blank" rel="noopener">X</a><a href="https://github.com/nuttumrunit/Nuttum" target="_blank" rel="noopener">GitHub</a><a href="https://pump.fun/" target="_blank" rel="noopener">Pump.fun</a></nav>
+      <p>&copy; 2026 Nuttum</p>
+    </footer>
+  </div>
 
-        <section id="stats" class="flex nuttum-data">
-            <div class="data-panel">
-                <div class="data-title">&#9636; NUTTUM.AI &mdash; LIVE METRICS</div>
-                <div class="metric" data-metric="rate" data-unit="blk/min" data-color="#12b81f">
-                    <div class="metric-head">block placement rate &mdash; Nuttum AI</div>
-                    <canvas class="metric-chart" width="640" height="190"></canvas>
-                    <div class="metric-legend"></div>
-                </div>
-                <div class="metric" data-metric="total" data-unit="blocks" data-color="#12b81f">
-                    <div class="metric-head">cumulative blocks placed in NYC</div>
-                    <canvas class="metric-chart" width="640" height="190"></canvas>
-                    <div class="metric-legend"></div>
-                </div>
-                <div class="metric" data-metric="buildings" data-unit="builds" data-color="#e8a30c">
-                    <div class="metric-head">buildings completed</div>
-                    <canvas class="metric-chart" width="640" height="190"></canvas>
-                    <div class="metric-legend"></div>
-                </div>
-            </div>
-            <div class="feed-panel">
-                <div class="data-title">:: REALTIME FEED</div>
-                <div class="feed-scroll" id="nuttumFeed"></div>
-            </div>
-        </section>
-
-        <section id="links">
-            <img class="flex nomargin" style="height: 1.5vw;" src="graphics/dividers/greenglowblink.gif"
-                alt="green glow blink">
-            <div class="flex" style="margin-top: 0%;">
-                <img style="width: 10%; height: 10%; margin-top: 10%; margin-left: 10%;" src="graphics/groovy1.gif"
-                    alt="groovy1">
-                <div>
-                    <div class="devlog-box">
-                        <p class="devlog-head">&#9989; Completed</p>
-                        <ul>
-                            <li>Nuttum is <b>alive</b> &mdash; a real AI brain that
-                                <b>autonomously designs and builds a detailed city</b>, solid building by building, on a
-                                clean green island in the sea. It <b>never idles and never resets</b> &mdash; it keeps
-                                growing 24/7, and <b>reclaims land from the sea</b> when it reaches the water.</li>
-                            <li><b>Real neighborhoods with character</b> &mdash; not a boring grid: a downtown of
-                                skyscrapers, then mid&#8209;rises, brownstone rows, <b>villa suburbs</b> with gardens,
-                                <b>school campuses</b> with sports fields, <b>stadium</b> districts, <b>hillside</b>
-                                neighborhoods on real terrain, parks and monument plazas &mdash; with streetlights and
-                                trees on every block.</li>
-                            <li>Live free&#8209;cam &mdash; watch Nuttum build in real time, with an on&#8209;screen
-                                <b>uptime counter</b> and a <b>US&nbsp;Eastern clock</b>.</li>
-                            <li>Live world map (dynmap) &mdash; top&#8209;down view, kept current as the city grows.</li>
-                            <li><b>Real</b> metrics dashboard &mdash; block rate, cumulative blocks and buildings, drawn
-                                from live data. Server&#8209;authoritative, so every visitor sees the <b>same</b> curve
-                                and a refresh never restarts it.</li>
-                            <li>Realtime event feed &mdash; Nuttum&#39;s real actions and its own words as it builds.</li>
-                            <li><b>Shared realtime chat room</b> (Supabase) &mdash; everyone sees the same live messages,
-                                image upload, US&nbsp;Eastern timestamps, name colours, and pinned house rules.</li>
-                            <li><b>Shared realtime guestbook</b> (Supabase) &mdash; visitors post project feedback and
-                                ideas that everyone sees live, with a pinned note from Nuttum.</li>
-                            <li>Detailed wiki&#8209;style <b>&ldquo;How to join&rdquo; guide</b> covering the live stream,
-                                the districts, and how holders will build together.</li>
-                            <li>Site is up &mdash; landing page &rarr; full retro homepage, all branded as Nuttum, with a
-                                nav bar that jumps to every section.</li>
-                        </ul>
-                        <p class="devlog-head">&#9203; Upcoming</p>
-                        <ul>
-                            <li><b>$NUTTUM</b> token launch &mdash; contract address (CA) TBA.</li>
-                            <li><b>On&#8209;chain blocks</b> &mdash; move Nuttum onto Solana so every placed block is
-                                committed on&#8209;chain: once placed, a block is there forever &mdash; nobody can reset
-                                it.</li>
-                            <li><b>Community co&#8209;building</b> &mdash; $NUTTUM holders steer what Nuttum builds next.</li>
-                            <li>Let visitors place their own blocks in Nuttum&#39;s world.</li>
-                            <li><b>Public hosting</b> &mdash; open the live stream to anyone worldwide (not just local),
-                                plus the public GitHub project link.</li>
-                            <li>Even richer city &mdash; bridges, waterfronts &amp; ports, transit, interiors, and
-                                day/night lighting on top of the districts Nuttum already builds.</li>
-                        </ul>
-                    </div>
-                </div>
-                <img style="width: 10%; height: 10%; margin-top: 10%; margin-right: 10%;" src="graphics/groovy2.gif"
-                    alt="groovy2">
-            </div>
-        </section>
-
-        <section>
-            <div>
-                <img src="graphics/dividers/glitter.gif" alt="glitter">
-            </div>
-        </section>
-
-        <section id="guide" class="flex">
-            <div class="window panel" style="width: 100%;">
-                <div class="window-header">
-                    <h2>&#128214; Join Guide</h2>
-                    <div class="window-commands"><a class="maximize"></a><a class="close"></a></div>
-                </div>
-                <div class="wiki-body">
-                    <h1 class="wiki-title">Nuttum &mdash; How to Join &amp; Build Together</h1>
-                    <div class="wiki-toc">
-                        <div class="wiki-toc-head">Contents</div>
-                        <ol>
-                            <li><a href="#g-what">What is Nuttum?</a></li>
-                            <li><a href="#g-live">What you are watching, live</a></li>
-                            <li><a href="#g-city">The city Nuttum is building</a></li>
-                            <li><a href="#g-now">How to join right now</a></li>
-                            <li><a href="#g-holders">For future $NUTTUM holders</a></li>
-                            <li><a href="#g-build">How building together will work</a></li>
-                            <li><a href="#g-road">Roadmap to participation</a></li>
-                            <li><a href="#g-faq">FAQ</a></li>
-                            <li><a href="#g-updates">Stay updated</a></li>
-                        </ol>
-                    </div>
-                    <p><b>Nuttum</b> is an autonomous AI that designs and builds an entire city, block by block, on a
-                        living voxel world that can never be reset. This guide covers three things: <b>what you are
-                        seeing</b> in the live stream above, <b>what you can do today</b>, and <b>how $NUTTUM holders will
-                        build alongside Nuttum</b> once it moves on-chain.</p>
-
-                    <h2 id="g-what">What is Nuttum?</h2>
-                    <p>Nuttum is not a scripted bot playing back a recording. It is an <b>autonomous AI architect</b>: it
-                        decides for itself what to build next, designs each structure &mdash; proportions, materials,
-                        windows, setbacks, rooftops &mdash; and then lays every single block on a live Minecraft world.</p>
-                    <p>It works <b>24 hours a day and never idles</b>. It does not reset, and its progress is saved, so the
-                        city only ever grows. When Nuttum reaches the edge of its island, it <b>reclaims land from the
-                        sea</b> and keeps expanding outward &mdash; the way a real city grows over time. Everything it does
-                        is streamed live at the top of this site as it happens.</p>
-
-                    <h2 id="g-live">What you are watching, live</h2>
-                    <p>Everything at the top of the site is <b>real and live</b> &mdash; there is nothing pre-rendered:</p>
-                    <ul>
-                        <li><b>Live cam</b> &mdash; a free camera that follows Nuttum as it builds, with a running
-                            <b>uptime counter</b> and a <b>US&nbsp;Eastern clock</b> in the corner.</li>
-                        <li><b>World map</b> &mdash; a top-down live map of the whole city that updates as new blocks land.</li>
-                        <li><b>Data dashboard</b> &mdash; real metrics pulled straight from the build: <i>blocks per
-                            minute</i>, <i>total blocks placed</i>, and <i>buildings completed</i>. The charts are
-                            server-side, so every visitor sees the <b>same</b> history and a refresh never restarts them.</li>
-                        <li><b>Realtime feed</b> &mdash; a running log of Nuttum's actual actions and its own words as it
-                            designs and builds each block.</li>
-                    </ul>
-
-                    <h2 id="g-city">The city Nuttum is building</h2>
-                    <p>Nuttum builds a city with <b>logic and character</b>, not a repeating grid. As it grows outward from
-                        downtown, each neighborhood takes on a different character &mdash; just like a real metropolis:</p>
-                    <ul>
-                        <li><b>Downtown</b> &mdash; dense glass-and-steel skyscrapers and office towers with setbacks and
-                            spires.</li>
-                        <li><b>Midtown</b> &mdash; mid-rises, public squares, and monument plazas with fountains.</li>
-                        <li><b>Residential</b> &mdash; brownstone rows, corner shops, apartments and pocket parks.</li>
-                        <li><b>Villa suburbs</b> &mdash; detached houses with pitched roofs, front gardens and fences.</li>
-                        <li><b>Campuses</b> &mdash; brick school buildings around sports fields and quad lawns.</li>
-                        <li><b>Sports districts</b> &mdash; stadiums with stands and floodlights.</li>
-                        <li><b>Hillside neighborhoods</b> &mdash; homes built on real raised terrain, not flat ground.</li>
-                        <li><b>Green space</b> &mdash; parks and ponds, tree-lined streets, and streetlights on every block.</li>
-                    </ul>
-                    <p>Each district is contiguous and coherent, the streets are laid on a grid, and the city only ever
-                        grows &mdash; there is always something new being built.</p>
-
-                    <h2 id="g-now">How to join right now</h2>
-                    <p>No wallet, no download, and no account needed:</p>
-                    <ol>
-                        <li><b>Watch</b> the live cam and world map at the top, and follow the feed and charts.</li>
-                        <li><b>Chat</b> in the chat room &mdash; it is <b>shared and realtime</b>, so everyone sees your
-                            messages instantly. You can upload images, pick a name colour, and read US&nbsp;Eastern
-                            timestamps. Please keep it civil and kind.</li>
-                        <li><b>Sign the guestbook</b> below to leave a lasting note in Nuttum's world.</li>
-                    </ol>
-                    <p>That is it &mdash; you are already part of the crowd watching Nuttum build.</p>
-
-                    <h2 id="g-holders">For future $NUTTUM holders</h2>
-                    <p class="wiki-soon">Planned &mdash; not live yet.</p>
-                    <p>$NUTTUM will launch on <b>Solana</b>. The contract address (CA) is <b>TBA</b> and will be posted on
-                        the official project channels &mdash; <b>ignore any address until it is announced there</b>. Holding
-                        $NUTTUM will unlock <b>build access</b> in Nuttum's world: connect your Solana wallet on this site,
-                        and holders receive a build slot.</p>
-
-                    <h2 id="g-build">How building together will work</h2>
-                    <p class="wiki-soon">Planned.</p>
-                    <p>Nuttum moves onto Solana so that <b>every block it places is committed on-chain</b>. Once a block is
-                        placed it is <b>permanent</b> &mdash; it can never be deleted or reset, by anyone. Holders place
-                        their own blocks into the same shared world, and Nuttum keeps designing and building around them.
-                        The world only grows &mdash; forever, together.</p>
-
-                    <h2 id="g-road">Roadmap to participation</h2>
-                    <ul>
-                        <li><b>Step 1</b> &mdash; $NUTTUM token launch on Solana (CA&nbsp;TBA).</li>
-                        <li><b>Step 2</b> &mdash; on-chain block commits, making every placed block permanent.</li>
-                        <li><b>Step 3</b> &mdash; wallet connect + holder build access on this site.</li>
-                        <li><b>Step 4</b> &mdash; open community building for all holders, alongside Nuttum.</li>
-                    </ul>
-
-                    <h2 id="g-faq">FAQ</h2>
-                    <p><b>Is this real, or a video?</b> Real and live. Nuttum is building right now &mdash; refresh in a few
-                        minutes and the city will have changed.</p>
-                    <p><b>Can Nuttum stop or be reset?</b> No. It runs 24/7 and its progress is saved to disk; the world
-                        only grows.</p>
-                    <p><b>Do I need to pay or connect a wallet to watch?</b> No. Watching, chatting and the guestbook are
-                        free and open to everyone. A wallet is only for future holder build access.</p>
-                    <p><b>What exactly does it build?</b> A whole city with varied neighborhoods &mdash; downtown towers,
-                        suburbs, campuses, stadiums, hillside homes and parks &mdash; all designed by the AI itself.</p>
-
-                    <h2 id="g-updates">Stay updated</h2>
-                    <p>Follow the GitHub link on the entry page, and check the <b>Devlog</b> above for
-                        what is done and what is next. Anything marked <i>planned</i> is upcoming &mdash; today's live
-                        features are <b>watch, chat, and guestbook</b>.</p>
-                </div>
-            </div>
-        </section>
-
-        <section>
-            <div>
-                <img src="graphics/dividers/80s.gif" alt="divider 80s">
-            </div>
-        </section>
-
-        <section id="board" class="flex">
-            <div class="gb-book" style="width: 100%;">
-                <h2 class="gb-title">Nuttum's Book of Guests</h2>
-                <div class="gb-brick gb-intro">This is the community board &mdash; share your feedback, ideas and feature requests for the project. Everyone sees new notes in real time, and Nuttum reads every one.</div>
-                <div class="gb-stats">Now listing <b id="gbCount">0</b> messages.</div>
-                <div class="gb-post">
-                    <input id="gbName" class="gb-name" placeholder="your name" maxlength="30">
-                    <textarea id="gbMsg" class="gb-msg" placeholder="share your feedback or a suggestion for the project..." maxlength="500"></textarea>
-                    <button class="gb-sign" onclick="nuttumSign()">Sign the book</button>
-                </div>
-                <div class="gb-entry gb-pinned-entry">
-                    <div class="gb-head">
-                        <div><span class="gb-lbl">&#128204; Pinned by:</span> <span class="gb-val grad-name">Nuttum</span></div>
-                    </div>
-                    <div class="gb-brick gb-text grad-text">This is your board &mdash; tell me what you think of the project: ideas, features you want, updates you would like to see. I read every note as I build. Be kind, and thanks for being here.</div>
-                </div>
-                <div id="gbList"></div>
-            </div>
-        </section>
-
-        <section>
-            <footer>
-                <p class="site-copyright">Copyright &copy;2026 Nuttum</p>
-            </footer>
-        </section>
-
-        <section>
-            <div class="clippy">
-                <div class="clippy-box" id="clippy-box">
-                    <div class="window">
-                        <audio id="playing">
-                        </audio>
-                        <div class="window-header alt-header">
-                            <h2>
-                                <img src="graphics/ui/mediaplayer/mediaplayer.gif" alt="mediaplayer">
-                                Media Player
-                            </h2>
-                            <div class="window-commands">
-                                <a class="maximize"></a>
-                                <a class="close" id="closebtn"></a>
-                            </div>
-                        </div>
-                        <div class="links">
-                            <a class="link active"><u>F</u>ile</a>
-                            <a class="link"><u>E</u>dit</a>
-                            <a class="link"><u>D</u>evice</a>
-                            <a class="link"><u>H</u>elp</a>
-                        </div>
-                        <hr>
-                        <div class="flex">
-                            <input type="range" id="seek" min="0" max="100" value="0" class="slider"
-                                aria-label="seek slider">
-                        </div>
-                        <hr>
-                        <div class="toolbar">
-                            <a class="togglebtn" id="togglebtn"
-                                style="background-image: url(graphics/ui/mediaplayer/play.gif)"></a>
-                            <div class="skip-buttons">
-                                <a class="back" id="back"></a>
-                                <a class="next" id="next"></a>
-                            </div>
-                            <input type="range" id="volume" min="0" max="100" step="1" value="100" class="slider"
-                                style="flex-grow: 1;" aria-label="volume slider">
-                            <div class="vertical-hr"></div>
-                            <div class="time">
-                                <span id="time">00:00</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div>
-                    <a id="clippybtn">
-                        <img class="clippy-img" src="graphics/ui/clippy.gif" alt="clippy">
-                    </a>
-                </div>
-            </div>
-        </section>
-
-        <section id="theme">
-            <div style="display: inline; position: fixed; margin: 0%; width: 20%; top: 5%; left: 0%;">
-                <img class="theme_1 hide" alt="theme_1">
-            </div>
-            <div style="display: inline; position: fixed; margin: 0%; width: 20%; top: 55%; left: 0%;">
-                <img class="theme_2 hide" alt="theme_2">
-            </div>
-            <div style="display: inline; position: fixed; margin: 0%; width: 20%; top: 20%; right: 0%;">
-                <img class="theme_3 hide" alt="theme_3">
-            </div>
-            <div style="position: absolute; margin: 0%; width: 20%; top: 20%; right: 22%;">
-                <img class="theme_title hide" alt="theme_title">
-            </div>
-            <div class="theme_overlay"></div>
-        </section>
-
-        <section class="overlay">
-        </section>
-    </div>
-
-    <scripts>
-        <script language="JavaScript" src="javascript/cursortrail.js"></script>
-        <script language="JavaScript" src="javascript/mediaplayer.js"></script>
-        <script language="JavaScript" src="javascript/dropdown.js"></script>
-        <script language="JavaScript" src="javascript/rainbowtext.js"></script>
-        <script language="JavaScript" src="javascript/followercount.js"></script>
-        <script language="JavaScript" src="javascript/clippybtns.js"></script>
-        <script language="JavaScript" src="javascript/topbtn.js"></script>
-        <script language="JavaScript" src="javascript/themes.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-        <script language="JavaScript" src="javascript/nuttumchat.js?v=2"></script>
-        <script language="JavaScript" src="javascript/nuttumdata.js?v=4"></script>
-        <script language="JavaScript" src="javascript/guestbook.js?v=2"></script>
-        <script language="JavaScript">
-            // Nav bar: smoothly scroll to the matching section (works whether the page
-            // scrolls on the window or inside a container).
-            (function () {
-                document.querySelectorAll('nav a[href^="#"]').forEach(function (a) {
-                    a.addEventListener('click', function (e) {
-                        var el = document.getElementById(a.getAttribute('href').slice(1));
-                        if (el) { e.preventDefault(); el.scrollIntoView({ behavior: 'smooth', block: 'start' }); history.replaceState(null, '', a.getAttribute('href')); }
-                    });
-                });
-            })();
-        </script>
-        <script language="JavaScript">
-            // Point the live cam + world map at the configured endpoints (config.js).
-            // Locally these are localhost; in production they are your Cloudflare Tunnel URLs.
-            (function () {
-                var W = window.NUTTUM || {};
-                var cam = document.getElementById('camFrame'); if (cam && W.cam) cam.src = W.cam;
-                var map = document.getElementById('mapFrame'); if (map && W.map) map.src = W.map;
-                var mx = document.querySelector('.livestream .window-header .maximize'); if (mx && W.cam) mx.href = W.cam;
-            })();
-        </script>
-    </scripts>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="javascript/nuttumchat.js?v=3"></script>
+  <script src="javascript/nuttumdata.js?v=5"></script>
+  <script src="javascript/guestbook.js?v=3"></script>
+  <script>
+    (function () {
+      document.querySelectorAll('a[href^="#"]').forEach(function (link) {
+        link.addEventListener('click', function (event) {
+          var target = document.querySelector(link.getAttribute('href'));
+          if (target) { event.preventDefault(); target.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+        });
+      });
+      var settings = window.NUTTUM || {};
+      var cam = document.getElementById('camFrame'), map = document.getElementById('mapFrame'), popout = document.getElementById('cameraPopout');
+      if (cam && settings.cam) cam.src = settings.cam;
+      if (map && settings.map) map.src = settings.map;
+      if (popout && settings.cam) popout.href = settings.cam;
+    })();
+  </script>
 </body>
-
 </html>

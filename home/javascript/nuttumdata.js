@@ -4,7 +4,7 @@
 // every visitor sees the SAME real curve and a page refresh never restarts it.
 (function () {
     var LIVE = (window.NUTTUM && window.NUTTUM.data) || 'nuttum-live.json';
-    var GREEN = '#12a012', RED = '#d02020';
+    var GREEN = '#67efad', RED = '#ff8f70';
 
     function hm(ms) { return new Date(ms).toLocaleTimeString('en-US', { timeZone: 'America/New_York', hour12: false, hour: '2-digit', minute: '2-digit' }); }
     function fmt(n) {
@@ -51,20 +51,20 @@
         function Y(v) { return py0 + ph - (v / maxV) * ph; }
 
         ctx.clearRect(0, 0, W, H);
-        ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, W, H);
-        ctx.fillStyle = '#fbfbfb'; ctx.fillRect(px0, py0, pw, ph);
+        ctx.fillStyle = '#082f4c'; ctx.fillRect(0, 0, W, H);
+        ctx.fillStyle = '#0a4264'; ctx.fillRect(px0, py0, pw, ph);
         ctx.font = '9px Consolas, monospace'; ctx.textBaseline = 'middle';
         for (var g = 0; g <= 4; g++) {
             var val = maxV * g / 4, y = Y(val);
-            ctx.strokeStyle = (g === 0) ? '#999' : '#e6cccc';
+            ctx.strokeStyle = (g === 0) ? 'rgba(214,242,255,.45)' : 'rgba(183,225,244,.16)';
             ctx.beginPath(); ctx.moveTo(px0, y + 0.5); ctx.lineTo(px0 + pw, y + 0.5); ctx.stroke();
-            ctx.fillStyle = '#333'; ctx.textAlign = 'right'; ctx.fillText(fmt(val), px0 - 5, y);
+            ctx.fillStyle = '#d9f3ff'; ctx.textAlign = 'right'; ctx.fillText(fmt(val), px0 - 5, y);
         }
         ctx.textAlign = 'center'; ctx.textBaseline = 'top';
         for (var vx = 0; vx <= 5; vx++) {
             var i = Math.round((n - 1) * vx / 5), x = X(i);
-            ctx.strokeStyle = '#efdcdc'; ctx.beginPath(); ctx.moveTo(x + 0.5, py0); ctx.lineTo(x + 0.5, py0 + ph); ctx.stroke();
-            ctx.fillStyle = '#333'; ctx.fillText(hm(times[i]), x, py0 + ph + 3);
+            ctx.strokeStyle = 'rgba(183,225,244,.12)'; ctx.beginPath(); ctx.moveTo(x + 0.5, py0); ctx.lineTo(x + 0.5, py0 + ph); ctx.stroke();
+            ctx.fillStyle = '#b9deef'; ctx.fillText(hm(times[i]), x, py0 + ph + 3);
         }
         // filled area + line
         ctx.beginPath(); ctx.moveTo(X(0), py0 + ph);
@@ -76,12 +76,12 @@
         ctx.strokeStyle = m.color; ctx.lineWidth = 1.4; ctx.stroke();
         ctx.strokeStyle = RED; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(px0, Y(0) + 0.5); ctx.lineTo(px0 + pw, Y(0) + 0.5); ctx.stroke();
         ctx.fillStyle = m.color; ctx.beginPath(); ctx.arc(X(n - 1), Y(d[n - 1]), 2, 0, 7); ctx.fill();
-        ctx.strokeStyle = '#999'; ctx.lineWidth = 1; ctx.strokeRect(px0 + 0.5, py0 + 0.5, pw, ph);
+        ctx.strokeStyle = 'rgba(214,242,255,.32)'; ctx.lineWidth = 1; ctx.strokeRect(px0 + 0.5, py0 + 0.5, pw, ph);
         ctx.save(); ctx.translate(11, py0 + ph / 2); ctx.rotate(-Math.PI / 2);
-        ctx.fillStyle = '#444'; ctx.font = 'bold 9px Consolas, monospace'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+        ctx.fillStyle = '#d9f3ff'; ctx.font = 'bold 9px Consolas, monospace'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
         ctx.fillText(m.unit, 0, 0); ctx.restore();
         ctx.save(); ctx.translate(W - 9, py0 + ph / 2); ctx.rotate(Math.PI / 2);
-        ctx.fillStyle = '#cccccc'; ctx.font = '8px Consolas, monospace'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+        ctx.fillStyle = '#74abc5'; ctx.font = '8px Consolas, monospace'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
         ctx.fillText('RRDTOOL / NUTTUM.AI', 0, 0); ctx.restore();
     }
 
