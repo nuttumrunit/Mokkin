@@ -44,6 +44,16 @@
       backdrop-filter: blur(12px) saturate(125%);
     }
     a { color: #fff1a8; font-weight: 700; }
+    .signal-line {
+      display: inline-block;
+      color: #ffd27a;
+      background: linear-gradient(90deg, #fff6cf 0%, #ffd166 32%, #ff9b6a 66%, #f7fbff 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: none;
+      filter: drop-shadow(0 1px 1px rgba(8, 44, 78, 0.9));
+    }
     html, body { scrollbar-width: none; -ms-overflow-style: none; }
     html::-webkit-scrollbar, body::-webkit-scrollbar { display: none; }
     .enterbtn {
@@ -78,8 +88,7 @@ It comes from real activity outside the world.</p>
 
     <p>Nuttum listens to every trade across Fomo and pump.fun &mdash; not just trades of Nuttum. One verified trade gives the builder one block.<br>
 When the city crosses certain block counts, that growth will trigger a buyback and burn.</p>
-
-    <p><b class="rainbowline">⁂That's Nuttum. The market creates the signal. The AI turns it into a city. One trade, one block, and no fake progress bar.</b></p>
+    <p><b class="signal-line">&#9632;&nbsp; That's Nuttum. The market creates the signal. The AI turns it into a city. One trade, one block, and no fake progress bar.</b></p>
 
     <p><a href="story.html"><b>&#8250;&#8250; read the whole story</b></a></p>
 
@@ -115,14 +124,8 @@ When the city crosses certain block counts, that growth will trigger a buyback a
       var d = new Date().toLocaleDateString('en-CA', { timeZone: 'America/New_York' });
       var el = document.getElementById('lastupd'); if (el) el.textContent = d;
     } catch(e){}
-    // flowing rainbow ENTER (same palette as the reference)
-    var colours = ["#ff0000","#ff5500","#ffaa00","#ffff00","#aaff00","#55ff00","#00ff00","#00ff55","#00ffaa","#00ffff","#00aaff","#0055ff","#0000ff","#5500ff","#aa00ff","#ff00ff","#ff00aa","#ff0055"];
-    // auto-split any .rainbowline into per-letter rainbow spans
-    var lines = document.querySelectorAll('.rainbowline');
-    for (var q=0; q<lines.length; q++){
-      var t = lines[q].textContent; lines[q].textContent = '';
-      for (var j=0; j<t.length; j++){ var sp=document.createElement('span'); sp.className='rainbow'; sp.textContent=t[j]; lines[q].appendChild(sp); }
-    }
+    // Nuttum sky-and-sun palette for ENTER
+    var colours = ["#fff6cf","#ffd166","#ffb45c","#ff8f70","#dff6ff","#8ed8ff","#ffffff","#8ed8ff","#dff6ff","#ff8f70","#ffb45c","#ffd166"];
     var letters = document.querySelectorAll('.rainbow');
     for (var x=0; x<letters.length; x++){ letters[x].style.color = colours[x % colours.length]; }
     setInterval(function(){
