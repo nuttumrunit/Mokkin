@@ -1,167 +1,141 @@
-// Nuttum AI — live metrics dashboard + realtime feed.
-// Renders server-authoritative runtime data. If the runtime is unavailable, the last
-// published file is displayed and labelled as a historical snapshot.
+// Nuttum verified market telemetry. No synthetic transactions are generated here.
 (function () {
-    var SETTINGS = window.NUTTUM || {};
-    var REMOTE = String(SETTINGS.data || '').trim();
-    var SNAPSHOT = SETTINGS.snapshot || 'nuttum-live.json';
-    var GREEN = '#67efad', RED = '#ff8f70';
+  'use strict';
+  var settings = window.NUTTUM || {};
+  var remote = String(settings.data || '').trim();
+  var snapshot = settings.snapshot || 'nuttum-live.json';
+  var live = { history: [], signals: null, stale: true, source: 'loading' };
+  var COLORS = { fomo: '#7cf2c3', pumpfun: '#ffd166', consumed: '#79c8ff', queue: '#ff9b6a', grid: 'rgba(205,239,255,.14)' };
 
-    function hm(ms) { return new Date(ms).toLocaleTimeString('en-US', { timeZone: 'America/New_York', hour12: false, hour: '2-digit', minute: '2-digit' }); }
-    function fmt(n) {
-        if (n >= 1000000) return (n / 1000000).toFixed(1) + 'M';
-        if (n >= 1000) return (n / 1000).toFixed(1) + 'k';
-        return (Math.round(n * 10) / 10).toString();
+  function fmt(n) {
+    n = Number(n || 0);
+    if (n >= 1000000) return (n / 1000000).toFixed(1) + 'M';
+    if (n >= 1000) return (n / 1000).toFixed(1) + 'K';
+    return String(Math.round(n));
+  }
+  function et(ms, seconds) {
+    return new Date(ms).toLocaleTimeString('en-US', { timeZone: 'America/New_York', hour12: false, hour: '2-digit', minute: '2-digit', second: seconds ? '2-digit' : undefined });
+  }
+  function setText(id, value) { var el = document.getElementById(id); if (el) el.textContent = value; }
+  function request(url) {
+    return fetch(url + (url.indexOf('?') >= 0 ? '&' : '?') + '_=' + Date.now(), { cache: 'no-store' })
+      .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); });
+  }
+  function canvasBase(canvas) {
+    var ctx = canvas.getContext('2d'), w = canvas.width, h = canvas.height;
+    ctx.clearRect(0, 0, w, h);
+    var bg = ctx.createLinearGradient(0, 0, w, h); bg.addColorStop(0, '#062b47'); bg.addColorStop(1, '#0a5478');
+    ctx.fillStyle = bg; ctx.fillRect(0, 0, w, h);
+    return { ctx: ctx, w: w, h: h };
+  }
+  function emptyChart(canvas, title, detail) {
+    if (!canvas) return;
+    var b = canvasBase(canvas), ctx = b.ctx;
+    ctx.strokeStyle = COLORS.grid; ctx.setLineDash([5, 8]);
+    for (var y = 42; y < b.h - 20; y += 40) { ctx.beginPath(); ctx.moveTo(28, y); ctx.lineTo(b.w - 28, y); ctx.stroke(); }
+    ctx.setLineDash([]); ctx.textAlign = 'center'; ctx.fillStyle = '#e7f8ff'; ctx.font = '700 17px Arial'; ctx.fillText(title, b.w / 2, b.h / 2 - 5);
+    ctx.fillStyle = '#91c8df'; ctx.font = '12px Consolas'; ctx.fillText(detail, b.w / 2, b.h / 2 + 22);
+  }
+  function recentTransactions() {
+    var rows = live.signals && Array.isArray(live.signals.recentTransactions) ? live.signals.recentTransactions : [];
+    var now = Date.now(), start = now - 3600000;
+    return rows.filter(function (tx) { var t = Number(tx.t); return t >= start && t <= now + 60000 && (tx.source === 'fomo' || tx.source === 'pumpfun') && tx.signature; });
+  }
+  function drawVelocity() {
+    var canvas = document.getElementById('transactionChart'), legend = document.getElementById('transactionLegend');
+    if (!canvas) return;
+    var rows = recentTransactions();
+    if (!rows.length) {
+      emptyChart(canvas, 'No verified transactions', 'Waiting for signed Fomo and pump.fun events');
+      if (legend) legend.innerHTML = '<span><i style="background:' + COLORS.fomo + '"></i>Fomo 0</span><span><i style="background:' + COLORS.pumpfun + '"></i>Pump.fun 0</span>';
+      return;
     }
-    function niceMax(v) {
-        if (v <= 0) return 1;
-        var mag = Math.pow(10, Math.floor(Math.log(v) / Math.LN10)), n = v / mag;
-        return (n <= 1 ? 1 : n <= 2 ? 2 : n <= 5 ? 5 : 10) * mag;
-    }
-    function pct(s, p) { return s[Math.min(s.length - 1, Math.floor(p * s.length))]; }
-    function esc(s) { return String(s).replace(/[&<>]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]; }); }
-
-    var live = { history: [], events: [], stale: true, source: 'loading' };
-
-    var metrics = [];
-    document.querySelectorAll('.metric').forEach(function (m) {
-        var canvas = m.querySelector('.metric-chart');
-        metrics.push({
-            key: m.getAttribute('data-metric'), canvas: canvas, ctx: canvas.getContext('2d'),
-            legend: m.querySelector('.metric-legend'),
-            unit: m.getAttribute('data-unit') || '', color: m.getAttribute('data-color') || GREEN
-        });
+    var b = canvasBase(canvas), ctx = b.ctx, w = b.w, h = b.h, now = Date.now(), start = now - 3600000;
+    var bins = Array.from({ length: 12 }, function () { return { fomo: 0, pumpfun: 0 }; });
+    rows.forEach(function (tx) { var i = Math.min(11, Math.max(0, Math.floor((Number(tx.t) - start) / 300000))); bins[i][tx.source]++; });
+    var max = Math.max(1, Math.max.apply(null, bins.map(function (x) { return x.fomo + x.pumpfun; })));
+    var left = 42, right = 24, top = 25, bottom = 38, plotW = w - left - right, plotH = h - top - bottom;
+    ctx.strokeStyle = COLORS.grid; ctx.lineWidth = 1; ctx.font = '10px Consolas'; ctx.fillStyle = '#8fc7df';
+    for (var g = 0; g <= 4; g++) { var gy = top + plotH * g / 4; ctx.beginPath(); ctx.moveTo(left, gy); ctx.lineTo(w - right, gy); ctx.stroke(); ctx.textAlign = 'right'; ctx.fillText(String(Math.round(max * (4 - g) / 4)), left - 8, gy + 3); }
+    var slot = plotW / bins.length, bw = Math.max(10, slot - 10);
+    bins.forEach(function (bin, i) {
+      var x = left + i * slot + (slot - bw) / 2, pumpH = plotH * bin.pumpfun / max, fomoH = plotH * bin.fomo / max, base = top + plotH;
+      if (pumpH) { ctx.fillStyle = COLORS.pumpfun; ctx.fillRect(x, base - pumpH, bw, pumpH); }
+      if (fomoH) { ctx.fillStyle = COLORS.fomo; ctx.fillRect(x, base - pumpH - fomoH, bw, fomoH); }
+      if (i % 3 === 0) { ctx.textAlign = 'center'; ctx.fillStyle = '#8fc7df'; ctx.fillText(et(start + i * 300000, false), x + bw / 2, h - 16); }
     });
-
-    // pull one metric's value series + matching timestamps straight from the server history
-    function seriesFor(key) {
-        var h = live.history || [], vals = [], times = [];
-        for (var i = 0; i < h.length; i++) { vals.push(h[i][key] || 0); times.push(h[i].t); }
-        if (vals.length === 0) { vals = [0]; times = [Date.now()]; }
-        return { vals: vals, times: times };
+    var by = live.signals.bySource || {};
+    if (legend) legend.innerHTML = '<span><i style="background:' + COLORS.fomo + '"></i>Fomo <b>' + fmt(by.fomo) + '</b></span><span><i style="background:' + COLORS.pumpfun + '"></i>Pump.fun <b>' + fmt(by.pumpfun) + '</b></span><span>Last hour <b>' + fmt(rows.length) + '</b></span>';
+  }
+  function drawCredits() {
+    var canvas = document.getElementById('creditChart'), legend = document.getElementById('creditLegend');
+    if (!canvas) return;
+    var signals = live.signals;
+    if (!signals || signals.totalVerified == null) {
+      emptyChart(canvas, 'No runtime balance', 'A live signed event gateway is required');
+      if (legend) legend.innerHTML = '<span>Verified <b>0</b></span><span>Built <b>0</b></span><span>Queued <b>0</b></span>';
+      setText('creditChartState', 'No Runtime Data'); return;
     }
-
-    function draw(m) {
-        var ctx = m.ctx, W = m.canvas.width, H = m.canvas.height;
-        var ser = seriesFor(m.key), d = ser.vals, times = ser.times;
-        var PADL = 46, PADR = 34, PADT = 8, PADB = 18;
-        var px0 = PADL, py0 = PADT, pw = W - PADL - PADR, ph = H - PADT - PADB;
-        var maxV = niceMax(Math.max.apply(null, d) * 1.08) || 1;
-        var n = d.length;
-        function X(i) { return n <= 1 ? px0 + pw : px0 + pw * i / (n - 1); }
-        function Y(v) { return py0 + ph - (v / maxV) * ph; }
-
-        ctx.clearRect(0, 0, W, H);
-        ctx.fillStyle = '#082f4c'; ctx.fillRect(0, 0, W, H);
-        ctx.fillStyle = '#0a4264'; ctx.fillRect(px0, py0, pw, ph);
-        ctx.font = '9px Consolas, monospace'; ctx.textBaseline = 'middle';
-        for (var g = 0; g <= 4; g++) {
-            var val = maxV * g / 4, y = Y(val);
-            ctx.strokeStyle = (g === 0) ? 'rgba(214,242,255,.45)' : 'rgba(183,225,244,.16)';
-            ctx.beginPath(); ctx.moveTo(px0, y + 0.5); ctx.lineTo(px0 + pw, y + 0.5); ctx.stroke();
-            ctx.fillStyle = '#d9f3ff'; ctx.textAlign = 'right'; ctx.fillText(fmt(val), px0 - 5, y);
-        }
-        ctx.textAlign = 'center'; ctx.textBaseline = 'top';
-        for (var vx = 0; vx <= 5; vx++) {
-            var i = Math.round((n - 1) * vx / 5), x = X(i);
-            ctx.strokeStyle = 'rgba(183,225,244,.12)'; ctx.beginPath(); ctx.moveTo(x + 0.5, py0); ctx.lineTo(x + 0.5, py0 + ph); ctx.stroke();
-            ctx.fillStyle = '#b9deef'; ctx.fillText(hm(times[i]), x, py0 + ph + 3);
-        }
-        // filled area + line
-        ctx.beginPath(); ctx.moveTo(X(0), py0 + ph);
-        for (var a = 0; a < n; a++) ctx.lineTo(X(a), Y(d[a]));
-        ctx.lineTo(X(n - 1), py0 + ph); ctx.closePath();
-        ctx.fillStyle = m.color + '4d'; ctx.fill();
-        ctx.beginPath();
-        for (var bb = 0; bb < n; bb++) { var xx = X(bb), yy = Y(d[bb]); if (bb === 0) ctx.moveTo(xx, yy); else ctx.lineTo(xx, yy); }
-        ctx.strokeStyle = m.color; ctx.lineWidth = 1.4; ctx.stroke();
-        ctx.strokeStyle = RED; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(px0, Y(0) + 0.5); ctx.lineTo(px0 + pw, Y(0) + 0.5); ctx.stroke();
-        ctx.fillStyle = m.color; ctx.beginPath(); ctx.arc(X(n - 1), Y(d[n - 1]), 2, 0, 7); ctx.fill();
-        ctx.strokeStyle = 'rgba(214,242,255,.32)'; ctx.lineWidth = 1; ctx.strokeRect(px0 + 0.5, py0 + 0.5, pw, ph);
-        ctx.save(); ctx.translate(11, py0 + ph / 2); ctx.rotate(-Math.PI / 2);
-        ctx.fillStyle = '#d9f3ff'; ctx.font = 'bold 9px Consolas, monospace'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-        ctx.fillText(m.unit, 0, 0); ctx.restore();
-        ctx.save(); ctx.translate(W - 9, py0 + ph / 2); ctx.rotate(Math.PI / 2);
-        ctx.fillStyle = '#74abc5'; ctx.font = '8px Consolas, monospace'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
-        ctx.fillText('RRDTOOL / NUTTUM.AI', 0, 0); ctx.restore();
+    var verified = Math.max(0, Number(signals.totalVerified || 0)), consumed = Math.max(0, Math.min(verified, Number(live.signalConsumed || 0))), queue = Math.max(0, verified - consumed);
+    var b = canvasBase(canvas), ctx = b.ctx, w = b.w, h = b.h;
+    var items = [{ label: 'VERIFIED TRADES', value: verified, color: COLORS.fomo }, { label: 'BLOCKS PLACED', value: consumed, color: COLORS.consumed }, { label: 'CREDITS QUEUED', value: queue, color: COLORS.queue }];
+    var max = Math.max(1, verified), x0 = 190, barW = w - x0 - 46;
+    items.forEach(function (item, i) {
+      var y = 42 + i * 68; ctx.fillStyle = '#9ccfe3'; ctx.font = '10px Consolas'; ctx.textAlign = 'left'; ctx.fillText(item.label, 28, y + 9);
+      ctx.fillStyle = '#f4fbff'; ctx.font = '700 24px Arial'; ctx.fillText(fmt(item.value), 28, y + 34);
+      ctx.fillStyle = 'rgba(216,244,255,.11)'; ctx.fillRect(x0, y, barW, 28);
+      ctx.fillStyle = item.color; ctx.fillRect(x0, y, barW * item.value / max, 28);
+      ctx.fillStyle = '#dff5ff'; ctx.font = '10px Consolas'; ctx.textAlign = 'right'; ctx.fillText(Math.round(item.value / max * 100) + '%', w - 28, y + 18);
+    });
+    setText('creditChartState', queue ? fmt(queue) + ' Waiting' : 'Queue Clear');
+    if (legend) legend.innerHTML = '<span>Rule <b>1 verified TX = 1 block credit</b></span><span>Consumed <b>' + fmt(consumed) + '</b></span><span>Remaining <b>' + fmt(queue) + '</b></span>';
+  }
+  function renderFeed() {
+    var feed = document.getElementById('transactionFeed'); if (!feed) return;
+    var rows = live.signals && Array.isArray(live.signals.recentTransactions) ? live.signals.recentTransactions.slice().sort(function (a, b) { return Number(b.t) - Number(a.t); }) : [];
+    feed.innerHTML = '';
+    if (!rows.length) {
+      var empty = document.createElement('div'); empty.className = 'tx-empty'; empty.innerHTML = '<strong>No verified TX received</strong><span>The feed remains empty until a signed provider adapter submits real transactions.</span>'; feed.appendChild(empty); return;
     }
+    rows.slice(0, 160).forEach(function (tx) {
+      var row = document.createElement('div'); row.className = 'tx-row';
+      var meta = document.createElement('div'); meta.className = 'tx-meta';
+      var source = document.createElement('span'); source.className = 'tx-source ' + tx.source; source.textContent = tx.source === 'pumpfun' ? 'PUMP.FUN' : 'FOMO';
+      var time = document.createElement('time'); time.textContent = et(Number(tx.t), true) + ' ET'; meta.appendChild(source); meta.appendChild(time);
+      var link = document.createElement('a'); link.className = 'tx-signature'; link.href = 'https://solscan.io/tx/' + encodeURIComponent(tx.signature); link.target = '_blank'; link.rel = 'noopener'; link.textContent = tx.signature;
+      row.appendChild(meta); row.appendChild(link); feed.appendChild(row);
+    });
+  }
+  function renderStatus() {
+    var source = live.source, fresh = source === 'live' && !live.stale;
+    document.querySelectorAll('.runtime-mode').forEach(function (el) { el.textContent = fresh ? 'Live Verified Feed' : source === 'live' ? 'Stale Runtime' : source === 'snapshot' ? 'No Market Snapshot' : 'Runtime Offline'; });
+    setText('txFeedState', fresh ? 'Live' : source === 'live' ? 'Stale' : 'Offline');
+    var light = document.getElementById('txFeedLight'); if (light) light.classList.toggle('offline', !fresh);
+    var note = document.getElementById('marketDataNotice');
+    if (note) note.querySelector('span:last-child').innerHTML = fresh ? '<strong>Verified feed online.</strong> Every row below was accepted by the signed gateway and deduplicated by transaction ID.' : '<strong>Runtime offline.</strong> No current transaction feed is configured. Historical builder activity is excluded from these market charts.';
+    var signals = live.signals || {}, by = signals.bySource || {};
+    setText('fomoCount', signals.totalVerified == null ? 'Awaiting Feed' : fmt(by.fomo || 0) + ' Verified');
+    setText('pumpfunCount', signals.totalVerified == null ? 'Awaiting Feed' : fmt(by.pumpfun || 0) + ' Verified');
+    setText('blockQueue', signals.totalVerified == null ? 'Runtime Offline' : fmt(Math.max(0, Number(signals.totalVerified || 0) - Number(live.signalConsumed || 0))) + ' Credits Queued');
+  }
+  function applyData(data, source) {
+    data.source = source; data.stale = source !== 'live' || Date.now() - Number(data.ts || 0) > 15000; live = data;
+    renderStatus(); drawVelocity(); drawCredits(); renderFeed();
+  }
+  (function poll() {
+    var load = remote ? request(remote).then(function (d) { applyData(d, 'live'); return 2000; }).catch(function () { return request(snapshot).then(function (d) { applyData(d, 'snapshot'); return 30000; }); }) : request(snapshot).then(function (d) { applyData(d, 'snapshot'); return 30000; });
+    load.catch(function () { live.source = 'offline'; live.stale = true; renderStatus(); drawVelocity(); drawCredits(); renderFeed(); return 10000; }).then(function (delay) { setTimeout(poll, delay || 10000); });
+  })();
 
-    function updateLegend(m) {
-        var d = seriesFor(m.key).vals, cur = d[d.length - 1];
-        var s = d.slice().sort(function (a, b) { return a - b; });
-        var avg = d.reduce(function (a, b) { return a + b; }, 0) / d.length;
-        function c(l, v, strong) { return l + ':' + (strong ? '<b>' : '') + String(fmt(v)).padStart(7) + (strong ? '</b>' : ''); }
-        m.legend.innerHTML = '<div class="lg-row"><span class="sw" style="background:' + m.color + '"></span>' +
-            'Nuttum ' + c(' Min', s[0]) + '  ' + c('Avg', avg) + '  ' + c('90th', pct(s, 0.9)) + '  ' +
-            c('Max', s[s.length - 1]) + '  ' + c('Cur', cur, true) + '  ' + m.unit + (live.source === 'snapshot' ? '  [snapshot]' : live.stale ? '  [stale]' : '  [live]') + '</div>';
+  function pad2(n) { return (n < 10 ? '0' : '') + n; }
+  (function tickHud() {
+    var up = document.getElementById('hudUptime'), est = document.getElementById('hudEst');
+    if (up) {
+      if (live.source !== 'live' || !live.startedAt) up.textContent = '--:--:--';
+      else { var sec = Math.max(0, Math.floor((Date.now() - live.startedAt) / 1000)), hh = Math.floor(sec / 3600); up.textContent = (hh >= 100 ? hh : pad2(hh)) + ':' + pad2(Math.floor((sec % 3600) / 60)) + ':' + pad2(sec % 60); }
     }
-
-    function renderCharts() { metrics.forEach(function (m) { draw(m); updateLegend(m); }); }
-
-    // ---- realtime feed (real bot events) ----
-    var feed = document.getElementById('nuttumFeed');
-    function renderFeed() {
-        if (!feed) return;
-        var evs = live.events || [];
-        feed.innerHTML = '';
-        if (!evs.length) {
-            var d0 = document.createElement('div'); d0.className = 'feed-line';
-            d0.innerHTML = '<span class="feed-time">--:--:--</span> <span class="feed-tag">SYS</span> waiting for Nuttum...';
-            feed.appendChild(d0);
-        }
-        evs.forEach(function (e) {
-            var d = document.createElement('div'); d.className = 'feed-line';
-            d.innerHTML = '<span class="feed-time">' + esc(e.t || '') + '</span> <span class="feed-tag">' + esc(e.tag || '') + '</span> ' + esc(e.msg || '');
-            feed.appendChild(d);
-        });
-        feed.scrollTop = feed.scrollHeight;
-    }
-
-    function request(url) {
-        return fetch(url + (url.indexOf('?') >= 0 ? '&' : '?') + '_=' + Date.now(), { cache: 'no-store' })
-            .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); });
-    }
-    function applyData(d, source) {
-        d.source = source;
-        d.stale = source !== 'live' || (Date.now() - (d.ts || 0)) > 15000;
-        live = d; renderCharts(); renderFeed();
-        var signals = d.signals || {}, by = signals.bySource || {};
-        var fomo = document.getElementById('fomoCount'), pump = document.getElementById('pumpfunCount'), queue = document.getElementById('blockQueue');
-        if (fomo) fomo.textContent = signals.totalVerified == null ? 'Awaiting Feed' : fmt(by.fomo || 0) + ' Verified';
-        if (pump) pump.textContent = signals.totalVerified == null ? 'Awaiting Feed' : fmt(by.pumpfun || 0) + ' Verified';
-        if (queue) queue.textContent = signals.totalVerified == null ? 'Runtime Offline' : fmt(Math.max(0, (signals.totalVerified || 0) - (d.signalConsumed || 0))) + ' Credits Queued';
-        document.querySelectorAll('.runtime-mode').forEach(function (el) {
-            el.textContent = source === 'live' && !d.stale ? 'Live Runtime' : source === 'live' ? 'Stale Runtime' : 'Historical Snapshot';
-        });
-    }
-    (function poll() {
-        var load = REMOTE
-            ? request(REMOTE).then(function (d) { applyData(d, 'live'); return 2000; })
-                .catch(function () { return request(SNAPSHOT).then(function (d) { applyData(d, 'snapshot'); return 30000; }); })
-            : request(SNAPSHOT).then(function (d) { applyData(d, 'snapshot'); return 30000; });
-        load.catch(function () { live.stale = true; live.source = 'offline'; renderCharts(); renderFeed(); return 10000; })
-            .then(function (delay) { setTimeout(poll, delay || 10000); });
-    })();
-
-    // ---- live-cam HUD: total uptime (to the second) + US Eastern time ----
-    function pad2(n) { return (n < 10 ? '0' : '') + n; }
-    function startFrom() {
-        if (live.startedAt) return live.startedAt;
-        var h = live.history || [];
-        return h.length ? h[0].t : Date.now();
-    }
-    (function tickHud() {
-        var up = document.getElementById('hudUptime'), est = document.getElementById('hudEst');
-        if (up) {
-            var s = Math.max(0, Math.floor((Date.now() - startFrom()) / 1000));
-            var hh = Math.floor(s / 3600), mm = Math.floor((s % 3600) / 60), ss = s % 60;
-            up.textContent = (hh >= 100 ? hh : pad2(hh)) + ':' + pad2(mm) + ':' + pad2(ss);
-        }
-        if (est) {
-            est.textContent = new Date().toLocaleTimeString('en-US', {
-                timeZone: 'America/New_York', hour12: false, hour: '2-digit', minute: '2-digit', second: '2-digit'
-            }) + ' ET';
-        }
-        setTimeout(tickHud, 1000);
-    })();
+    if (est) est.textContent = et(Date.now(), true) + ' ET';
+    setTimeout(tickHud, 1000);
+  })();
+  window.addEventListener('resize', function () { drawVelocity(); drawCredits(); });
 })();

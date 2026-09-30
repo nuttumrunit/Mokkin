@@ -2,6 +2,8 @@
 // For 24/7 service, replace the empty values with stable HTTPS hostnames from a named tunnel.
 window.NUTTUM = {
   cam: '',
+  camMode: 'viewer', // viewer = interactive iframe, image = refreshed real cam.jpg
+  health: '',
   map: '',
   data: '',
   snapshot: 'nuttum-live.json',

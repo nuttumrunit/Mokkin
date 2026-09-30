@@ -10,8 +10,10 @@ const PORT = Number(process.env.NUTTUM_SIGNAL_PORT || 8891)
 const FILE = path.resolve(process.env.NUTTUM_SIGNAL_FILE || path.join(__dirname, 'signals.json'))
 const SECRET = process.env.NUTTUM_WEBHOOK_SECRET || ''
 const SOURCES = new Set(['fomo', 'pumpfun'])
-let state = { version: 1, totalVerified: 0, bySource: { fomo: 0, pumpfun: 0 }, seen: {}, updatedAt: null }
+let state = { version: 1, totalVerified: 0, bySource: { fomo: 0, pumpfun: 0 }, seen: {}, recentTransactions: [], updatedAt: null }
 try { state = Object.assign(state, JSON.parse(fs.readFileSync(FILE, 'utf8'))) } catch (_) {}
+state.bySource = Object.assign({ fomo: 0, pumpfun: 0 }, state.bySource || {})
+state.seen = state.seen || {}; state.recentTransactions = state.recentTransactions || []
 
 function save () {
   state.updatedAt = new Date().toISOString()
@@ -40,7 +42,12 @@ function ingest (source, payload) {
     if (!tx || tx.length < 12) { rejected.push(index); return }
     const key = source + ':' + tx
     if (state.seen[key]) { duplicates++; return }
-    state.seen[key] = Date.now(); state.totalVerified++; state.bySource[source] = (state.bySource[source] || 0) + 1; accepted++
+    const eventTime = Number(event.timestamp || event.time || event.blockTime || Date.now())
+    const time = eventTime < 100000000000 ? eventTime * 1000 : eventTime
+    state.seen[key] = Date.now(); state.totalVerified++; state.bySource[source] = (state.bySource[source] || 0) + 1
+    state.recentTransactions.push({ source, signature: tx, t: Number.isFinite(time) ? time : Date.now() })
+    if (state.recentTransactions.length > 500) state.recentTransactions = state.recentTransactions.slice(-500)
+    accepted++
   })
   trimSeen(); if (accepted) save()
   return { accepted, duplicates, rejected, totalVerified: state.totalVerified, bySource: state.bySource }
@@ -48,7 +55,7 @@ function ingest (source, payload) {
 
 http.createServer((req, res) => {
   if (req.method === 'OPTIONS') { res.writeHead(204, { 'access-control-allow-origin': '*', 'access-control-allow-methods': 'GET,POST,OPTIONS', 'access-control-allow-headers': 'content-type,x-nuttum-signature' }); return res.end() }
-  if (req.method === 'GET' && (req.url === '/health' || req.url === '/signals')) return json(res, 200, { ok: true, authRequired: Boolean(SECRET), ...state })
+  if (req.method === 'GET' && (req.url === '/health' || req.url === '/signals')) return json(res, 200, { ok: true, authRequired: Boolean(SECRET), version: state.version, totalVerified: state.totalVerified, bySource: state.bySource, recentTransactions: state.recentTransactions.slice(-200), updatedAt: state.updatedAt })
   const match = req.url.match(/^\/events\/(fomo|pumpfun)$/)
   if (req.method !== 'POST' || !match || !SOURCES.has(match[1])) return json(res, 404, { error: 'not_found' })
   let raw = ''

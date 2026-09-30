@@ -16,8 +16,8 @@
   <title>Nuttum City Console</title>
   <link rel="canonical" href="https://nuttumrunit.github.io/Nuttum/home/">
   <link rel="icon" type="image/png" href="../Nuttum-transparent.png">
-  <link rel="stylesheet" href="dashboard.css?v=2">
-  <script src="config.js?v=4"></script>
+  <link rel="stylesheet" href="dashboard.css?v=3">
+  <script src="config.js?v=5"></script>
 </head>
 <body>
   <div class="page-shell">
@@ -76,6 +76,7 @@
             <div class="panel-heading"><span><i class="panel-light" id="camLight"></i> Builder Camera</span><a id="cameraPopout" href="#" target="_blank" rel="noopener">Open View</a></div>
             <div class="frame-shell">
               <iframe id="camFrame" class="streamframe" src="about:blank" title="Nuttum live builder camera"></iframe>
+              <img id="camImage" class="streamimage" alt="Nuttum live builder camera" hidden>
               <div class="frame-placeholder"><img src="../Nuttum-transparent.png" alt=""><span>Connecting To Builder</span></div>
               <div class="livecam-hud" id="livecamHud">
                 <div><small>Uptime</small><strong id="hudUptime">00:00:00</strong></div>
@@ -95,31 +96,30 @@
 
       <section id="telemetry" class="section-block">
         <div class="section-heading">
-          <div><span class="section-kicker">Prototype Telemetry</span><h2>Builder Output</h2></div>
-          <p>These charts report the current builder prototype. Fomo and pump.fun transaction adapters are the next data layer.</p>
+          <div><span class="section-kicker">Verified Market Data</span><h2>Market Activity</h2></div>
+          <p>Only signed, deduplicated Fomo and pump.fun transactions appear in this section.</p>
         </div>
-        <div class="integration-note">
+        <div class="integration-note" id="marketDataNotice">
           <span class="note-icon"><img src="../badges/icon_trade_block.svg" alt=""></span>
-          <span><strong>Market gateway is ready.</strong> Verified, deduplicated events are accepted by the runtime. Public Fomo and pump.fun feeds remain disabled until their exact provider endpoints are configured.</span>
+          <span><strong>Runtime offline.</strong> No current transaction feed is configured. Historical builder activity is excluded from these market charts.</span>
         </div>
-        <div class="telemetry-layout">
-          <div class="metric-stack">
-            <article class="metric console-panel" data-metric="rate" data-unit="blk/min" data-color="#67efad">
-              <div class="metric-head"><span>Builder Output Rate</span><small class="runtime-mode">Verified Snapshot</small></div>
-              <canvas class="metric-chart" width="640" height="190"></canvas><div class="metric-legend"></div>
+        <div class="telemetry-layout market-layout">
+          <div class="metric-stack market-charts">
+            <article class="metric console-panel market-chart-card">
+              <div class="metric-head"><span>Transaction Velocity</span><small class="runtime-mode">Runtime Offline</small></div>
+              <div class="chart-summary"><span><small>Window</small><strong>Last 60 Minutes</strong></span><span><small>Resolution</small><strong>5 Minute Buckets</strong></span></div>
+              <canvas id="transactionChart" class="metric-chart market-canvas" width="760" height="260" aria-label="Fomo and pump.fun verified transactions over the last hour"></canvas>
+              <div class="market-legend" id="transactionLegend"></div>
             </article>
-            <article class="metric console-panel" data-metric="total" data-unit="blocks" data-color="#ffd166">
-              <div class="metric-head"><span>Total Blocks Placed</span><small class="runtime-mode">Verified Snapshot</small></div>
-              <canvas class="metric-chart" width="640" height="190"></canvas><div class="metric-legend"></div>
-            </article>
-            <article class="metric console-panel" data-metric="buildings" data-unit="builds" data-color="#ff9b6a">
-              <div class="metric-head"><span>Structures Completed</span><small class="runtime-mode">Verified Snapshot</small></div>
-              <canvas class="metric-chart" width="640" height="190"></canvas><div class="metric-legend"></div>
+            <article class="metric console-panel market-chart-card">
+              <div class="metric-head"><span>Signal To Block Balance</span><small id="creditChartState">No Runtime Data</small></div>
+              <canvas id="creditChart" class="metric-chart market-canvas" width="760" height="260" aria-label="Verified transactions, consumed block credits and queued credits"></canvas>
+              <div class="market-legend" id="creditLegend"></div>
             </article>
           </div>
-          <aside class="console-panel feed-panel">
-            <div class="panel-heading"><span><i class="panel-light"></i> Builder Event Feed</span><span class="panel-state">Auto Refresh</span></div>
-            <div class="feed-scroll" id="nuttumFeed"></div>
+          <aside class="console-panel feed-panel tx-feed-panel">
+            <div class="panel-heading"><span><i class="panel-light" id="txFeedLight"></i> Verified Transaction Feed</span><span class="panel-state" id="txFeedState">Offline</span></div>
+            <div class="feed-scroll tx-feed-scroll" id="transactionFeed"></div>
           </aside>
         </div>
       </section>
@@ -189,9 +189,9 @@
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="javascript/runtime.js?v=1"></script>
+  <script src="javascript/runtime.js?v=2"></script>
   <script src="javascript/nuttumchat.js?v=4"></script>
-  <script src="javascript/nuttumdata.js?v=6"></script>
+  <script src="javascript/nuttumdata.js?v=7"></script>
   <script src="javascript/guestbook.js?v=4"></script>
   <script>
     (function () {

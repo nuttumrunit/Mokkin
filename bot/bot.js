@@ -52,7 +52,8 @@ const SIGNAL_MODE = (process.env.NUTTUM_SIGNAL_MODE || 'market').toLowerCase()
 const MILESTONES = String(process.env.NUTTUM_MILESTONE_BLOCKS || '').split(',').map(Number).filter(n => Number.isInteger(n) && n > 0).sort((a, b) => a - b)
 let signalConsumed = 0; try { signalConsumed = JSON.parse(fs.readFileSync(SIGNAL_USAGE, 'utf8')).consumed || 0 } catch (_) {}
 let milestoneLog = []; try { milestoneLog = JSON.parse(fs.readFileSync(MILESTONE_FILE, 'utf8')) } catch (_) {}
-function signalState () { try { return JSON.parse(fs.readFileSync(SIGNAL_FILE, 'utf8')) } catch (_) { return { totalVerified: 0, bySource: { fomo: 0, pumpfun: 0 } } } }
+function signalState () { try { return JSON.parse(fs.readFileSync(SIGNAL_FILE, 'utf8')) } catch (_) { return { totalVerified: 0, bySource: { fomo: 0, pumpfun: 0 }, recentTransactions: [] } } }
+function publicSignals () { const s = signalState(); return { totalVerified: s.totalVerified || 0, bySource: s.bySource || { fomo: 0, pumpfun: 0 }, recentTransactions: (s.recentTransactions || []).slice(-200), updatedAt: s.updatedAt || null } }
 function saveSignalUse () { fs.writeFileSync(SIGNAL_USAGE, JSON.stringify({ consumed: signalConsumed, updatedAt: new Date().toISOString() }, null, 2)) }
 function checkMilestone () {
   if (!MILESTONES.includes(signalConsumed) || milestoneLog.some(m => m.blocks === signalConsumed)) return
@@ -78,13 +79,14 @@ function writeLive() {
   try {
     fs.writeFileSync(SITE_LIVE, JSON.stringify({
       ts: Date.now(), startedAt, totalBlocks, blocksPerMin: bpm(), buildings: buildingsCount(),
-      signalMode: SIGNAL_MODE, signalConsumed, signals: signalState(),
+      signalMode: SIGNAL_MODE, signalConsumed, signals: publicSignals(),
       history: history.slice(-180), events: events.slice(-40)
     }))
   } catch (e) {}
 }
 function sampleHistory() {                         // one real datapoint every 5s, kept server-side (persistent)
-  history.push({ t: Date.now(), rate: bpm(), total: totalBlocks, buildings: buildingsCount() })
+  const ss = publicSignals()
+  history.push({ t: Date.now(), rate: bpm(), total: totalBlocks, buildings: buildingsCount(), verified: ss.totalVerified, fomo: ss.bySource.fomo || 0, pumpfun: ss.bySource.pumpfun || 0, consumed: signalConsumed, queue: Math.max(0, ss.totalVerified - signalConsumed) })
   if (history.length > 200) history = history.slice(-200)
   try { fs.writeFileSync(STATE, JSON.stringify({ startedAt, totalBlocks, history })) } catch (e) {}
 }

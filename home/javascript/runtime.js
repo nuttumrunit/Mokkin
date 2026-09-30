@@ -1,28 +1,35 @@
 (function () {
   var cfg = window.NUTTUM || {};
   function setText(id, text) { var el = document.getElementById(id); if (el) el.textContent = text; }
+  function setOffline(kind, offline) {
+    var frame = document.getElementById(kind + 'Frame'), shell = frame && frame.parentElement, light = document.getElementById(kind + 'Light');
+    if (shell) shell.classList.toggle('service-offline', offline);
+    if (light) light.classList.toggle('offline', offline);
+  }
   function setFrame(kind, url) {
     var frame = document.getElementById(kind + 'Frame');
     var shell = frame && frame.parentElement;
     var placeholder = shell && shell.querySelector('.frame-placeholder span');
-    var light = document.getElementById(kind + 'Light');
     var retry = document.getElementById(kind + 'Retry');
     if (!frame || !shell) return;
     if (!url) {
-      shell.classList.add('service-offline');
+      setOffline(kind, true);
       if (placeholder) placeholder.textContent = kind === 'cam' ? 'Builder Host Offline' : 'World Map Offline';
-      if (light) light.classList.add('offline');
       if (retry) retry.hidden = true;
       return;
     }
-    shell.classList.remove('service-offline');
-    if (placeholder) placeholder.textContent = 'Connecting';
-    frame.src = url;
+    setOffline(kind, false); if (placeholder) placeholder.textContent = 'Connecting To Live Service';
+    if (kind === 'cam' && cfg.camMode === 'image') {
+      var image = document.getElementById('camImage'); frame.hidden = true; image.hidden = false;
+      var refresh = function () { image.src = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_=' + Date.now(); };
+      image.onload = function () { shell.classList.add('frame-loaded'); setOffline(kind, false); setTimeout(refresh, 2500); };
+      image.onerror = function () { shell.classList.remove('frame-loaded'); setOffline(kind, true); if (placeholder) placeholder.textContent = 'Live Camera Disconnected'; setTimeout(refresh, 5000); };
+      refresh();
+    } else {
+      frame.src = url;
+      frame.addEventListener('load', function () { shell.classList.add('frame-loaded'); setOffline(kind, false); }, { once: true });
+    }
     if (retry) { retry.hidden = false; retry.href = url; }
-    frame.addEventListener('load', function () {
-      shell.classList.add('frame-loaded');
-      if (light) light.classList.remove('offline');
-    }, { once: true });
   }
   setFrame('cam', cfg.cam);
   setFrame('map', cfg.map);
