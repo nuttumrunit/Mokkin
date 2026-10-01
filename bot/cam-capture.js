@@ -4,7 +4,7 @@
 require('dotenv').config({ path: require('path').join(__dirname, '.env') })
 const { chromium } = require('playwright')
 const path = require('path')
-const OUT = path.resolve(process.env.NUTTUM_CAM_FILE || path.join(__dirname, '..', 'home', 'cam.jpg'))
+const OUT = path.resolve(process.env.NUTTUM_CAM_FILE || path.join(__dirname, '..', 'data', 'cam.jpg'))
 const URL = process.env.NUTTUM_VIEWER_URL || 'http://localhost:' + (process.env.NUTTUM_VIEWER_PORT || 3007)
 
 ;(async () => {

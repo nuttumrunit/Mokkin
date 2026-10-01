@@ -12,19 +12,19 @@
   <meta property="og:type" content="website">
   <meta property="og:description" content="The market sets the pace. The AI builds the city.">
   <meta property="og:url" content="https://mokkin.fun/home/">
-  <meta property="og:image" content="https://mokkin.fun/Mokkin-transparent.png">
+  <meta property="og:image" content="https://mokkin.fun/assets/brand/mokkin.png">
   <title>Mokkin City Console</title>
   <link rel="canonical" href="https://mokkin.fun/home/">
-  <link rel="icon" type="image/png" href="../Mokkin-transparent.png">
-  <link rel="stylesheet" href="dashboard.css?v=3">
-  <link rel="stylesheet" href="../github-browser.css">
-  <script src="config.js?v=5"></script>
+  <link rel="icon" type="image/png" href="../assets/brand/mokkin.png">
+  <link rel="stylesheet" href="../assets/css/dashboard.css?v=1">
+  <link rel="stylesheet" href="../assets/css/repository-browser.css">
+  <script src="../assets/js/config.js?v=1"></script>
 </head>
 <body>
   <div class="page-shell">
     <header class="topbar">
       <a class="brand" href="../">
-        <img src="../Mokkin-transparent.png" alt="Mokkin">
+        <img src="../assets/brand/mokkin.png" alt="Mokkin">
         <span><strong>Mokkin</strong><small>AI City Console</small></span>
       </a>
       <nav class="main-nav" aria-label="Primary navigation">
@@ -47,7 +47,7 @@
             <a class="secondary-action" href="../story.html">Read The Full Story</a>
           </div>
           <div class="contract-bar" aria-label="Mokkin contract address">
-            <span class="contract-icon"><img src="../badges/icon_solana.svg" alt=""></span>
+            <span class="contract-icon"><img src="../assets/icons/icon_solana.svg" alt=""></span>
             <span class="contract-copy"><small>Contract Address</small><strong id="contractValue">TBA</strong><em id="contractNote">Published here after launch</em></span>
             <button id="contractCopy" type="button" disabled>Copy</button>
           </div>
@@ -55,16 +55,16 @@
         <div class="hero-visual" aria-label="Mokkin builder">
           <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
           <span class="orbit-block block-one"></span><span class="orbit-block block-two"></span><span class="orbit-block block-three"></span>
-          <div class="logo-stage"><img src="../Mokkin-transparent.png" alt="Mokkin"></div>
+          <div class="logo-stage"><img src="../assets/brand/mokkin.png" alt="Mokkin"></div>
           <div class="visual-caption"><span>Builder Core</span><strong>Integration Mode</strong></div>
         </div>
       </section>
 
       <section class="system-ribbon" aria-label="Mokkin system rules">
-        <article class="ribbon-card"><span class="ribbon-icon"><img src="../badges/icon_fomo.svg" alt=""></span><span><small>Signal Source</small><strong>Fomo</strong><em id="fomoCount">Awaiting Feed</em></span></article>
-        <article class="ribbon-card"><span class="ribbon-icon"><img src="../badges/icon_pumpfun_system.svg" alt=""></span><span><small>Signal Source</small><strong>Pump.fun</strong><em id="pumpfunCount">Awaiting Feed</em></span></article>
-        <article class="ribbon-card"><span class="ribbon-icon"><img src="../badges/icon_trade_block.svg" alt=""></span><span><small>Build Rule</small><strong>1 TX = 1 Block</strong><em id="blockQueue">Runtime Offline</em></span></article>
-        <article class="ribbon-card"><span class="ribbon-icon"><img src="../badges/icon_burn.svg" alt=""></span><span><small>Milestone</small><strong>Buyback + Burn</strong><em id="milestoneState">Threshold TBA</em></span></article>
+        <article class="ribbon-card"><span class="ribbon-icon"><img src="../assets/icons/icon_fomo.svg" alt=""></span><span><small>Signal Source</small><strong>Fomo</strong><em id="fomoCount">Awaiting Feed</em></span></article>
+        <article class="ribbon-card"><span class="ribbon-icon"><img src="../assets/icons/icon_pumpfun_system.svg" alt=""></span><span><small>Signal Source</small><strong>Pump.fun</strong><em id="pumpfunCount">Awaiting Feed</em></span></article>
+        <article class="ribbon-card"><span class="ribbon-icon"><img src="../assets/icons/icon_trade_block.svg" alt=""></span><span><small>Build Rule</small><strong>1 TX = 1 Block</strong><em id="blockQueue">Runtime Offline</em></span></article>
+        <article class="ribbon-card"><span class="ribbon-icon"><img src="../assets/icons/icon_burn.svg" alt=""></span><span><small>Milestone</small><strong>Buyback + Burn</strong><em id="milestoneState">Threshold TBA</em></span></article>
       </section>
 
       <section id="live" class="section-block">
@@ -78,7 +78,7 @@
             <div class="frame-shell">
               <iframe id="camFrame" class="streamframe" src="about:blank" title="Mokkin live builder camera"></iframe>
               <img id="camImage" class="streamimage" alt="Mokkin live builder camera" hidden>
-              <div class="frame-placeholder"><img src="../Mokkin-transparent.png" alt=""><span>Connecting To Builder</span></div>
+              <div class="frame-placeholder"><img src="../assets/brand/mokkin.png" alt=""><span>Connecting To Builder</span></div>
               <div class="livecam-hud" id="livecamHud">
                 <div><small>Uptime</small><strong id="hudUptime">00:00:00</strong></div>
                 <div><small>Eastern Time</small><strong id="hudEst">00:00:00 ET</strong></div>
@@ -89,7 +89,7 @@
             <div class="panel-heading"><span><i class="panel-light map-light" id="mapLight"></i> World Map</span><a class="panel-state" id="mapRetry" href="#" target="_blank" rel="noopener" hidden>Open Map</a></div>
             <div class="frame-shell">
               <iframe id="mapFrame" class="streamframe" src="about:blank" title="Mokkin world map"></iframe>
-              <div class="frame-placeholder map-placeholder"><img src="../badges/icon_builder.svg" alt=""><span>Loading World Map</span></div>
+              <div class="frame-placeholder map-placeholder"><img src="../assets/icons/icon_builder.svg" alt=""><span>Loading World Map</span></div>
             </div>
           </article>
         </div>
@@ -101,7 +101,7 @@
           <p>Only successful, deduplicated onchain Fomo and pump.fun transactions appear in this section.</p>
         </div>
         <div class="integration-note" id="marketDataNotice">
-          <span class="note-icon"><img src="../badges/icon_trade_block.svg" alt=""></span>
+          <span class="note-icon"><img src="../assets/icons/icon_trade_block.svg" alt=""></span>
           <span><strong>Runtime offline.</strong> No current transaction feed is configured. Historical builder activity is excluded from these market charts.</span>
         </div>
         <div class="telemetry-layout market-layout">
@@ -131,10 +131,10 @@
           <p>A public, inspectable pipeline replaces arbitrary timers and unlimited build speed.</p>
         </div>
         <div class="route-grid">
-          <article class="route-step"><span>01</span><img src="../badges/icon_fomo.svg" alt=""><small>Observe</small><h3>Platform Trade</h3><p>An eligible trade is detected across Fomo or pump.fun.</p></article>
-          <article class="route-step"><span>02</span><img src="../badges/icon_trade_block.svg" alt=""><small>Verify</small><h3>Clean The Signal</h3><p>The chain result is checked and duplicate signatures are rejected.</p></article>
-          <article class="route-step"><span>03</span><img src="../badges/icon_builder.svg" alt=""><small>Plan</small><h3>AI Chooses The Build</h3><p>The market sets the timing. Mokkin decides where the block belongs.</p></article>
-          <article class="route-step"><span>04</span><img src="../badges/icon_burn.svg" alt=""><small>Milestone</small><h3>Buyback And Burn</h3><p>Defined block counts will trigger an inspectable economic action.</p></article>
+          <article class="route-step"><span>01</span><img src="../assets/icons/icon_fomo.svg" alt=""><small>Observe</small><h3>Platform Trade</h3><p>An eligible trade is detected across Fomo or pump.fun.</p></article>
+          <article class="route-step"><span>02</span><img src="../assets/icons/icon_trade_block.svg" alt=""><small>Verify</small><h3>Clean The Signal</h3><p>The chain result is checked and duplicate signatures are rejected.</p></article>
+          <article class="route-step"><span>03</span><img src="../assets/icons/icon_builder.svg" alt=""><small>Plan</small><h3>AI Chooses The Build</h3><p>The market sets the timing. Mokkin decides where the block belongs.</p></article>
+          <article class="route-step"><span>04</span><img src="../assets/icons/icon_burn.svg" alt=""><small>Milestone</small><h3>Buyback And Burn</h3><p>Defined block counts will trigger an inspectable economic action.</p></article>
         </div>
         <div class="build-status glass-card">
           <div><span class="section-kicker">Implementation Status</span><h3>Building The Verifiable Pipeline</h3><p>Exact thresholds, eligible transaction rules and the public event trail will be published before activation.</p></div>
@@ -183,17 +183,17 @@
     </main>
 
     <footer>
-      <div><img src="../Mokkin-transparent.png" alt=""><span><strong>Mokkin</strong><small>The market sets the pace. The AI builds.</small></span></div>
+      <div><img src="../assets/brand/mokkin.png" alt=""><span><strong>Mokkin</strong><small>The market sets the pace. The AI builds.</small></span></div>
       <nav><a href="https://x.com/mokkinlabs" target="_blank" rel="noopener">X</a><a class="github-browser-trigger" href="#github-code" data-repo="nuttumrunit/Mokkin" data-branch="main">GitHub</a><a href="https://pump.fun/" target="_blank" rel="noopener">Pump.fun</a></nav>
       <p>&copy; 2026 Mokkin</p>
     </footer>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="javascript/runtime.js?v=2"></script>
-  <script src="javascript/nuttumchat.js?v=4"></script>
-  <script src="javascript/nuttumdata.js?v=7"></script>
-  <script src="javascript/guestbook.js?v=4"></script>
+  <script src="../assets/js/runtime.js?v=1"></script>
+  <script src="../assets/js/chat.js?v=1"></script>
+  <script src="../assets/js/market-data.js?v=1"></script>
+  <script src="../assets/js/guestbook.js?v=1"></script>
   <script>
     (function () {
       document.querySelectorAll('a[href^="#"]').forEach(function (link) {
@@ -205,6 +205,6 @@
 
     })();
   </script>
-  <script src="../github-browser.js"></script>
+  <script src="../assets/js/repository-browser.js"></script>
 </body>
 </html>

@@ -23,5 +23,6 @@ bot/signals.json
 bot/signal-consumption.json
 bot/milestones.json
 home/cam.jpg
+data/cam.jpg
 
 runtime/

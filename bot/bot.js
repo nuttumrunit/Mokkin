@@ -46,7 +46,7 @@ const rawfill = (x1, y1, z1, x2, y2, z2, b) => cmd(`/fill ${x1} ${y1} ${z1} ${x2
 const clamp = (v, a, b) => Math.max(a, Math.min(b, Math.round(v || 0)))
 
 // ---- persistent, server-side live data (charts + info stream) ----
-const SITE_LIVE = path.resolve(process.env.NUTTUM_LIVE_FILE || path.join(__dirname, '..', 'home', 'nuttum-live.json'))
+const SITE_LIVE = path.resolve(process.env.NUTTUM_LIVE_FILE || path.join(__dirname, '..', 'data', 'mokkin-live.json'))
 const SIGNAL_FILE = path.resolve(process.env.NUTTUM_SIGNAL_FILE || path.join(__dirname, 'signals.json'))
 const SIGNAL_USAGE = path.join(__dirname, 'signal-consumption.json')
 const MILESTONE_FILE = path.join(__dirname, 'milestones.json')
@@ -104,7 +104,7 @@ setInterval(sampleHistory, 5000)
 
 // public endpoint (CORS): serves the live JSON + the latest live-view frame (cam.jpg),
 // so the hosted site can show a light, always-loading cam + data from anywhere
-const CAM_JPG = path.resolve(process.env.NUTTUM_CAM_FILE || path.join(__dirname, '..', 'home', 'cam.jpg'))
+const CAM_JPG = path.resolve(process.env.NUTTUM_CAM_FILE || path.join(__dirname, '..', 'data', 'cam.jpg'))
 const MAP_WEB = path.resolve(process.env.NUTTUM_MAP_WEB || path.join(__dirname, '..', 'runtime', 'server', 'plugins', 'squaremap', 'web'))
 const MAP_MIME = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8', '.json': 'application/json', '.png': 'image/png', '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.svg': 'image/svg+xml', '.ico': 'image/x-icon', '.webp': 'image/webp' }
 try {

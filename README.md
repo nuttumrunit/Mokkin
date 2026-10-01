@@ -57,10 +57,20 @@ The listener defaults to Solana's public RPC. Use a dedicated `NUTTUM_SOLANA_WS`
 
 ## Public deployment
 
-GitHub Pages hosts only the static frontend. A 24/7 camera, map, data endpoint, listener, and Minecraft runtime require an always on host plus stable HTTPS hostnames. Keep the event gateway on localhost, keep secrets out of the repository, and update `home/config.js` with stable public camera, viewer, map, and data URLs.
+GitHub Pages hosts only the static frontend. A 24/7 camera, map, data endpoint, listener, and Minecraft runtime require an always on host plus stable HTTPS hostnames. Keep the event gateway on localhost, keep secrets out of the repository, and update `assets/js/config.js` with stable public camera, viewer, map, and data URLs.
 
 The contract address is deliberately `TBA` until launch. No private key or automated financial transaction belongs in this repository.
 
 ## License
 
 MIT
+## Repository layout
+
+- `assets/brand/` — Mokkin logo
+- `assets/icons/` — icons used by the live site
+- `assets/css/` — dashboard and repository browser styles
+- `assets/js/` — runtime, market data, chat, guestbook, and repository browser code
+- `data/` — public runtime snapshot used when the live endpoint is unavailable
+- `home/` — city console page
+- `bot/` — Minecraft builder, verified transaction listener, and local signal gateway
+- `index.html` and `story.html` — public entry and story pages
