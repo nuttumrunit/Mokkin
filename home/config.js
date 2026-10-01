@@ -11,8 +11,8 @@ window.NUTTUM = {
   contractAddress: '',
   network: 'solana-mainnet',
   status: {
-    fomo: 'awaiting-feed',
-    pumpfun: 'awaiting-feed',
+    fomo: 'live-onchain',
+    pumpfun: 'live-onchain',
     buyback: 'awaiting-launch'
   }
 };

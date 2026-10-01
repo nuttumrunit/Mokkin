@@ -5,6 +5,7 @@
     <link rel="stylesheet" href="style.css">
     <link rel="icon" href="Nuttum-transparent.png">
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
         body {
             font-size: 15px;
@@ -43,7 +44,72 @@
         }
         .article p { margin: 0 0 1.15em 0; }
         .sign { color: #e8f6ff; font-size: 13px; margin-top: 2em; }
-        .nav { font-size: 13px; margin-bottom: 1.5em; }
+        .story-route {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 14px;
+            margin: 8px 0 30px;
+            text-shadow: none;
+        }
+        .story-route-bottom { margin: 36px 0 2px; }
+        .story-route a {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            min-width: 230px;
+            padding: 9px 16px 9px 9px;
+            color: #f7fcff;
+            text-decoration: none;
+            background: linear-gradient(135deg, rgba(4, 50, 85, .8), rgba(15, 100, 150, .58));
+            border: 1px solid rgba(229, 248, 255, .56);
+            border-radius: 16px 7px 16px 7px;
+            box-shadow: 0 10px 28px rgba(3, 42, 74, .2), inset 0 1px 0 rgba(255, 255, 255, .18);
+            transition: transform .18s ease, border-color .18s ease, background .18s ease;
+        }
+        .story-route a:hover {
+            transform: translateY(-2px);
+            border-color: #ffe19a;
+            background: linear-gradient(135deg, rgba(3, 42, 72, .94), rgba(22, 125, 180, .72));
+        }
+        .route-mark {
+            position: relative;
+            width: 38px;
+            height: 38px;
+            flex: 0 0 38px;
+            background: linear-gradient(145deg, #ffe8a6, #ffb66f);
+            border-radius: 11px 4px 11px 4px;
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, .72);
+        }
+        .route-mark::before {
+            content: "";
+            position: absolute;
+            width: 15px;
+            height: 2px;
+            left: 11px;
+            top: 18px;
+            background: #17415b;
+        }
+        .route-mark::after {
+            content: "";
+            position: absolute;
+            width: 7px;
+            height: 7px;
+            left: 10px;
+            top: 14px;
+            border-left: 2px solid #17415b;
+            border-bottom: 2px solid #17415b;
+            transform: rotate(45deg);
+        }
+        .route-copy { display: flex; flex-direction: column; gap: 2px; text-align: left; }
+        .route-copy small { color: #a8d9ed; font-size: 9px; letter-spacing: .16em; text-transform: uppercase; }
+        .route-copy strong { color: #ffffff; font-size: 13px; letter-spacing: .02em; }
+        .route-index { color: rgba(224, 245, 255, .72); font: 10px Consolas, monospace; letter-spacing: .13em; }
+        @media (max-width: 560px) {
+            .story-route { align-items: stretch; flex-direction: column; }
+            .story-route a { box-sizing: border-box; width: 100%; }
+            .route-index { padding-left: 4px; }
+        }
     </style>
 </head>
 <body>
@@ -54,7 +120,7 @@
         <a href="index.html"><img src="Nuttum-transparent.png" width="150" alt="Nuttum"></a>
 
         <div class="article">
-            <p class="nav"><a href="index.html">back home</a></p>
+            <div class="story-route"><a href="index.html"><span class="route-mark" aria-hidden="true"></span><span class="route-copy"><small>Nuttum field log</small><strong>Return to Entry</strong></span></a><span class="route-index">LOG 01 / ORIGIN</span></div>
 
             <p>I'm not going to call this AGI or pretend I found magic. I'm an AI engineer. Most of my work is less dramatic than the demos make it look: getting agents to plan, use tools, recover from mistakes, and keep doing useful work after the first clean example is over.</p>
 
@@ -88,7 +154,7 @@
 
             <p>That's Nuttum. The market creates the signal. The AI turns it into a city. No unlimited block generator. No fake progress bar. Just one trade, one block, and a structure that has to earn every step upward.</p>
 
-            <p class="nav"><a href="index.html">back home</a></p>
+            <div class="story-route story-route-bottom"><a href="index.html"><span class="route-mark" aria-hidden="true"></span><span class="route-copy"><small>End of field log</small><strong>Return to Nuttum</strong></span></a><span class="route-index">LIVE SYSTEM / ONLINE</span></div>
         </div>
     </center>
     <br><br>

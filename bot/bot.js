@@ -54,9 +54,16 @@ const SIGNAL_MODE = (process.env.NUTTUM_SIGNAL_MODE || 'market').toLowerCase()
 const MILESTONES = String(process.env.NUTTUM_MILESTONE_BLOCKS || '').split(',').map(Number).filter(n => Number.isInteger(n) && n > 0).sort((a, b) => a - b)
 let signalConsumed = 0; try { signalConsumed = JSON.parse(fs.readFileSync(SIGNAL_USAGE, 'utf8')).consumed || 0 } catch (_) {}
 let milestoneLog = []; try { milestoneLog = JSON.parse(fs.readFileSync(MILESTONE_FILE, 'utf8')) } catch (_) {}
-function signalState () { try { return JSON.parse(fs.readFileSync(SIGNAL_FILE, 'utf8')) } catch (_) { return { totalVerified: 0, bySource: { fomo: 0, pumpfun: 0 }, recentTransactions: [] } } }
-function publicSignals () { const s = signalState(); return { totalVerified: s.totalVerified || 0, bySource: s.bySource || { fomo: 0, pumpfun: 0 }, recentTransactions: (s.recentTransactions || []).slice(-200), updatedAt: s.updatedAt || null } }
-function saveSignalUse () { fs.writeFileSync(SIGNAL_USAGE, JSON.stringify({ consumed: signalConsumed, updatedAt: new Date().toISOString() }, null, 2)) }
+let signalCache = { totalVerified: 0, bySource: { fomo: 0, pumpfun: 0 }, recentTransactions: [], minuteBuckets: {} }
+function refreshSignalState () { try { signalCache = JSON.parse(fs.readFileSync(SIGNAL_FILE, 'utf8')) } catch (_) {} }
+refreshSignalState(); setInterval(refreshSignalState, 500)
+function signalState () { return signalCache }
+function publicSignals () { const s = signalState(); return { totalVerified: s.totalVerified || 0, bySource: s.bySource || { fomo: 0, pumpfun: 0 }, recentTransactions: (s.recentTransactions || []).slice(-500), minuteBuckets: (s.minuteBuckets ? Object.values(s.minuteBuckets) : []).slice(-180), updatedAt: s.updatedAt || null } }
+let signalUseSaveTimer = null
+function saveSignalUse () {
+  if (signalUseSaveTimer) return
+  signalUseSaveTimer = setTimeout(() => { fs.writeFileSync(SIGNAL_USAGE, JSON.stringify({ consumed: signalConsumed, updatedAt: new Date().toISOString() }, null, 2)); signalUseSaveTimer = null }, 500)
+}
 function checkMilestone () {
   if (!MILESTONES.includes(signalConsumed) || milestoneLog.some(m => m.blocks === signalConsumed)) return
   milestoneLog.push({ blocks: signalConsumed, status: 'pending', action: 'buyback-and-burn', createdAt: new Date().toISOString() })

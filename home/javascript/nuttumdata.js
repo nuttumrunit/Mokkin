@@ -41,18 +41,36 @@
     var now = Date.now(), start = now - 3600000;
     return rows.filter(function (tx) { var t = Number(tx.t); return t >= start && t <= now + 60000 && (tx.source === 'fomo' || tx.source === 'pumpfun') && tx.signature; });
   }
+  function hourlyActivity() {
+    var now = Date.now(), start = now - 3600000;
+    var bins = Array.from({ length: 12 }, function () { return { fomo: 0, pumpfun: 0 }; });
+    var minuteRows = live.signals && Array.isArray(live.signals.minuteBuckets) ? live.signals.minuteBuckets : [];
+    if (minuteRows.length) {
+      minuteRows.forEach(function (row) {
+        var t = Number(row.t); if (t < start || t > now + 60000) return;
+        var i = Math.min(11, Math.max(0, Math.floor((t - start) / 300000)));
+        bins[i].fomo += Number(row.fomo || 0); bins[i].pumpfun += Number(row.pumpfun || 0);
+      });
+    } else {
+      recentTransactions().forEach(function (tx) {
+        var i = Math.min(11, Math.max(0, Math.floor((Number(tx.t) - start) / 300000)));
+        bins[i][tx.source]++;
+      });
+    }
+    var fomo = bins.reduce(function (n, x) { return n + x.fomo; }, 0);
+    var pumpfun = bins.reduce(function (n, x) { return n + x.pumpfun; }, 0);
+    return { bins: bins, fomo: fomo, pumpfun: pumpfun, total: fomo + pumpfun, start: start };
+  }
   function drawVelocity() {
     var canvas = document.getElementById('transactionChart'), legend = document.getElementById('transactionLegend');
     if (!canvas) return;
-    var rows = recentTransactions();
-    if (!rows.length) {
-      emptyChart(canvas, 'No verified transactions', 'Waiting for signed Fomo and pump.fun events');
+    var activity = hourlyActivity(), bins = activity.bins;
+    if (!activity.total) {
+      emptyChart(canvas, 'No verified transactions', 'Waiting for verified onchain Fomo and pump.fun trades');
       if (legend) legend.innerHTML = '<span><i style="background:' + COLORS.fomo + '"></i>Fomo 0</span><span><i style="background:' + COLORS.pumpfun + '"></i>Pump.fun 0</span>';
       return;
     }
-    var b = canvasBase(canvas), ctx = b.ctx, w = b.w, h = b.h, now = Date.now(), start = now - 3600000;
-    var bins = Array.from({ length: 12 }, function () { return { fomo: 0, pumpfun: 0 }; });
-    rows.forEach(function (tx) { var i = Math.min(11, Math.max(0, Math.floor((Number(tx.t) - start) / 300000))); bins[i][tx.source]++; });
+    var b = canvasBase(canvas), ctx = b.ctx, w = b.w, h = b.h;
     var max = Math.max(1, Math.max.apply(null, bins.map(function (x) { return x.fomo + x.pumpfun; })));
     var left = 42, right = 24, top = 25, bottom = 38, plotW = w - left - right, plotH = h - top - bottom;
     ctx.strokeStyle = COLORS.grid; ctx.lineWidth = 1; ctx.font = '10px Consolas'; ctx.fillStyle = '#8fc7df';
@@ -62,12 +80,10 @@
       var x = left + i * slot + (slot - bw) / 2, pumpH = plotH * bin.pumpfun / max, fomoH = plotH * bin.fomo / max, base = top + plotH;
       if (pumpH) { ctx.fillStyle = COLORS.pumpfun; ctx.fillRect(x, base - pumpH, bw, pumpH); }
       if (fomoH) { ctx.fillStyle = COLORS.fomo; ctx.fillRect(x, base - pumpH - fomoH, bw, fomoH); }
-      if (i % 3 === 0) { ctx.textAlign = 'center'; ctx.fillStyle = '#8fc7df'; ctx.fillText(et(start + i * 300000, false), x + bw / 2, h - 16); }
+      if (i % 3 === 0) { ctx.textAlign = 'center'; ctx.fillStyle = '#8fc7df'; ctx.fillText(et(activity.start + i * 300000, false), x + bw / 2, h - 16); }
     });
-    var by = live.signals.bySource || {};
-    if (legend) legend.innerHTML = '<span><i style="background:' + COLORS.fomo + '"></i>Fomo <b>' + fmt(by.fomo) + '</b></span><span><i style="background:' + COLORS.pumpfun + '"></i>Pump.fun <b>' + fmt(by.pumpfun) + '</b></span><span>Last hour <b>' + fmt(rows.length) + '</b></span>';
-  }
-  function drawCredits() {
+    if (legend) legend.innerHTML = '<span><i style="background:' + COLORS.fomo + '"></i>Fomo <b>' + fmt(activity.fomo) + '</b></span><span><i style="background:' + COLORS.pumpfun + '"></i>Pump.fun <b>' + fmt(activity.pumpfun) + '</b></span><span>Last hour <b>' + fmt(activity.total) + '</b></span>';
+  }  function drawCredits() {
     var canvas = document.getElementById('creditChart'), legend = document.getElementById('creditLegend');
     if (!canvas) return;
     var signals = live.signals;
@@ -95,7 +111,7 @@
     var rows = live.signals && Array.isArray(live.signals.recentTransactions) ? live.signals.recentTransactions.slice().sort(function (a, b) { return Number(b.t) - Number(a.t); }) : [];
     feed.innerHTML = '';
     if (!rows.length) {
-      var empty = document.createElement('div'); empty.className = 'tx-empty'; empty.innerHTML = '<strong>No verified TX received</strong><span>The feed remains empty until a signed provider adapter submits real transactions.</span>'; feed.appendChild(empty); return;
+      var empty = document.createElement('div'); empty.className = 'tx-empty'; empty.innerHTML = '<strong>No verified TX received</strong><span>The feed remains empty until a verified onchain trade arrives.</span>'; feed.appendChild(empty); return;
     }
     rows.slice(0, 160).forEach(function (tx) {
       var row = document.createElement('div'); row.className = 'tx-row';
@@ -113,9 +129,9 @@
     var light = document.getElementById('txFeedLight'); if (light) light.classList.toggle('offline', !fresh);
     var note = document.getElementById('marketDataNotice');
     if (note) note.querySelector('span:last-child').innerHTML = fresh ? '<strong>Verified feed online.</strong> Every row below was accepted by the signed gateway and deduplicated by transaction ID.' : '<strong>Runtime offline.</strong> No current transaction feed is configured. Historical builder activity is excluded from these market charts.';
-    var signals = live.signals || {}, by = signals.bySource || {};
-    setText('fomoCount', signals.totalVerified == null ? 'Awaiting Feed' : fmt(by.fomo || 0) + ' Verified');
-    setText('pumpfunCount', signals.totalVerified == null ? 'Awaiting Feed' : fmt(by.pumpfun || 0) + ' Verified');
+    var signals = live.signals || {}, activity = hourlyActivity();
+    setText('fomoCount', signals.totalVerified == null ? 'Awaiting Feed' : fmt(activity.fomo) + ' / 60m');
+    setText('pumpfunCount', signals.totalVerified == null ? 'Awaiting Feed' : fmt(activity.pumpfun) + ' / 60m');
     setText('blockQueue', signals.totalVerified == null ? 'Runtime Offline' : fmt(Math.max(0, Number(signals.totalVerified || 0) - Number(live.signalConsumed || 0))) + ' Credits Queued');
   }
   function applyData(data, source) {

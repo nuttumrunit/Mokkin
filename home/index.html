@@ -97,7 +97,7 @@
       <section id="telemetry" class="section-block">
         <div class="section-heading">
           <div><span class="section-kicker">Verified Market Data</span><h2>Market Activity</h2></div>
-          <p>Only signed, deduplicated Fomo and pump.fun transactions appear in this section.</p>
+          <p>Only successful, deduplicated onchain Fomo and pump.fun transactions appear in this section.</p>
         </div>
         <div class="integration-note" id="marketDataNotice">
           <span class="note-icon"><img src="../badges/icon_trade_block.svg" alt=""></span>
@@ -131,7 +131,7 @@
         </div>
         <div class="route-grid">
           <article class="route-step"><span>01</span><img src="../badges/icon_fomo.svg" alt=""><small>Observe</small><h3>Platform Trade</h3><p>An eligible trade is detected across Fomo or pump.fun.</p></article>
-          <article class="route-step"><span>02</span><img src="../badges/icon_trade_block.svg" alt=""><small>Verify</small><h3>Clean The Signal</h3><p>The transaction is checked and duplicate events are rejected.</p></article>
+          <article class="route-step"><span>02</span><img src="../badges/icon_trade_block.svg" alt=""><small>Verify</small><h3>Clean The Signal</h3><p>The chain result is checked and duplicate signatures are rejected.</p></article>
           <article class="route-step"><span>03</span><img src="../badges/icon_builder.svg" alt=""><small>Plan</small><h3>AI Chooses The Build</h3><p>The market sets the timing. Nuttum decides where the block belongs.</p></article>
           <article class="route-step"><span>04</span><img src="../badges/icon_burn.svg" alt=""><small>Milestone</small><h3>Buyback And Burn</h3><p>Defined block counts will trigger an inspectable economic action.</p></article>
         </div>
@@ -139,7 +139,7 @@
           <div><span class="section-kicker">Implementation Status</span><h3>Building The Verifiable Pipeline</h3><p>Exact thresholds, eligible transaction rules and the public event trail will be published before activation.</p></div>
           <div class="status-list">
             <span><i class="done"></i> City builder prototype</span><span><i class="done"></i> Public interface</span>
-            <span><i class="done"></i> Signed event gateway</span><span><i></i> Fomo provider feed</span><span><i></i> Pump.fun provider feed</span><span><i></i> Funded burn executor</span>
+            <span><i class="done"></i> Signed event gateway</span><span><i class="done"></i> Fomo Solana feed</span><span><i class="done"></i> Pump.fun onchain feed</span><span><i></i> Funded burn executor</span>
           </div>
         </div>
       </section>

@@ -10,6 +10,7 @@
     "files": [
         "bot.js",
         "signal-gateway.js",
+        "chain-listener.js",
         "cam-capture.js",
         "ai.config.example.json",
         ".env.example",
@@ -18,6 +19,7 @@
     "scripts": {
         "start": "node bot.js",
         "gateway": "node signal-gateway.js",
+        "listener": "node chain-listener.js",
         "capture": "node cam-capture.js",
         "capture:install": "npx playwright install chromium"
     },
@@ -50,6 +52,7 @@
         "playwright": "^1.51.0",
         "prismarine-schematic": "^1.2.3",
         "prismarine-viewer": "^1.28.0",
-        "vec3": "^0.1.10"
+        "vec3": "^0.1.10",
+        "ws": "^8.22.0"
     }
 }
