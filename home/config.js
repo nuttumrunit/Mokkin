@@ -8,7 +8,7 @@ window.NUTTUM = {
   map: 'https://resumes-bosnia-nsw-glen.trycloudflare.com/map/',
   data: 'https://resumes-bosnia-nsw-glen.trycloudflare.com/',
   snapshot: 'nuttum-live.json',
-  contractAddress: 'DN7663RDLbkB4waeA68ij3AAtqYfA9cKJ3jPNgzppump',
+  contractAddress: '',
   network: 'solana-mainnet',
   status: {
     fomo: 'live-onchain',
