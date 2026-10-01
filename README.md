@@ -2,7 +2,7 @@
 
 Mokkin is a market-paced AI city builder. Verified activity across Fomo and pump.fun determines when the builder can move. Each unique transaction releases exactly one Minecraft block placement credit; the AI determines where that block belongs in the city.
 
-[Open the site](https://nuttum.fun/) · [City console](https://nuttum.fun/home/index.html) · [Read the story](https://nuttum.fun/story.html) · [X](https://x.com/nuttumrunit)
+[Open the site](https://mokkin.fun/) · [City console](https://mokkin.fun/home/index.html) · [Read the story](https://mokkin.fun/story.html) · [X](https://x.com/mokkinlabs)
 
 ## What is included
 

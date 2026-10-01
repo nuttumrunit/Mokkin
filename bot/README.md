@@ -53,7 +53,7 @@ The signed gateway still accepts private adapters at `/events/fomo` and `/events
 
 `GET /health` and `GET /signals` show accepted totals, recent signatures, and minute buckets. The bot stores consumed credits in `signal-consumption.json`. Configured block milestones are written to `milestones.json` with `pending` status. No wallet or token transaction is sent automatically.
 
-Site: <https://nuttum.fun/>
+Site: <https://mokkin.fun/>
 
 ## License
 
