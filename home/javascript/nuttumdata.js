@@ -45,26 +45,30 @@
     var now = Date.now(), start = now - 3600000;
     var bins = Array.from({ length: 12 }, function () { return { fomo: 0, pumpfun: 0 }; });
     var minuteRows = live.signals && Array.isArray(live.signals.minuteBuckets) ? live.signals.minuteBuckets : [];
+    var firstObserved = now;
     if (minuteRows.length) {
       minuteRows.forEach(function (row) {
         var t = Number(row.t); if (t < start || t > now + 60000) return;
+        firstObserved = Math.min(firstObserved, t);
         var i = Math.min(11, Math.max(0, Math.floor((t - start) / 300000)));
         bins[i].fomo += Number(row.fomo || 0); bins[i].pumpfun += Number(row.pumpfun || 0);
       });
     } else {
       recentTransactions().forEach(function (tx) {
+        firstObserved = Math.min(firstObserved, Number(tx.t));
         var i = Math.min(11, Math.max(0, Math.floor((Number(tx.t) - start) / 300000)));
         bins[i][tx.source]++;
       });
     }
     var fomo = bins.reduce(function (n, x) { return n + x.fomo; }, 0);
     var pumpfun = bins.reduce(function (n, x) { return n + x.pumpfun; }, 0);
-    return { bins: bins, fomo: fomo, pumpfun: pumpfun, total: fomo + pumpfun, start: start };
+    return { bins: bins, fomo: fomo, pumpfun: pumpfun, total: fomo + pumpfun, start: start, windowMinutes: Math.min(60, Math.max(1, Math.ceil((now - firstObserved) / 60000))) };
   }
   function drawVelocity() {
     var canvas = document.getElementById('transactionChart'), legend = document.getElementById('transactionLegend');
     if (!canvas) return;
     var activity = hourlyActivity(), bins = activity.bins;
+    setText('transactionWindow', activity.total ? 'Observed ' + activity.windowMinutes + ' Minutes' : 'Last 60 Minutes');
     if (!activity.total) {
       emptyChart(canvas, 'No verified transactions', 'Waiting for verified onchain Fomo and pump.fun trades');
       if (legend) legend.innerHTML = '<span><i style="background:' + COLORS.fomo + '"></i>Fomo 0</span><span><i style="background:' + COLORS.pumpfun + '"></i>Pump.fun 0</span>';
@@ -82,7 +86,7 @@
       if (fomoH) { ctx.fillStyle = COLORS.fomo; ctx.fillRect(x, base - pumpH - fomoH, bw, fomoH); }
       if (i % 3 === 0) { ctx.textAlign = 'center'; ctx.fillStyle = '#8fc7df'; ctx.fillText(et(activity.start + i * 300000, false), x + bw / 2, h - 16); }
     });
-    if (legend) legend.innerHTML = '<span><i style="background:' + COLORS.fomo + '"></i>Fomo <b>' + fmt(activity.fomo) + '</b></span><span><i style="background:' + COLORS.pumpfun + '"></i>Pump.fun <b>' + fmt(activity.pumpfun) + '</b></span><span>Last hour <b>' + fmt(activity.total) + '</b></span>';
+    if (legend) legend.innerHTML = '<span><i style="background:' + COLORS.fomo + '"></i>Fomo <b>' + fmt(activity.fomo) + '</b></span><span><i style="background:' + COLORS.pumpfun + '"></i>Pump.fun <b>' + fmt(activity.pumpfun) + '</b></span><span>Window <b>' + activity.windowMinutes + 'm · ' + fmt(activity.total) + '</b></span>';
   }  function drawCredits() {
     var canvas = document.getElementById('creditChart'), legend = document.getElementById('creditLegend');
     if (!canvas) return;
@@ -130,8 +134,8 @@
     var note = document.getElementById('marketDataNotice');
     if (note) note.querySelector('span:last-child').innerHTML = fresh ? '<strong>Verified feed online.</strong> Every row below was accepted by the signed gateway and deduplicated by transaction ID.' : '<strong>Runtime offline.</strong> No current transaction feed is configured. Historical builder activity is excluded from these market charts.';
     var signals = live.signals || {}, activity = hourlyActivity();
-    setText('fomoCount', signals.totalVerified == null ? 'Awaiting Feed' : fmt(activity.fomo) + ' / 60m');
-    setText('pumpfunCount', signals.totalVerified == null ? 'Awaiting Feed' : fmt(activity.pumpfun) + ' / 60m');
+    setText('fomoCount', signals.totalVerified == null ? 'Awaiting Feed' : fmt(activity.fomo) + ' / ' + activity.windowMinutes + 'm');
+    setText('pumpfunCount', signals.totalVerified == null ? 'Awaiting Feed' : fmt(activity.pumpfun) + ' / ' + activity.windowMinutes + 'm');
     setText('blockQueue', signals.totalVerified == null ? 'Runtime Offline' : fmt(Math.max(0, Number(signals.totalVerified || 0) - Number(live.signalConsumed || 0))) + ' Credits Queued');
   }
   function applyData(data, source) {
