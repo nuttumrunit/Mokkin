@@ -8,7 +8,7 @@ window.NUTTUM = {
   map: 'https://resumes-bosnia-nsw-glen.trycloudflare.com/map/',
   data: 'https://resumes-bosnia-nsw-glen.trycloudflare.com/',
   snapshot: '../data/mokkin-live.json',
-  contractAddress: '',
+  contractAddress: '6KRs8XJmSGHRqRRrfGo12ADN32cFHxPZ3uRgMTsppump',
   network: 'solana-mainnet',
   status: {
     fomo: 'live-onchain',
