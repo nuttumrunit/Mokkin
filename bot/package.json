@@ -1,11 +1,11 @@
 {
-    "name": "@nuttumrunit/nuttum-bot",
+    "name": "@nuttumrunit/mokkin-bot",
     "version": "1.0.0",
     "description": "Market-paced AI city builder: one verified trade becomes one block.",
     "main": "bot.js",
     "type": "commonjs",
     "bin": {
-        "nuttum-bot": "bot.js"
+        "mokkin-bot": "bot.js"
     },
     "files": [
         "bot.js",
@@ -25,7 +25,7 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/nuttumrunit/Nuttum.git",
+        "url": "git+https://github.com/nuttumrunit/Mokkin.git",
         "directory": "bot"
     },
     "keywords": [
@@ -35,7 +35,7 @@
         "autonomous",
         "city-builder",
         "voxel",
-        "nuttum"
+        "mokkin"
     ],
     "author": "nuttumrunit",
     "license": "MIT",

@@ -1,4 +1,4 @@
-// Nuttum guestbook — shared realtime board backed by Supabase.
+// Mokkin guestbook — shared realtime board backed by Supabase.
 // Visitors leave feedback / ideas / feature requests; everyone sees new notes live.
 // Atabook style: Date (US Eastern) / Name / Number + a brick message. Newest on top.
 (function () {

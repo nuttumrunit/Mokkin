@@ -1,4 +1,4 @@
-// Nuttum verified market telemetry. No synthetic transactions are generated here.
+// Mokkin verified market telemetry. No synthetic transactions are generated here.
 (function () {
   'use strict';
   var settings = window.NUTTUM || {};

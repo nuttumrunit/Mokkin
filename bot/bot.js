@@ -1,4 +1,4 @@
-// Nuttum — an autonomous AI building a coherent New York City on a clean green island
+// Mokkin — an autonomous AI building a coherent New York City on a clean green island
 // surrounded by a wide ocean. A real LLM designs each building (as a spec); the code builds
 // it SOLID with /fill, lays streets, shapes parks. It keeps a persistent, server-side data
 // history (so all site visitors see the SAME real chart, and a refresh never restarts it),
@@ -15,7 +15,7 @@ try { mineflayerViewer = require('prismarine-viewer').mineflayer } catch (e) { c
 
 const HOST = process.env.NUTTUM_MC_HOST || '127.0.0.1'
 const PORT = Number(process.env.NUTTUM_MC_PORT || 25565)
-const NAME = process.env.NUTTUM_BOT_NAME || 'Nuttum'
+const NAME = process.env.NUTTUM_BOT_NAME || 'Mokkin'
 const VIEWER_PORT = Number(process.env.NUTTUM_VIEWER_PORT || 3007)
 const DATA_PORT = Number(process.env.NUTTUM_DATA_PORT || 8890)
 const BLOCK_DELAY_MS = Math.max(0, Number(process.env.NUTTUM_BLOCK_DELAY_MS || 20))
@@ -260,7 +260,7 @@ async function reclaimLand(cx, cz) {
   await sleep(140)
 }
 
-const SYSTEM = `You are Nuttum, an autonomous AI architect building a detailed New York City block by block. For the given plot you design ONE building and return a SPEC (not individual blocks) — a renderer builds it SOLID from your spec, so pick proportions and materials that look great and match the district.
+const SYSTEM = `You are Mokkin, an autonomous AI architect building a detailed New York City block by block. For the given plot you design ONE building and return a SPEC (not individual blocks) — a renderer builds it SOLID from your spec, so pick proportions and materials that look great and match the district.
 Return ONLY a raw JSON object, no markdown/fences/commentary:
 {"say":"<one short in-character sentence>","name":"<short name>","w":<6-12>,"d":<6-12>,"height":<6..HMAX>,"body":"<block id>","trim":"<block id>","windows":"<block id>","setbacks":[[<height>,<inset 1-2>]],"roof":"flat|watertank|spire|crown|dome|pitched","roof_material":"<block id>"}
 Rules: block ids without minecraft: prefix; use real NYC materials (concrete/quartz/smooth_stone/bricks/deepslate/terracotta/copper body; stained_glass windows; iron/quartz/copper trim). height must be <= HMAX. setbacks optional (taller buildings look better with 1-2). No air/bedrock/tnt/water/lava/command blocks. JSON only.`
@@ -431,7 +431,7 @@ async function run() {
   await sleep(3000); cmd(`/tp ${NAME} 0 ${GY + 40} 0`); await sleep(3500)
   try { bot.creative.startFlying() } catch (e) {}
   if (!done['_canvas']) { await prepareCanvas(); done['_canvas'] = 1; saveProgress() }
-  pushEvent('SYS', 'Nuttum online — building New York City'); bot.chat('Nuttum online. building New York City.')
+  pushEvent('SYS', 'Mokkin online — building New York City'); bot.chat('Mokkin online. building New York City.')
 
   const plots = []; for (let r = 0; r <= MAXRING; r++) for (let gj = -r; gj <= r; gj++) for (let gi = -r; gi <= r; gi++) if (Math.max(Math.abs(gi), Math.abs(gj)) === r) plots.push([gi, gj])
   while (true) {

@@ -3,19 +3,19 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Nuttum is a market paced AI city builder. Every verified trade becomes one block.">
-  <meta name="keywords" content="Nuttum, AI agent, Minecraft, Solana, Fomo, pump.fun">
-  <meta name="author" content="Nuttum">
+  <meta name="description" content="Mokkin is a market paced AI city builder. Every verified trade becomes one block.">
+  <meta name="keywords" content="Mokkin, AI agent, Minecraft, Solana, Fomo, pump.fun">
+  <meta name="author" content="Mokkin">
   <meta name="robots" content="index, follow">
-  <meta property="og:title" content="Nuttum City Console">
-  <meta property="og:site_name" content="Nuttum">
+  <meta property="og:title" content="Mokkin City Console">
+  <meta property="og:site_name" content="Mokkin">
   <meta property="og:type" content="website">
   <meta property="og:description" content="The market sets the pace. The AI builds the city.">
-  <meta property="og:url" content="https://nuttumrunit.github.io/Nuttum/home/">
-  <meta property="og:image" content="https://nuttumrunit.github.io/Nuttum/Nuttum-transparent.png">
-  <title>Nuttum City Console</title>
-  <link rel="canonical" href="https://nuttumrunit.github.io/Nuttum/home/">
-  <link rel="icon" type="image/png" href="../Nuttum-transparent.png">
+  <meta property="og:url" content="https://nuttum.fun/home/">
+  <meta property="og:image" content="https://nuttum.fun/Mokkin-transparent.png">
+  <title>Mokkin City Console</title>
+  <link rel="canonical" href="https://nuttum.fun/home/">
+  <link rel="icon" type="image/png" href="../Mokkin-transparent.png">
   <link rel="stylesheet" href="dashboard.css?v=3">
   <script src="config.js?v=5"></script>
 </head>
@@ -23,8 +23,8 @@
   <div class="page-shell">
     <header class="topbar">
       <a class="brand" href="../">
-        <img src="../Nuttum-transparent.png" alt="Nuttum">
-        <span><strong>Nuttum</strong><small>AI City Console</small></span>
+        <img src="../Mokkin-transparent.png" alt="Mokkin">
+        <span><strong>Mokkin</strong><small>AI City Console</small></span>
       </a>
       <nav class="main-nav" aria-label="Primary navigation">
         <a href="#live">Live</a>
@@ -40,26 +40,26 @@
         <div class="hero-copy">
           <div class="eyebrow"><span class="live-dot"></span> Market Paced AI Builder</div>
           <h1>One Verified Trade.<br><span>One New Block.</span></h1>
-          <p class="hero-text">Nuttum turns activity across Fomo and pump.fun into construction. Transactions decide when the builder moves. The AI decides what the city becomes.</p>
+          <p class="hero-text">Mokkin turns activity across Fomo and pump.fun into construction. Transactions decide when the builder moves. The AI decides what the city becomes.</p>
           <div class="hero-actions">
             <a class="primary-action" href="#live">Watch The Builder</a>
             <a class="secondary-action" href="../story.html">Read The Full Story</a>
           </div>
-          <div class="contract-bar" aria-label="Nuttum contract address">
+          <div class="contract-bar" aria-label="Mokkin contract address">
             <span class="contract-icon"><img src="../badges/icon_solana.svg" alt=""></span>
             <span class="contract-copy"><small>Contract Address</small><strong id="contractValue">TBA</strong><em id="contractNote">Published here after launch</em></span>
             <button id="contractCopy" type="button" disabled>Copy</button>
           </div>
         </div>
-        <div class="hero-visual" aria-label="Nuttum builder">
+        <div class="hero-visual" aria-label="Mokkin builder">
           <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
           <span class="orbit-block block-one"></span><span class="orbit-block block-two"></span><span class="orbit-block block-three"></span>
-          <div class="logo-stage"><img src="../Nuttum-transparent.png" alt="Nuttum"></div>
+          <div class="logo-stage"><img src="../Mokkin-transparent.png" alt="Mokkin"></div>
           <div class="visual-caption"><span>Builder Core</span><strong>Integration Mode</strong></div>
         </div>
       </section>
 
-      <section class="system-ribbon" aria-label="Nuttum system rules">
+      <section class="system-ribbon" aria-label="Mokkin system rules">
         <article class="ribbon-card"><span class="ribbon-icon"><img src="../badges/icon_fomo.svg" alt=""></span><span><small>Signal Source</small><strong>Fomo</strong><em id="fomoCount">Awaiting Feed</em></span></article>
         <article class="ribbon-card"><span class="ribbon-icon"><img src="../badges/icon_pumpfun_system.svg" alt=""></span><span><small>Signal Source</small><strong>Pump.fun</strong><em id="pumpfunCount">Awaiting Feed</em></span></article>
         <article class="ribbon-card"><span class="ribbon-icon"><img src="../badges/icon_trade_block.svg" alt=""></span><span><small>Build Rule</small><strong>1 TX = 1 Block</strong><em id="blockQueue">Runtime Offline</em></span></article>
@@ -75,9 +75,9 @@
           <article class="console-panel camera-panel">
             <div class="panel-heading"><span><i class="panel-light" id="camLight"></i> Builder Camera</span><a id="cameraPopout" href="#" target="_blank" rel="noopener">Open View</a></div>
             <div class="frame-shell">
-              <iframe id="camFrame" class="streamframe" src="about:blank" title="Nuttum live builder camera"></iframe>
-              <img id="camImage" class="streamimage" alt="Nuttum live builder camera" hidden>
-              <div class="frame-placeholder"><img src="../Nuttum-transparent.png" alt=""><span>Connecting To Builder</span></div>
+              <iframe id="camFrame" class="streamframe" src="about:blank" title="Mokkin live builder camera"></iframe>
+              <img id="camImage" class="streamimage" alt="Mokkin live builder camera" hidden>
+              <div class="frame-placeholder"><img src="../Mokkin-transparent.png" alt=""><span>Connecting To Builder</span></div>
               <div class="livecam-hud" id="livecamHud">
                 <div><small>Uptime</small><strong id="hudUptime">00:00:00</strong></div>
                 <div><small>Eastern Time</small><strong id="hudEst">00:00:00 ET</strong></div>
@@ -87,7 +87,7 @@
           <article class="console-panel map-panel" id="map">
             <div class="panel-heading"><span><i class="panel-light map-light" id="mapLight"></i> World Map</span><a class="panel-state" id="mapRetry" href="#" target="_blank" rel="noopener" hidden>Open Map</a></div>
             <div class="frame-shell">
-              <iframe id="mapFrame" class="streamframe" src="about:blank" title="Nuttum world map"></iframe>
+              <iframe id="mapFrame" class="streamframe" src="about:blank" title="Mokkin world map"></iframe>
               <div class="frame-placeholder map-placeholder"><img src="../badges/icon_builder.svg" alt=""><span>Loading World Map</span></div>
             </div>
           </article>
@@ -132,7 +132,7 @@
         <div class="route-grid">
           <article class="route-step"><span>01</span><img src="../badges/icon_fomo.svg" alt=""><small>Observe</small><h3>Platform Trade</h3><p>An eligible trade is detected across Fomo or pump.fun.</p></article>
           <article class="route-step"><span>02</span><img src="../badges/icon_trade_block.svg" alt=""><small>Verify</small><h3>Clean The Signal</h3><p>The chain result is checked and duplicate signatures are rejected.</p></article>
-          <article class="route-step"><span>03</span><img src="../badges/icon_builder.svg" alt=""><small>Plan</small><h3>AI Chooses The Build</h3><p>The market sets the timing. Nuttum decides where the block belongs.</p></article>
+          <article class="route-step"><span>03</span><img src="../badges/icon_builder.svg" alt=""><small>Plan</small><h3>AI Chooses The Build</h3><p>The market sets the timing. Mokkin decides where the block belongs.</p></article>
           <article class="route-step"><span>04</span><img src="../badges/icon_burn.svg" alt=""><small>Milestone</small><h3>Buyback And Burn</h3><p>Defined block counts will trigger an inspectable economic action.</p></article>
         </div>
         <div class="build-status glass-card">
@@ -152,7 +152,7 @@
         <div class="community-grid">
           <article class="console-panel chat-panel" id="chat">
             <div class="panel-heading"><span><i class="panel-light"></i> Live Chat</span><span class="panel-state" id="chatState">Connecting</span></div>
-            <div class="chat-pinned" id="chatPinned"><strong>Nuttum</strong><span>Keep it useful, civil and focused on the build.</span></div>
+            <div class="chat-pinned" id="chatPinned"><strong>Mokkin</strong><span>Keep it useful, civil and focused on the build.</span></div>
             <div id="chatlog"></div>
             <div class="chatrow">
               <div class="input-tools">
@@ -172,7 +172,7 @@
             <p class="guestbook-intro">Leave a feature request, a build idea or honest feedback for the project.</p>
             <div class="guestbook-form">
               <input id="gbName" placeholder="Your name" maxlength="30">
-              <textarea id="gbMsg" placeholder="What should Nuttum build next?" maxlength="500"></textarea>
+              <textarea id="gbMsg" placeholder="What should Mokkin build next?" maxlength="500"></textarea>
               <button type="button" onclick="nuttumSign()">Sign The Guestbook</button>
             </div>
             <div id="gbList"></div>
@@ -182,9 +182,9 @@
     </main>
 
     <footer>
-      <div><img src="../Nuttum-transparent.png" alt=""><span><strong>Nuttum</strong><small>The market sets the pace. The AI builds.</small></span></div>
-      <nav><a href="https://x.com/nuttumrunit" target="_blank" rel="noopener">X</a><a href="https://github.com/nuttumrunit/Nuttum" target="_blank" rel="noopener">GitHub</a><a href="https://pump.fun/coin/EZnykyzNcCFhU6zvE3q5L1pTQPGSdJu3cGRg3h3Apump" target="_blank" rel="noopener">Pump.fun</a></nav>
-      <p>&copy; 2026 Nuttum</p>
+      <div><img src="../Mokkin-transparent.png" alt=""><span><strong>Mokkin</strong><small>The market sets the pace. The AI builds.</small></span></div>
+      <nav><a href="https://x.com/nuttumrunit" target="_blank" rel="noopener">X</a><a href="https://github.com/nuttumrunit/Mokkin" target="_blank" rel="noopener">GitHub</a><a href="https://pump.fun/" target="_blank" rel="noopener">Pump.fun</a></nav>
+      <p>&copy; 2026 Mokkin</p>
     </footer>
   </div>
 

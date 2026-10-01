@@ -89,7 +89,7 @@ http.createServer((req, res) => {
     try { return json(res, 200, ingest(match[1], JSON.parse(raw || '{}'))) } catch (error) { return json(res, 400, { error: 'invalid_json', detail: error.message }) }
   })
 }).listen(PORT, '127.0.0.1', () => {
-  console.log(`Nuttum signal gateway listening on 127.0.0.1:${PORT}`)
+  console.log(`Mokkin signal gateway listening on 127.0.0.1:${PORT}`)
   console.log('POST verified events to /events/fomo or /events/pumpfun')
   if (!SECRET) console.warn('WARNING: NUTTUM_WEBHOOK_SECRET is empty; do not expose this server publicly.')
 })

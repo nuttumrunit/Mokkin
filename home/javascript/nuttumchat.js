@@ -1,4 +1,4 @@
-// Nuttum chat room — shared realtime chat backed by Supabase.
+// Mokkin chat room — shared realtime chat backed by Supabase.
 // Every visitor sees the same live messages (Postgres realtime); images are uploaded to
 // Supabase Storage so they persist for everyone. KWSX style: timestamped lines (US Eastern),
 // per-user name colours, emoji + image + colour picker.

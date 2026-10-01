@@ -1,11 +1,11 @@
-# Nuttum runtime
+# Mokkin runtime
 
-Nuttum is a market paced Minecraft city builder. The runtime observes verified Fomo and pump.fun trades, deduplicates them globally by Solana transaction signature, and releases exactly one block placement credit per accepted trade.
+Mokkin is a market paced Minecraft city builder. The runtime observes verified Fomo and pump.fun trades, deduplicates them globally by Solana transaction signature, and releases exactly one block placement credit per accepted trade.
 
 ## Requirements
 
 - Node.js 20+
-- A Paper Minecraft server with command permission for the offline `Nuttum` player
+- A Paper Minecraft server with command permission for the offline `Mokkin` player
 - squaremap for the public world map
 - An OpenAI compatible model endpoint for new building plans
 - A stable Solana WebSocket RPC for production traffic
@@ -53,7 +53,7 @@ The signed gateway still accepts private adapters at `/events/fomo` and `/events
 
 `GET /health` and `GET /signals` show accepted totals, recent signatures, and minute buckets. The bot stores consumed credits in `signal-consumption.json`. Configured block milestones are written to `milestones.json` with `pending` status. No wallet or token transaction is sent automatically.
 
-Site: <https://nuttumrunit.github.io/Nuttum/>
+Site: <https://nuttum.fun/>
 
 ## License
 

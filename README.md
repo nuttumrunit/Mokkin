@@ -1,8 +1,8 @@
-# Nuttum
+# Mokkin
 
-Nuttum is a market-paced AI city builder. Verified activity across Fomo and pump.fun determines when the builder can move. Each unique transaction releases exactly one Minecraft block placement credit; the AI determines where that block belongs in the city.
+Mokkin is a market-paced AI city builder. Verified activity across Fomo and pump.fun determines when the builder can move. Each unique transaction releases exactly one Minecraft block placement credit; the AI determines where that block belongs in the city.
 
-[Open the site](https://nuttumrunit.github.io/Nuttum/) · [City console](https://nuttumrunit.github.io/Nuttum/home/index.html) · [Read the story](https://nuttumrunit.github.io/Nuttum/story.html) · [X](https://x.com/nuttumrunit)
+[Open the site](https://nuttum.fun/) · [City console](https://nuttum.fun/home/index.html) · [Read the story](https://nuttum.fun/story.html) · [X](https://x.com/nuttumrunit)
 
 ## What is included
 
@@ -23,7 +23,7 @@ Pump + PumpSwap ------/                                                   |
                                                                           +-> public telemetry
 ```
 
-The Fomo app does not publish a developer API. Nuttum therefore observes its public Solana signer and accepts only successful transactions containing a swap instruction. Pump.fun activity is read from the official Pump and PumpSwap program addresses and accepts only successful buy or sell instructions. If one Fomo trade routes through PumpSwap, Fomo wins attribution and the signature is counted once.
+The Fomo app does not publish a developer API. Mokkin therefore observes its public Solana signer and accepts only successful transactions containing a swap instruction. Pump.fun activity is read from the official Pump and PumpSwap program addresses and accepts only successful buy or sell instructions. If one Fomo trade routes through PumpSwap, Fomo wins attribution and the signature is counted once.
 
 The current Fomo feed covers Solana. Other Fomo supported chains are not silently estimated. Buyback and burn records remain `pending` until a contract address, public thresholds, funded wallet, and reviewed executor are supplied.
 
