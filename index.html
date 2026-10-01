@@ -231,7 +231,6 @@
       text-transform: uppercase;
       cursor: not-allowed;
     }
-    .ca-copy-button:not(:disabled) { color: #062f4b; background: #ffe39b; cursor: pointer; }
     .city-systems {
       max-width: 860px;
       margin: 20px auto 2px;
@@ -371,10 +370,10 @@ When the city crosses certain block counts, that growth will trigger a buyback a
       <span class="ca-mark"><img src="badges/icon_solana.svg" alt=""></span>
       <span class="ca-copygroup">
         <small>Contract address</small>
-        <strong class="ca-value">5mq5pUyFyX83mZNcaT44G7cRY4M8dn2ryfx47dWspump</strong>
-        <em>Solana Mainnet</em>
+        <strong class="ca-value">TBA</strong>
+        <em>Published here after the token launch</em>
       </span>
-      <button class="ca-copy-button" type="button">Copy</button>
+      <button class="ca-copy-button" type="button" disabled>Copy</button>
     </div>
 
 
@@ -386,8 +385,8 @@ When the city crosses certain block counts, that growth will trigger a buyback a
        <a class="platform-link" href="https://github.com/nuttumrunit/Nuttum" target="_blank" rel="noopener">
          <span class="platform-mark"><img src="badges/icon_github.svg" alt=""></span><span class="platform-copy"><strong>GitHub</strong><small>View source</small></span>
        </a>
-       <a class="platform-link" href="https://pump.fun/coin/5mq5pUyFyX83mZNcaT44G7cRY4M8dn2ryfx47dWspump" target="_blank" rel="noopener">
-         <span class="platform-mark"><img src="badges/icon_pumpfun.svg" alt=""></span><span class="platform-copy"><strong>Pump.fun</strong><small>View Nuttum token</small></span>
+       <a class="platform-link" href="https://pump.fun/" target="_blank" rel="noopener">
+         <span class="platform-mark"><img src="badges/icon_pumpfun.svg" alt=""></span><span class="platform-copy"><strong>Pump.fun</strong><small>Open launchpad</small></span>
        </a>
      </nav>
      <section class="city-systems" aria-label="Nuttum city systems">
@@ -432,15 +431,6 @@ When the city crosses certain block counts, that growth will trigger a buyback a
       var d = new Date().toLocaleDateString('en-CA', { timeZone: 'America/New_York' });
       var el = document.getElementById('lastupd'); if (el) el.textContent = d;
     } catch(e){}
-    var mint = '5mq5pUyFyX83mZNcaT44G7cRY4M8dn2ryfx47dWspump';
-    var copyButton = document.querySelector('.ca-copy-button');
-    if (copyButton) copyButton.addEventListener('click', function () {
-      if (!navigator.clipboard) return;
-      navigator.clipboard.writeText(mint).then(function () {
-        copyButton.textContent = 'Copied';
-        setTimeout(function () { copyButton.textContent = 'Copy'; }, 1400);
-      });
-    });
   })();
   </script>
   </body>
