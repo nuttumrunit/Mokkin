@@ -370,10 +370,10 @@ When the city crosses certain block counts, that growth will trigger a buyback a
       <span class="ca-mark"><img src="assets/icons/icon_solana.svg" alt=""></span>
       <span class="ca-copygroup">
         <small>Contract address</small>
-        <strong class="ca-value">TBA</strong>
-        <em>Published here after the token launch</em>
+        <strong class="ca-value">DCHxAT3uHhaxN1NAwjjaDjygAPWWVypzUDNtiJTXpump</strong>
+        <em>Solana contract address</em>
       </span>
-      <button class="ca-copy-button" type="button" disabled>Copy</button>
+      <button class="ca-copy-button" type="button">Copy</button>
     </div>
 
 
@@ -385,7 +385,7 @@ When the city crosses certain block counts, that growth will trigger a buyback a
        <a class="platform-link github-browser-trigger" href="#github-code" data-repo="nuttumrunit/Mokkin" data-branch="main">
          <span class="platform-mark"><img src="assets/icons/icon_github.svg" alt=""></span><span class="platform-copy"><strong>GitHub</strong><small>View source</small></span>
        </a>
-       <a class="platform-link" href="https://pump.fun/" target="_blank" rel="noopener">
+       <a class="platform-link" href="https://pump.fun/coin/DCHxAT3uHhaxN1NAwjjaDjygAPWWVypzUDNtiJTXpump" target="_blank" rel="noopener">
          <span class="platform-mark"><img src="assets/icons/icon_pumpfun.svg" alt=""></span><span class="platform-copy"><strong>Pump.fun</strong><small>Open launchpad</small></span>
        </a>
      </nav>
@@ -431,6 +431,15 @@ When the city crosses certain block counts, that growth will trigger a buyback a
       var d = new Date().toLocaleDateString('en-CA', { timeZone: 'America/New_York' });
       var el = document.getElementById('lastupd'); if (el) el.textContent = d;
     } catch(e){}
+    var ca = 'DCHxAT3uHhaxN1NAwjjaDjygAPWWVypzUDNtiJTXpump';
+    var copyButton = document.querySelector('.ca-copy-button');
+    if (copyButton) copyButton.addEventListener('click', function(){
+      if (!navigator.clipboard) return;
+      navigator.clipboard.writeText(ca).then(function(){
+        copyButton.textContent = 'Copied';
+        setTimeout(function(){ copyButton.textContent = 'Copy'; }, 1400);
+      });
+    });
   })();
   </script>
   <script src="assets/js/repository-browser.js"></script>
