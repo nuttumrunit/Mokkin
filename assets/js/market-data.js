@@ -36,13 +36,16 @@
     ctx.setLineDash([]); ctx.textAlign = 'center'; ctx.fillStyle = '#e7f8ff'; ctx.font = '700 17px Arial'; ctx.fillText(title, b.w / 2, b.h / 2 - 5);
     ctx.fillStyle = '#91c8df'; ctx.font = '12px Consolas'; ctx.fillText(detail, b.w / 2, b.h / 2 + 22);
   }
+  function dataNow() {
+    return live.source === 'snapshot' && Number(live.ts) ? Number(live.ts) : Date.now();
+  }
   function recentTransactions() {
     var rows = live.signals && Array.isArray(live.signals.recentTransactions) ? live.signals.recentTransactions : [];
-    var now = Date.now(), start = now - 3600000;
+    var now = dataNow(), start = now - 3600000;
     return rows.filter(function (tx) { var t = Number(tx.t); return t >= start && t <= now + 60000 && (tx.source === 'fomo' || tx.source === 'pumpfun') && tx.signature; });
   }
   function hourlyActivity() {
-    var now = Date.now(), start = now - 3600000;
+    var now = dataNow(), start = now - 3600000;
     var bins = Array.from({ length: 12 }, function () { return { fomo: 0, pumpfun: 0 }; });
     var minuteRows = live.signals && Array.isArray(live.signals.minuteBuckets) ? live.signals.minuteBuckets : [];
     var firstObserved = now;
@@ -128,11 +131,11 @@
   }
   function renderStatus() {
     var source = live.source, fresh = source === 'live' && !live.stale;
-    document.querySelectorAll('.runtime-mode').forEach(function (el) { el.textContent = fresh ? 'Live Verified Feed' : source === 'live' ? 'Stale Runtime' : source === 'snapshot' ? 'No Market Snapshot' : 'Runtime Offline'; });
-    setText('txFeedState', fresh ? 'Live' : source === 'live' ? 'Stale' : 'Offline');
+    document.querySelectorAll('.runtime-mode').forEach(function (el) { el.textContent = fresh ? 'Live Verified Feed' : source === 'live' ? 'Stale Runtime' : source === 'snapshot' ? 'Last Verified Snapshot' : 'Runtime Offline'; });
+    setText('txFeedState', fresh ? 'Live' : source === 'live' ? 'Stale' : source === 'snapshot' ? 'Snapshot' : 'Offline');
     var light = document.getElementById('txFeedLight'); if (light) light.classList.toggle('offline', !fresh);
     var note = document.getElementById('marketDataNotice');
-    if (note) note.querySelector('span:last-child').innerHTML = fresh ? '<strong>Verified feed online.</strong> Every row below was accepted by the signed gateway and deduplicated by transaction ID.' : '<strong>Runtime offline.</strong> No current transaction feed is configured. Historical builder activity is excluded from these market charts.';
+    if (note) note.querySelector('span:last-child').innerHTML = fresh ? '<strong>Verified feed online.</strong> Every row below was accepted by the signed gateway and deduplicated by transaction ID.' : source === 'snapshot' ? '<strong>Last verified snapshot.</strong> Live runtime is offline; the most recent saved transaction data remains visible below.' : '<strong>Runtime offline.</strong> No current transaction feed is configured.';
     var signals = live.signals || {}, activity = hourlyActivity();
     setText('fomoCount', signals.totalVerified == null ? 'Awaiting Feed' : fmt(activity.fomo) + ' / ' + activity.windowMinutes + 'm');
     setText('pumpfunCount', signals.totalVerified == null ? 'Awaiting Feed' : fmt(activity.pumpfun) + ' / ' + activity.windowMinutes + 'm');

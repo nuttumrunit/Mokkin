@@ -6,7 +6,7 @@ window.NUTTUM = {
   viewer: 'https://binary-oops-district-rogers.trycloudflare.com/',
   health: 'https://resumes-bosnia-nsw-glen.trycloudflare.com/health',
   map: 'https://resumes-bosnia-nsw-glen.trycloudflare.com/map/',
-  data: 'https://resumes-bosnia-nsw-glen.trycloudflare.com/',
+  data: '',
   snapshot: '../data/mokkin-live.json',
   contractAddress: '6KRs8XJmSGHRqRRrfGo12ADN32cFHxPZ3uRgMTsppump',
   network: 'solana-mainnet',
