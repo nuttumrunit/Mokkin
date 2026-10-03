@@ -7,7 +7,7 @@ window.NUTTUM = {
   map: '',
   data: '',
   snapshot: '../data/mokkin-live.json',
-  contractAddress: '',
+  contractAddress: 'FBEmHPHap5cxuBb2312G59nyYM6dxHavxvY8f29Apump',
   network: 'solana-mainnet',
   status: {
     fomo: 'live-onchain',
