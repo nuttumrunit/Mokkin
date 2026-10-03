@@ -1,11 +1,10 @@
-// Public runtime settings. These temporary HTTPS endpoints expose the real local builder.
-// Move them to a named Cloudflare Tunnel before treating the runtime as 24/7 production.
+// Public runtime settings. Add stable HTTPS endpoints when the builder host is online.
 window.NUTTUM = {
-  cam: 'https://resumes-bosnia-nsw-glen.trycloudflare.com/cam',
+  cam: '',
   camMode: 'image',
-  viewer: 'https://binary-oops-district-rogers.trycloudflare.com/',
-  health: 'https://resumes-bosnia-nsw-glen.trycloudflare.com/health',
-  map: 'https://resumes-bosnia-nsw-glen.trycloudflare.com/map/',
+  viewer: '',
+  health: '',
+  map: '',
   data: '',
   snapshot: '../data/mokkin-live.json',
   contractAddress: '',

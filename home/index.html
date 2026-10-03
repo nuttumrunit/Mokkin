@@ -16,9 +16,9 @@
   <title>Mokkin City Console</title>
   <link rel="canonical" href="https://mokkin.fun/home/">
   <link rel="icon" type="image/png" href="../assets/brand/mokkin.png">
-  <link rel="stylesheet" href="../assets/css/dashboard.css?v=1">
+  <link rel="stylesheet" href="../assets/css/dashboard.css?v=2">
   <link rel="stylesheet" href="../assets/css/repository-browser.css">
-  <script src="../assets/js/config.js?v=2"></script>
+  <script src="../assets/js/config.js?v=3"></script>
 </head>
 <body>
   <div class="page-shell">
@@ -74,11 +74,22 @@
         </div>
         <div class="live-grid">
           <article class="console-panel camera-panel">
-            <div class="panel-heading"><span><i class="panel-light" id="camLight"></i> Builder Camera</span><a id="cameraPopout" href="#" target="_blank" rel="noopener">Open View</a></div>
+            <div class="panel-heading"><span><i class="panel-light" id="camLight"></i> Builder Camera</span><span class="camera-controls"><span class="panel-state" id="camState">Connecting</span><a id="cameraPopout" href="#" target="_blank" rel="noopener">Open View</a></span></div>
             <div class="frame-shell">
               <iframe id="camFrame" class="streamframe" src="about:blank" title="Mokkin live builder camera"></iframe>
               <img id="camImage" class="streamimage" alt="Mokkin live builder camera" hidden>
-              <div class="frame-placeholder"><img src="../assets/brand/mokkin.png" alt=""><span>Connecting To Builder</span></div>
+              <div class="frame-placeholder camera-standby">
+                <div class="camera-grid" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+                <div class="camera-scanline" aria-hidden="true"></div>
+                <div class="standby-corners" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+                <div class="standby-copy">
+                  <span class="standby-code">CAM_01 / BUILDER POV</span>
+                  <strong id="camPlaceholderTitle">Reconnecting To Builder</strong>
+                  <span id="camPlaceholderDetail">The secure camera link is temporarily offline.</span>
+                  <button id="camReconnect" type="button">Retry Signal</button>
+                </div>
+                <div class="standby-footer"><span><i></i> Signal Lost</span><time id="camStandbyClock">--:--:-- ET</time></div>
+              </div>
               <div class="livecam-hud" id="livecamHud">
                 <div><small>Uptime</small><strong id="hudUptime">00:00:00</strong></div>
                 <div><small>Eastern Time</small><strong id="hudEst">00:00:00 ET</strong></div>
@@ -190,7 +201,7 @@
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="../assets/js/runtime.js?v=1"></script>
+  <script src="../assets/js/runtime.js?v=2"></script>
   <script src="../assets/js/chat.js?v=1"></script>
   <script src="../assets/js/market-data.js?v=2"></script>
   <script src="../assets/js/guestbook.js?v=1"></script>
